@@ -210,5 +210,5 @@ dist
 .pnp.*
 
 
-# Secret keys file
-keys.ts
+# Environmental variables
+dotenv.env
