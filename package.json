@@ -1,0 +1,20 @@
+{
+  "name": "bachelor",
+  "version": "1.0.0",
+  "description": "Bachelor project with NTNU and Symfoni, spring 2022.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/symfoni/bachelor.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/symfoni/bachelor/issues"
+  },
+  "homepage": "https://github.com/symfoni/bachelor#readme"
+}
