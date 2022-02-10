@@ -215,3 +215,8 @@ dotenv.env
 
 # Keys
 keys.ts
+
+# Agent databases
+database/nav-database.sqlite
+database/symfoni-database.sqlite
+database/user-database.sqlite
