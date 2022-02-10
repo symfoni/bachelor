@@ -212,3 +212,6 @@ dist
 
 # Environmental variables
 dotenv.env
+
+# Keys
+keys.ts
