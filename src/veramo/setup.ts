@@ -30,18 +30,19 @@ import { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migration
 
 // TypeORM is installed with `@veramo/data-store`
 import { createConnection } from 'typeorm'
+import { CredentialIssuer, ICredentialIssuer } from '@veramo/credential-w3c'
 
 // Local sqlite database for the different agents
-const NAV_DATABASE_FILE = 'nav-database.sqlite'
-const SYMFONI_DATABASE_FILE = 'symfoni-database.sqlite'
-const USER_DATABASE_FILE = 'user-database.sqlite'
+const NAV_DATABASE_FILE: string = 'nav-database.sqlite'
+const SYMFONI_DATABASE_FILE: string = 'symfoni-database.sqlite'
+const USER_DATABASE_FILE: string = 'user-database.sqlite'
 
 // You will need to get a project ID from infura https://www.infura.io
-const INFURA_ID = INFURA_PROJECT_ID
+const INFURA_ID: string = INFURA_PROJECT_ID
 
-const NAV_KEY = NAV_KMS_SECRET_KEY
-const SYMFONI_KEY = SYMFONI_KMS_SECRET_KEY
-const USER_KEY = USER_KMS_SECRET_KEY
+const NAV_KEY: string = NAV_KMS_SECRET_KEY
+const SYMFONI_KEY: string = SYMFONI_KMS_SECRET_KEY
+const USER_KEY: string = USER_KMS_SECRET_KEY
 
 // Nav database
 const dbConnectionNAV = createConnection({
@@ -74,4 +75,99 @@ const dbConnectionUser = createConnection({
     migrationsRun: true,
     logging: ['error', 'info', 'warn'],
     entities: Entities,
+})
+
+export const agentNAV = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
+    plugins: [
+        new KeyManager({
+            store: new KeyStore(dbConnectionNAV),
+            kms: {
+                local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionNAV, new SecretBox(NAV_KEY))),
+            },
+        }),
+        new DIDManager({
+            store: new DIDStore(dbConnectionNAV),
+            defaultProvider: 'did:ethr:rinkeby',
+            providers: {
+                'did:ethr:rinkeby': new EthrDIDProvider({
+                    defaultKms: 'local',
+                    network: 'rinkeby',
+                    rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_PROJECT_ID,
+                }),
+                'did:web': new WebDIDProvider({
+                    defaultKms: 'local',
+                }),
+            },
+        }),
+        new DIDResolverPlugin({
+            resolver: new Resolver({
+                ...ethrDidResolver({ infuraProjectId: INFURA_PROJECT_ID }),
+                ...webDidResolver(),
+            }),
+        }),
+        new CredentialIssuer()
+    ],
+})
+
+export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
+    plugins: [
+        new KeyManager({
+            store: new KeyStore(dbConnectionSymfoni),
+            kms: {
+                local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionSymfoni, new SecretBox(SYMFONI_KEY))),
+            },
+        }),
+        new DIDManager({
+            store: new DIDStore(dbConnectionSymfoni),
+            defaultProvider: 'did:ethr:rinkeby',
+            providers: {
+                'did:ethr:rinkeby': new EthrDIDProvider({
+                    defaultKms: 'local',
+                    network: 'rinkeby',
+                    rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_PROJECT_ID,
+                }),
+                'did:web': new WebDIDProvider({
+                    defaultKms: 'local',
+                }),
+            },
+        }),
+        new DIDResolverPlugin({
+            resolver: new Resolver({
+                ...ethrDidResolver({ infuraProjectId: INFURA_PROJECT_ID }),
+                ...webDidResolver(),
+            }),
+        }),
+        new CredentialIssuer()
+    ],
+})
+
+export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver>({
+    plugins: [
+        new KeyManager({
+            store: new KeyStore(dbConnectionUser),
+            kms: {
+                local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionUser, new SecretBox(USER_KEY))),
+            },
+        }),
+        new DIDManager({
+            store: new DIDStore(dbConnectionUser),
+            defaultProvider: 'did:ethr:rinkeby',
+            providers: {
+                'did:ethr:rinkeby': new EthrDIDProvider({
+                    defaultKms: 'local',
+                    network: 'rinkeby',
+                    rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_PROJECT_ID,
+                }),
+                'did:web': new WebDIDProvider({
+                    defaultKms: 'local',
+                }),
+            },
+        }),
+        new DIDResolverPlugin({
+            resolver: new Resolver({
+                ...ethrDidResolver({ infuraProjectId: INFURA_PROJECT_ID }),
+                ...webDidResolver(),
+            }),
+        }),
+    ],
 })
