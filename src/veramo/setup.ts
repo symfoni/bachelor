@@ -42,3 +42,36 @@ const INFURA_ID = INFURA_PROJECT_ID
 const NAV_KEY = NAV_KMS_SECRET_KEY
 const SYMFONI_KEY = SYMFONI_KMS_SECRET_KEY
 const USER_KEY = USER_KMS_SECRET_KEY
+
+// Nav database
+const dbConnectionNAV = createConnection({
+    type: 'sqlite',
+    database: NAV_DATABASE_FILE,
+    synchronize: false,
+    migrations,
+    migrationsRun: true,
+    logging: ['error', 'info', 'warn'],
+    entities: Entities,
+})
+
+// Symfoni database
+const dbConnectionSymfoni = createConnection({
+    type: 'sqlite',
+    database: SYMFONI_DATABASE_FILE,
+    synchronize: false,
+    migrations,
+    migrationsRun: true,
+    logging: ['error', 'info', 'warn'],
+    entities: Entities,
+})
+
+// User database
+const dbConnectionUser = createConnection({
+    type: 'sqlite',
+    database: USER_DATABASE_FILE,
+    synchronize: false,
+    migrations,
+    migrationsRun: true,
+    logging: ['error', 'info', 'warn'],
+    entities: Entities,
+})
