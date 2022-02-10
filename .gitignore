@@ -76,6 +76,9 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+
+.idea/
+
 # Nodejs specific files
 
 # Logs
@@ -207,8 +210,6 @@ dist
 .yarn/unplugged
 .yarn/build-state.yml
 .yarn/install-state.gz
-.pnp.*
-
 
 # Environmental variables
 dotenv.env
@@ -220,3 +221,4 @@ keys.ts
 database/nav-database.sqlite
 database/symfoni-database.sqlite
 database/user-database.sqlite
+
