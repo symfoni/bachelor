@@ -4,7 +4,7 @@
   "description": "Bachelor project with NTNU and Symfoni, spring 2022.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha 'test/**/*.ts'"
   },
   "repository": {
     "type": "git",
