@@ -33,9 +33,9 @@ import { createConnection } from 'typeorm';
 import { CredentialIssuer, ICredentialIssuer } from '@veramo/credential-w3c';
 
 // Local sqlite database for the different agents
-const NAV_DATABASE_FILE = 'database/nav-database.sqlite';
-const SYMFONI_DATABASE_FILE = 'database/symfoni-database.sqlite';
-const USER_DATABASE_FILE = 'database/user-database.sqlite';
+const NAV_DATABASE_FILE = '../database/nav-database.sqlite';
+const SYMFONI_DATABASE_FILE = '../database/symfoni-database.sqlite';
+const USER_DATABASE_FILE = '../database/user-database.sqlite';
 
 // You will need to get a project ID from infura https://www.infura.io
 const INFURA_ID: string = INFURA_PROJECT_ID;
