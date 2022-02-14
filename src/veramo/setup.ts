@@ -46,128 +46,128 @@ const USER_KEY: string = USER_KMS_SECRET_KEY;
 
 // Nav database
 const dbConnectionNAV = createConnection({
-    type: 'sqlite',
-    database: NAV_DATABASE_FILE,
-    synchronize: false,
-    migrations,
-    migrationsRun: true,
-    logging: ['error', 'info', 'warn'],
-    entities: Entities,
+	type: 'sqlite',
+	database: NAV_DATABASE_FILE,
+	synchronize: false,
+	migrations,
+	migrationsRun: true,
+	logging: ['error', 'info', 'warn'],
+	entities: Entities,
 });
 
 // Symfoni database
 const dbConnectionSymfoni = createConnection({
-    type: 'sqlite',
-    database: SYMFONI_DATABASE_FILE,
-    synchronize: false,
-    migrations,
-    migrationsRun: true,
-    logging: ['error', 'info', 'warn'],
-    entities: Entities,
+	type: 'sqlite',
+	database: SYMFONI_DATABASE_FILE,
+	synchronize: false,
+	migrations,
+	migrationsRun: true,
+	logging: ['error', 'info', 'warn'],
+	entities: Entities,
 });
 
 // User database
 const dbConnectionUser = createConnection({
-    type: 'sqlite',
-    database: USER_DATABASE_FILE,
-    synchronize: false,
-    migrations,
-    migrationsRun: true,
-    logging: ['error', 'info', 'warn'],
-    entities: Entities,
+	type: 'sqlite',
+	database: USER_DATABASE_FILE,
+	synchronize: false,
+	migrations,
+	migrationsRun: true,
+	logging: ['error', 'info', 'warn'],
+	entities: Entities,
 });
 
 export const agentNAV = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
-    plugins: [
-        new KeyManager({
-            store: new KeyStore(dbConnectionNAV),
-            kms: {
-                local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionNAV, new SecretBox(NAV_KEY))),
-            },
-        }),
-        new DIDManager({
-            store: new DIDStore(dbConnectionNAV),
-            defaultProvider: 'did:ethr:rinkeby',
-            providers: {
-                'did:ethr:rinkeby': new EthrDIDProvider({
-                    defaultKms: 'local',
-                    network: 'rinkeby',
-                    rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_ID,
-                }),
-                'did:web': new WebDIDProvider({
-                    defaultKms: 'local',
-                }),
-            },
-        }),
-        new DIDResolverPlugin({
-            resolver: new Resolver({
-                ...ethrDidResolver({ infuraProjectId: INFURA_ID }),
-                ...webDidResolver(),
-            }),
-        }),
-        new CredentialIssuer()
-    ],
+	plugins: [
+		new KeyManager({
+			store: new KeyStore(dbConnectionNAV),
+			kms: {
+				local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionNAV, new SecretBox(NAV_KEY))),
+			},
+		}),
+		new DIDManager({
+			store: new DIDStore(dbConnectionNAV),
+			defaultProvider: 'did:ethr:rinkeby',
+			providers: {
+				'did:ethr:rinkeby': new EthrDIDProvider({
+					defaultKms: 'local',
+					network: 'rinkeby',
+					rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_ID,
+				}),
+				'did:web': new WebDIDProvider({
+					defaultKms: 'local',
+				}),
+			},
+		}),
+		new DIDResolverPlugin({
+			resolver: new Resolver({
+				...ethrDidResolver({ infuraProjectId: INFURA_ID }),
+				...webDidResolver(),
+			}),
+		}),
+		new CredentialIssuer()
+	],
 });
 
 export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
-    plugins: [
-        new KeyManager({
-            store: new KeyStore(dbConnectionSymfoni),
-            kms: {
-                local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionSymfoni, new SecretBox(SYMFONI_KEY))),
-            },
-        }),
-        new DIDManager({
-            store: new DIDStore(dbConnectionSymfoni),
-            defaultProvider: 'did:ethr:rinkeby',
-            providers: {
-                'did:ethr:rinkeby': new EthrDIDProvider({
-                    defaultKms: 'local',
-                    network: 'rinkeby',
-                    rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_ID,
-                }),
-                'did:web': new WebDIDProvider({
-                    defaultKms: 'local',
-                }),
-            },
-        }),
-        new DIDResolverPlugin({
-            resolver: new Resolver({
-                ...ethrDidResolver({ infuraProjectId: INFURA_ID }),
-                ...webDidResolver(),
-            }),
-        }),
-        new CredentialIssuer()
-    ],
+	plugins: [
+		new KeyManager({
+			store: new KeyStore(dbConnectionSymfoni),
+			kms: {
+				local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionSymfoni, new SecretBox(SYMFONI_KEY))),
+			},
+		}),
+		new DIDManager({
+			store: new DIDStore(dbConnectionSymfoni),
+			defaultProvider: 'did:ethr:rinkeby',
+			providers: {
+				'did:ethr:rinkeby': new EthrDIDProvider({
+					defaultKms: 'local',
+					network: 'rinkeby',
+					rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_ID,
+				}),
+				'did:web': new WebDIDProvider({
+					defaultKms: 'local',
+				}),
+			},
+		}),
+		new DIDResolverPlugin({
+			resolver: new Resolver({
+				...ethrDidResolver({ infuraProjectId: INFURA_ID }),
+				...webDidResolver(),
+			}),
+		}),
+		new CredentialIssuer()
+	],
 });
 
 export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver>({
-    plugins: [
-        new KeyManager({
-            store: new KeyStore(dbConnectionUser),
-            kms: {
-                local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionUser, new SecretBox(USER_KEY))),
-            },
-        }),
-        new DIDManager({
-            store: new DIDStore(dbConnectionUser),
-            defaultProvider: 'did:ethr:rinkeby',
-            providers: {
-                'did:ethr:rinkeby': new EthrDIDProvider({
-                    defaultKms: 'local',
-                    network: 'rinkeby',
-                    rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_ID,
-                }),
-                'did:web': new WebDIDProvider({
-                    defaultKms: 'local',
-                }),
-            },
-        }),
-        new DIDResolverPlugin({
-            resolver: new Resolver({
-                ...ethrDidResolver({ infuraProjectId: INFURA_ID }),
-                ...webDidResolver(),
-            }),
-        }),
-    ],
+	plugins: [
+		new KeyManager({
+			store: new KeyStore(dbConnectionUser),
+			kms: {
+				local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionUser, new SecretBox(USER_KEY))),
+			},
+		}),
+		new DIDManager({
+			store: new DIDStore(dbConnectionUser),
+			defaultProvider: 'did:ethr:rinkeby',
+			providers: {
+				'did:ethr:rinkeby': new EthrDIDProvider({
+					defaultKms: 'local',
+					network: 'rinkeby',
+					rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_ID,
+				}),
+				'did:web': new WebDIDProvider({
+					defaultKms: 'local',
+				}),
+			},
+		}),
+		new DIDResolverPlugin({
+			resolver: new Resolver({
+				...ethrDidResolver({ infuraProjectId: INFURA_ID }),
+				...webDidResolver(),
+			}),
+		}),
+	],
 });
