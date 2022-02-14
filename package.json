@@ -4,7 +4,8 @@
   "description": "Bachelor project with NTNU and Symfoni, spring 2022.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha 'test/**/*.ts'"
+    "test": "mocha 'test/**/*.ts'",
+    "prepare": "husky install"
   },
   "repository": {
     "type": "git",
