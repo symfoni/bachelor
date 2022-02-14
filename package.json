@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "mocha 'test/**/*.ts'",
+    "lint": "npx eslint src/**",
     "prepare": "husky install"
   },
   "repository": {
