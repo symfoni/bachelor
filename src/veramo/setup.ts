@@ -1,6 +1,6 @@
 // Secret environmental variables
 import dotenv from 'dotenv';
-dotenv.config({ path: "../dotenv.env" });
+dotenv.config({ path: '../dotenv.env' });
 
 // Core interfaces
 import { createAgent, IDIDManager, IResolver, IDataStore, IKeyManager } from '@veramo/core';
@@ -40,13 +40,13 @@ const USER_DATABASE_FILE = '../database/user-database.sqlite';
 
 // See 'dotenv-template.env' for information about this variable.
 // TODO: Find a less hacky way to store infura ID as string
-const INFURA_ID: string = process.env.INFURA_PROJECT_ID ?? "no valid id";
+const INFURA_ID: string = process.env.INFURA_PROJECT_ID ?? 'no valid id';
 
 // See 'dotenv-template.env' for information about these variables.
 // TODO: Find a less hacky way to store the keys as string
-const NAV_KEY: string = process.env.NAV_KMS_SECRET_KEY ?? "no valid key";
-const SYMFONI_KEY: string = process.env.SYMFONI_KMS_SECRET_KEY ?? "no valid key";
-const USER_KEY: string = process.env.USER_KMS_SECRET_KEY ?? "no valid key";
+const NAV_KEY: string = process.env.NAV_KMS_SECRET_KEY ?? 'no valid key';
+const SYMFONI_KEY: string = process.env.SYMFONI_KMS_SECRET_KEY ?? 'no valid key';
+const USER_KEY: string = process.env.USER_KMS_SECRET_KEY ?? 'no valid key';
 
 // Nav database
 const dbConnectionNAV = createConnection({
