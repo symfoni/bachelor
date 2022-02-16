@@ -10,3 +10,16 @@ export function hashFile(filePath: string): string {
 
 	return fileHash;
 }
+
+
+export function isHashValid(hash: string, filePath: string): boolean {
+	const fileHash = hashFile(filePath);
+	let isEqual = false;
+
+	if (hash === fileHash) {
+		isEqual = true;
+		return isEqual;
+	}
+
+	return isEqual;
+}
