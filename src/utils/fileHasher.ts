@@ -7,13 +7,18 @@ import fs from 'fs';
  * @returns a hash of the file based on the sha256 algorithm as a string.
  */
 export function hashFile(filePath: string): string {
-	const targetFile = fs.readFileSync(filePath);
+	try {
+		const targetFile = fs.readFileSync(filePath);
 
-	const hash = crypto.createHash('sha256');
+		const hash = crypto.createHash('sha256');
 
-	const fileHash = hash.update(targetFile).digest('hex');
+		const fileHash = hash.update(targetFile).digest('hex');
 
-	return fileHash;
+		return fileHash
+	} catch (error) {
+		console.error('file not found', error);
+		return 'file not found'
+	}
 }
 
 /**
