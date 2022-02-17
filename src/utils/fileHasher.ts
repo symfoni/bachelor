@@ -14,10 +14,10 @@ export function hashFile(filePath: string): string {
 
 		const fileHash = hash.update(targetFile).digest('hex');
 
-		return fileHash
+		return fileHash;
 	} catch (error) {
 		console.error('file not found', error);
-		return 'file not found'
+		return 'file not found';
 	}
 }
 
