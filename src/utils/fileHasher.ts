@@ -17,7 +17,7 @@ export function hashFile(filePath: string): string {
 		return fileHash;
 	} catch (error) {
 		console.error('file not found', error);
-		return 'file not found';
+		return '';
 	}
 }
 
