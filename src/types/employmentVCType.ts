@@ -1,4 +1,3 @@
-// This type is under construction
 export type employmentVC = {
     context: [
         string,
@@ -27,13 +26,12 @@ export type employmentVC = {
                     startDate: string,
                     endDate: string
                 }
-                hasNotComitedGrossMisconduct: boolean,
                 rightForPension: true,
                 nonCompeteClause: false,
                 requirementToWorkOverseas: true
             }
             employerId: string,
-            PDFContract: {
+            contractPDF: {
                 URL: string,
                 hash: string
             }
