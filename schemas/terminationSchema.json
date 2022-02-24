@@ -1,0 +1,78 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+      "credentialSubject": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "termination": {
+            "type": "object",
+            "properties": {
+              "employee": {
+                "type": "object",
+                "properties": {
+                  "lastDayAtWork": {
+                    "type": "string",
+                    "format": "date"
+                  },
+                  "lastPayday": {
+                    "type": "string",
+                    "format": "date"
+    
+                  },
+                  "terminationStatus": {
+                    "type": "string",
+                    "enum": ["resigned", "fired", "bankruptcy"]
+                    
+                  },
+                  "terminatedDuringTrialPeriod": {
+                    "type": "boolean"
+                  },
+                  "WeeklyWorkHours": {
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "lastDayAtWork",
+                  "lastPayday",
+                  "terminationStatus",
+                  "terminatedDuringTrialPeriod",
+                  "WeeklyWorkHours"
+                ]
+              },
+              "contractPDF": {
+                "type": "object",
+                "properties": {
+                  "URL": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "hash": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "URL",
+                  "hash"
+                ]
+              }
+            },
+            "required": [
+              "employee",
+              "contractPDF"
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "termination"
+        ]
+      }
+    },
+    "required": [
+      "credentialSubject"
+    ]
+  }

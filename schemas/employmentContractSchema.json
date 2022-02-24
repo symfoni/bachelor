@@ -1,0 +1,154 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "credentialSubject": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "employment": {
+                    "type": "object",
+                    "properties": {
+                        "employee": {
+                            "type": "object",
+                            "properties": {
+                                "employeeId": {
+                                    "type": "string"
+                                },
+                                "jobTitle": {
+                                    "type": "string"
+                                },
+                                "placeOfWork": {
+                                    "type": "string"
+                                },
+                                "hoursOfWork": {
+                                    "type": "number"
+                                },
+                                "startDate": {
+                                    "type": "string",
+                                    "format": "date"
+                                },
+                                "endDate": {
+                                    "type": "string",
+                                    "format": "date"
+                                },
+                                "employmentStatus": {
+                                    "type": "object",
+                                    "properties": {
+                                        "employmentType": {
+                                            "type": "string",
+                                            "enum": [
+                                                "full time",
+                                                "part time",
+                                                "freelance"
+                                            ]
+                                        },
+                                        "partTimePercentage": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "employmentType",
+                                        "partTimePercentage"
+                                    ]
+                                },
+                                "salary": {
+                                    "type": "object",
+                                    "properties": {
+                                        "frequency": {
+                                            "type": "string",
+                                            "enum": [
+                                                "monthly",
+                                                "weekly",
+                                                "hourly"
+                                            ]
+                                        },
+                                        "amount": {
+                                            "type": "number"
+                                        },
+                                        "currency": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "frequency",
+                                        "amount",
+                                        "currency"
+                                    ]
+                                },
+                                "trialPeriod": {
+                                    "type": "object",
+                                    "properties": {
+                                        "startDate": {
+                                            "type": "string",
+                                            "format": "date"
+                                        },
+                                        "endDate": {
+                                            "type": "string",
+                                            "format": "date"
+                                        }
+                                    },
+                                    "required": [
+                                        "startDate",
+                                        "endDate"
+                                    ]
+                                },
+                                "rightForPension": {
+                                    "type": "boolean"
+                                },
+                                "nonCompeteClause": {
+                                    "type": "boolean"
+                                },
+                                "requirementToWorkOverseas": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "employeeId",
+                                "jobTitle",
+                                "placeOfWork",
+                                "hoursOfWork",
+                                "startDate",
+                                "endDate",
+                                "employmentStatus",
+                                "salary",
+                                "trialPeriod",
+                                "rightForPension",
+                                "requirementToWorkOverseas"
+                            ]
+                        }
+                    },
+                    "contractPDF": {
+                        "type": "object",
+                        "properties": {
+                            "URL": {
+                                "type": "string",
+                                "format": "uri"
+                            },
+                            "hash": {
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "URL",
+                            "hash"
+                        ]
+                    },
+                    "required": [
+                        "employee",
+                        "contractPDF"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "employment"
+            ]
+        }
+    },
+    "required": [
+        "credentialSubject"
+    ]
+}
