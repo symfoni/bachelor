@@ -1,0 +1,76 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "credentialSubject": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "business": {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "industrialCode": {
+                            "type": "string"
+                        },
+                        "organisationStructure": {
+                            "type": "string"
+                        },
+                        "organisationNumber": {
+                            "type": "number"
+                        },
+                        "address": {
+                            "type": "object",
+                            "properties": {
+                                "countryCode": {
+                                    "type": "string",
+                                    "pattern": "^[A-Z]{2}$"
+                                },
+                                "city": {
+                                    "type": "string"
+                                },
+                                "zipCode": {
+                                    "type": "number"
+                                },
+                                "streetName": {
+                                    "type": "string"
+                                },
+                                "streetNumber": {
+                                    "type": "number"
+                                },
+                                "floor": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "countryCode",
+                                "city",
+                                "zipCode",
+                                "streetName",
+                                "streetNumber"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "industrialCode",
+                        "organisationStructure",
+                        "organisationNumber",
+                        "address"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "business"
+            ]
+        }
+    },
+    "required": [
+        "credentialSubject"
+    ]
+}

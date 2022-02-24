@@ -1,0 +1,45 @@
+{
+  "@context": [
+    "https://www.w3.org/2018/credentials/v1"
+  ],
+  "type": [
+    "VerifiableCredential",
+    "PersonCredential"
+  ],
+  "issuer": "did:web:digdir.no",
+  "issuanceDate": "2010-01-01T19:23:24Z",
+  "credentialSubject": {
+    "id": "did:ethr:ebfeb1f712ebc6f1c276e12ec21",
+    "person": {
+      "dateOfdDeath": "2020-01-01T19:23:24Z",
+      "countryOfDeath": "NO",
+      "placeOfDeath": "Gjøvik",
+      "countryOfBirth": "NO",
+      "placeOfBirth": "Addressevegen 22",
+      "dateOfBirth": "2010-01-01T19:23:24Z",
+      "gender": "male",
+      "name": {
+        "lastName": "Nordmann",
+        "firstName": "Ola",
+        "middleName": "Gromp"
+      },
+      "originalName": "Ola Normann",
+      "maritalStatus": "unmarried",
+      "citizenship": "US",
+      "address": {
+        "countryCode": "NO",
+        "city": "gjøvik",
+        "zipCode": 1212,
+        "streetName": "veigaten",
+        "streetNumber": 12
+      }
+    }
+  },
+  "proof": {
+    "type": "RsaSignature2018",
+    "created": "2017-06-18T21:19:10Z",
+    "proofPurpose": "assertionMethod",
+    "verificationMethod": "https://example.edu/issuers/565049/keys/1",
+    "jws": "eyJhbGciOiJSUzI1NiIsImI2NCI6ZmFsc2UsImNyaXQiOlsiYjY0Il19..TCYt5XsITJX1CxPCT8yAV-TVkIEq_PbChOMqsLfRoPsnsgw5WEuts01mq-pQy7UJiN5mgRxD-WUcX16dUEMGlv50aqzpqh4Qktb3rk-BuQy72IFLOqV0G_zS245-kronKb78cPN25DGlcTwLtjPAYuNzVBAh4vGHSrQyHUdBBPM"
+  }
+}

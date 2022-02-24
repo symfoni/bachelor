@@ -1,0 +1,50 @@
+{
+    "@context": [
+        "https://www.w3.org/2018/credentials/v1"
+    ],
+    "issuer": {
+        "id": "did:ethr:rinkeby:0x03b1b81a272cf67248bf38b6e1054ea38370e3e4d8074aca3ebdcf55536646eedb"
+    },
+    "type": [
+        "VerifiableCredential",
+        "EmploymentVC"
+    ],
+    "credentialSubject": {
+        "id": "did:ethr:rinkeby:0x026e205a3fefa81f8e51cf7c284ec234fa667280740ca8e394ec608edad3680bfe",
+        "employment": {
+            "employee": {
+                "employeeId": "did:ethr:rinkeby:0x026e205a3fefa81f8e51cf7c284ec234fa667280740ca8e394ec608edad3680bfe",
+                "jobTitle": "Ingeniør",
+                "placeOfWork": "Rådhusplassen 10",
+                "hoursOfWork": 20,
+                "startDate": "2021-06-01",
+                "endDate": "2014-01-01",
+                "employmentStatus": {
+                    "employmentType": "part time",
+                    "partTimePercentage": 80
+                },
+                "salary": {
+                    "frequency": "monthly",
+                    "amount": 40700,
+                    "currency": "NOK"
+                },
+                "trialPeriod": {
+                    "startDate": "2021-06-20",
+                    "endDate": "2021-12-12"
+                },
+                "rightForPension": true,
+                "nonCompeteClause": false,
+                "requirementToWorkOverseas": true
+            },
+            "contractPDF": {
+                "URL": "www.pdfs.com/pdf0.pdf",
+                "hash": "8743b52063cd84097a65d1633f5c74f5"
+            }
+        }
+    },
+    "issuanceDate": "2022-02-18T10:02:18.000Z",
+    "proof": {
+        "type": "JwtProof2020",
+        "jwt": "eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSJdLCJ0eXBlIjpbIlZlcmlmaWFibGVDcmVkZW50aWFsIiwiRW1wbG95bWVudFZDIl0sImNyZWRlbnRpYWxTdWJqZWN0Ijp7ImVtcGxveW1lbnQiOnsiZW1wbG95ZWUiOnsiZW1wbG95ZWVJZCI6ImRpZDpldGhyOnJpbmtlYnk6MHgwMjZlMjA1YTNmZWZhODFmOGU1MWNmN2MyODRlYzIzNGZhNjY3MjgwNzQwY2E4ZTM5NGVjNjA4ZWRhZDM2ODBiZmUiLCJqb2JUaXRsZSI6IkluZ2VuacO4ciIsInBsYWNlT2ZXb3JrIjoiUsOlZGh1c3BsYXNzZW4gMTAiLCJob3Vyc09mV29yayI6MzcuNSwic3RhcnREYXRlIjoiMjAyMS0wNi0wMVQyMzoyODo1Ni43ODJaIiwiZW5kRGF0ZSI6IjIwMTQtMDEtMDFUMjM6Mjg6NTYuNzgyWiIsImVtcGxveW1lbnRTdGF0dXMiOnsiZW1wbG95bWVudFR5cGUiOiJwYXJ0IHRpbWUiLCJwYXJ0VGltZVBlcmNlbnRhZ2UiOjgwfSwic2FsYXJ5Ijp7ImZyZXF1ZW5jeSI6Im1vbnRobHkiLCJhbW91bnQiOjQwNzAwLCJjdXJyZW5jeSI6Ik5PSyJ9LCJ0cmlhbFBlcmlvZCI6eyJzdGFydERhdGUiOiIyMDIxLTA2LTIwVDIzOjI4OjU2Ljc4MloiLCJlbmREYXRlIjoiMjAyMS0xMi0xMlQyMzoyODo1Ni43ODJaIn0sImhhc05vdGNvbW1pdGVkR3Jvc3NNaXNjb25kdWN0Ijp0cnVlLCJyaWdodEZvclBlbnNpb24iOnRydWUsIm5vbkNvbXBldGVDbGF1c2UiOmZhbHNlLCJyZXF1aXJlbWVudFRvV29ya092ZXJzZWFzIjp0cnVlfSwiUERGRG9jdW1lbnQiOnsiVVJMIjoid3d3LnBkZnMuY29tL3BkZjAucGRmIiwiZW1wbG95bWVudEFncmVlbWVudENvbnRyYWN0UERGSGFzaCI6Ijg3NDNiNTIwNjNjZDg0MDk3YTY1ZDE2MzNmNWM3NGY1In19fX0sInN1YiI6ImRpZDpldGhyOnJpbmtlYnk6MHgwMjZlMjA1YTNmZWZhODFmOGU1MWNmN2MyODRlYzIzNGZhNjY3MjgwNzQwY2E4ZTM5NGVjNjA4ZWRhZDM2ODBiZmUiLCJuYmYiOjE2NDUxNzg1MzgsImlzcyI6ImRpZDpldGhyOnJpbmtlYnk6MHgwM2IxYjgxYTI3MmNmNjcyNDhiZjM4YjZlMTA1NGVhMzgzNzBlM2U0ZDgwNzRhY2EzZWJkY2Y1NTUzNjY0NmVlZGIifQ.qnHdk6aL7R8UYOAQy6oJsr7if0nPa7ZiyZ2CsvubUDZ1i5YSaPTvbKTJ8j2lxI2Rkdgrw27odMJa6o0l7RrAEw"
+    }
+}

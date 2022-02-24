@@ -1,0 +1,143 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "type": "object",
+    "properties": {
+        "credentialSubject": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "person": {
+                    "type": "object",
+                    "properties": {
+                        "dateOfdDeath": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "countryOfDeath": {
+                            "type": "string",
+                            "pattern": "^[A-Z]{2}$"
+                        },
+                        "placeOfDeath": {
+                            "type": "string"
+                        },
+                        "countryOfBirth": {
+                            "type": "string",
+                            "pattern": "^[A-Z]{2}$"
+                        },
+                        "placeOfBirth": {
+                            "type": "string"
+                        },
+                        "dateOfBirth": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "gender": {
+                            "type": "string",
+                            "enum": [
+                                "male",
+                                "female",
+                                "undefined"
+                            ]
+                        },
+                        "name": {
+                            "type": "object",
+                            "properties": {
+                                "lastName": {
+                                    "type": "string"
+                                },
+                                "firstName": {
+                                    "type": "string"
+                                },
+                                "middleName": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "lastName",
+                                "firstName"
+                            ]
+                        },
+                        "originalName": {
+                            "type": "string"
+                        },
+                        "maritalStatus": {
+                            "type": "string",
+                            "enum": [
+                                "widower",
+                                "widow",
+                                "married",
+                                "surviving partner",
+                                "registered partner",
+                                "seperated",
+                                "seperated partner",
+                                "divorced",
+                                "divorced partner",
+                                "unmarried",
+                                "unknown",
+                                "undefined"
+                            ]
+                        },
+                        "citizenship": {
+                            "type": "string",
+                            "pattern": "^[A-Z]{2}$"
+                        },
+                        "address": {
+                            "type": "object",
+                            "properties": {
+                                "countryCode": {
+                                    "type": "string",
+                                    "pattern": "^[A-Z]{2}$"
+                                },
+                                "city": {
+                                    "type": "string"
+                                },
+                                "zipCode": {
+                                    "type": "number"
+                                },
+                                "streetName": {
+                                    "type": "string"
+                                },
+                                "streetNumber": {
+                                    "type": "number"
+                                },
+                                "floor": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "countryCode",
+                                "city",
+                                "zipCode",
+                                "streetName",
+                                "streetNumber"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "dateOfdDeath",
+                        "countryOfDeath",
+                        "placeOfDeath",
+                        "countryOfBirth",
+                        "placeOfBirth",
+                        "dateOfBirth",
+                        "gender",
+                        "name",
+                        "originalName",
+                        "maritalStatus",
+                        "citizenship",
+                        "address"
+                    ]
+                }
+            },
+            "required": [
+                "id",
+                "person"
+            ]
+        }
+    },
+    "required": [
+        "credentialSubject"
+    ]
+}
