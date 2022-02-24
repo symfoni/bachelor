@@ -26,9 +26,9 @@ export type employmentVC = {
                     startDate: string,
                     endDate: string
                 }
-                rightForPension: true,
-                nonCompeteClause: false,
-                requirementToWorkOverseas: true
+                rightForPension: boolean,
+                nonCompeteClause: boolean,
+                requirementToWorkOverseas: boolean
             }
             employerId: string,
             contractPDF: {
