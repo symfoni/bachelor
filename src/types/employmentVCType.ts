@@ -1,6 +1,6 @@
 export type employmentVC = {
     context: [
-        string,
+        'https://www.w3.org/2018/credentials/v1', 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/employmentContractSchema.json',
         string
     ];
     type: ['VerifiableCredential', 'EmploymentVC'];
