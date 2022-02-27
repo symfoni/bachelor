@@ -1,7 +1,6 @@
 export type employmentVC = {
-    context: [
-        'https://www.w3.org/2018/credentials/v1', 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/employmentContractSchema.json',
-        string
+    '@context': [
+        'https://www.w3.org/2018/credentials/v1', 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/employmentContractSchema.json'
     ];
     type: ['VerifiableCredential', 'EmploymentVC'];
     credentialSubject: {
@@ -37,15 +36,10 @@ export type employmentVC = {
             }
         }
     };
-    issuer?: {
+    issuer: {
         id: string;
     };
-    issuanceDate?: string;
     expirationDate?: string;
-    proof?: {
-        type?: string;
-        jwt: string;
-    };
 };
 
 export enum employmentType {
