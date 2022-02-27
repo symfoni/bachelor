@@ -1,5 +1,8 @@
+import { PROOF_FORMAT_JWT } from '../constants/verifiableCredentialConstants';
+import { employmentVC } from '../types/employmentVCType';
 import { agentSymfoni } from '../veramo/setup';
 
+// TODO: Make unit tests for these functions
 
 /**
  * createDIDSymfoni creates a did for the symfoni agent
@@ -56,4 +59,20 @@ async function getDIDSymfoni(didInput: string) {
 	});
 
 	return DID;
+}
+
+/**
+ * createEmploymentCredential makes a verifiable credential based on JSON data input
+ * @param credentialData JSON data of type employmentVC
+ * @returns the verifiable credential
+ */
+async function createEmploymentCredential(credentialData: employmentVC) {
+	const employmentCredential = await agentSymfoni.createVerifiableCredential({
+		credential: {
+			credentialData
+		},
+		proofFormat: PROOF_FORMAT_JWT
+	});
+
+	return employmentCredential;
 }
