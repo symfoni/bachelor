@@ -44,3 +44,16 @@ async function listDIDsSymfoni(alias?: string, provider?: string) {
 		return DIDs;
 	}
 }
+
+/**
+ * getDID retrieves a specific did based on its id
+ * @param didInput the did id as a string
+ * @returns the corresponding did 
+ */
+async function getDID(didInput: string) {
+	const DID = await agentSymfoni.didManagerGet({
+		did: didInput
+	});
+
+	return DID;
+}
