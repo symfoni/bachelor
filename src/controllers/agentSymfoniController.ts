@@ -18,3 +18,29 @@ async function createDIDSymfoni(alias?: string, provider = 'did:ethr:rinkeby', k
 	return DID;
 }
 
+/**
+ * TODO: Possibly remake the function so that it may find a union of provider and alias results.
+ * listDIDsSymfoni finds all dids registered by the Symfoni agent based on either alias or provider.
+ * If neither is provided, the function will find all DIDs created by the symfoni agent.
+ * @param alias search based on the alias of the DID as a string
+ * @param provider search based on the provider of the DID as a string
+ * @returns returns a list DIDs
+ */
+async function listDIDsSymfoni(alias?: string, provider?: string) {
+	if (typeof alias === 'string' && typeof provider === 'string') {
+		return 'You can only search for either alias or provider, not both.';
+	} else if (typeof alias === 'string') {
+		const DIDs = await agentSymfoni.didManagerFind({
+			alias: alias
+		});
+		return DIDs;
+	} else if (typeof provider === 'string') {
+		const DIDs = await agentSymfoni.didManagerFind({
+			provider: provider
+		});
+		return DIDs;
+	} else {
+		const DIDs = await agentSymfoni.didManagerFind();
+		return DIDs;
+	}
+}
