@@ -50,7 +50,7 @@ async function listDIDsSymfoni(alias?: string, provider?: string) {
  * @param didInput the did id as a string
  * @returns the corresponding did 
  */
-async function getDID(didInput: string) {
+async function getDIDSymfoni(didInput: string) {
 	const DID = await agentSymfoni.didManagerGet({
 		did: didInput
 	});
