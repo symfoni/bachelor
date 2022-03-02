@@ -5,10 +5,10 @@ import { agentSymfoni } from '../veramo/setup';
 // TODO: Make unit tests for these functions
 
 /**
- * createDIDSymfoni creates a did for the symfoni agent
- * @param alias optional name for the did, default is an empty string
- * @param provider optional provider for the did, default is 'did:ethr:rinkeby'
- * @param keyManagementSystem optional key management system for the did, default is 'local'
+ * createDIDSymfoni creates a did for the symfoni agent.
+ * @param alias optional name for the did, default is an empty string.
+ * @param provider optional provider for the did, default is 'did:ethr:rinkeby'.
+ * @param keyManagementSystem optional key management system for the did, default is 'local'.
  * @returns the created DID
  */
 async function createDIDSymfoni(alias?: string, provider = 'did:ethr:rinkeby', keyManagementSystem = 'local') {
@@ -22,30 +22,39 @@ async function createDIDSymfoni(alias?: string, provider = 'did:ethr:rinkeby', k
 }
 
 /**
- * TODO: Possibly remake the function so that it may find a union of provider and alias results.
- * listDIDsSymfoni finds all dids registered by the Symfoni agent based on either alias or provider.
- * If neither is provided, the function will find all DIDs created by the symfoni agent.
- * @param alias search based on the alias of the DID as a string
- * @param provider search based on the provider of the DID as a string
- * @returns returns a list DIDs
+ * listDIDsSymfoniAll finds all DIDs created by the Symfoni agent.
+ * @returns the DIDs in a list.
  */
-async function listDIDsSymfoni(alias?: string, provider?: string) {
-	if (typeof alias === 'string' && typeof provider === 'string') {
-		return 'You can only search for either alias or provider, not both.';
-	} else if (typeof alias === 'string') {
-		const DIDs = await agentSymfoni.didManagerFind({
-			alias: alias
-		});
-		return DIDs;
-	} else if (typeof provider === 'string') {
-		const DIDs = await agentSymfoni.didManagerFind({
-			provider: provider
-		});
-		return DIDs;
-	} else {
-		const DIDs = await agentSymfoni.didManagerFind();
-		return DIDs;
-	}
+async function listDIDsSymfoniAll() {
+	const DIDs = await agentSymfoni.didManagerFind();
+
+	return DIDs;
+}
+
+/**
+ * listDIDsSymfoniAlias finds all DIDs created by the Symfoni agent based on alias.
+ * @param alias the alias of the DID you want to find.
+ * @returns a list of DIDs with the corresponding alias.
+ */
+async function listDIDsSymfoniAlias(alias: string) {
+	const DIDs = await agentSymfoni.didManagerFind({
+		alias: alias
+	});
+
+	return DIDs;
+}
+
+/**
+ * listDIDsSymfoniAlias finds all DIDs created by the Symfoni agent based on provider.
+ * @param provider the provider of the DIDs you want to find, eg. 'did:web' and 'did:ethr:rinkeby'
+ * @returns a list of DIDs with the corresponding provider.
+ */
+async function listDIDsSymfoniProvider(provider: string) {
+	const DIDs = await agentSymfoni.didManagerFind({
+		provider: provider
+	});
+
+	return DIDs;
 }
 
 /**
@@ -62,9 +71,9 @@ async function getDIDSymfoni(didInput: string) {
 }
 
 /**
- * createEmploymentCredential makes a verifiable credential based on JSON data input
- * @param credentialData JSON data of type employmentVC
- * @returns the verifiable credential
+ * createEmploymentCredential makes a verifiable credential based on JSON data input.
+ * @param credentialData JSON data of type employmentVC.
+ * @returns the verifiable credential.
  */
 async function createEmploymentCredential(credentialData: employmentVC) {
 	const employmentCredential = await agentSymfoni.createVerifiableCredential({
