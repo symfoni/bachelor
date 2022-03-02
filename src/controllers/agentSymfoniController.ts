@@ -98,3 +98,5 @@ async function resolveDIDSymfoni(didUrl: string) {
 
 	return didDocument;
 }
+
+// TODO: Make a function that can validate a person VC
