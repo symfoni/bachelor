@@ -85,3 +85,16 @@ async function createEmploymentCredential(credentialData: employmentVC) {
 
 	return employmentCredential;
 }
+
+/**
+ * resolveDIDSymfoni resolves any DID based on its URL.
+ * @param didUrl the DID url of the DID document you want to retrieve.
+ * @returns a DID document with the corresponding did URL.
+ */
+async function resolveDIDSymfoni(didUrl: string) {
+	const didDocument = await agentSymfoni.resolveDid({
+		didUrl: didUrl
+	});
+
+	return didDocument;
+}
