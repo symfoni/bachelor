@@ -11,7 +11,7 @@ import { agentSymfoni } from '../veramo/setup';
  * @param keyManagementSystem optional key management system for the did, default is 'local'.
  * @returns the created DID
  */
-async function createDIDSymfoni(alias?: string, provider = 'did:ethr:rinkeby', keyManagementSystem = 'local') {
+export async function createDIDSymfoni(alias?: string, provider = 'did:ethr:rinkeby', keyManagementSystem = 'local') {
 	const DID = await agentSymfoni.didManagerCreate({
 		alias: alias,
 		provider: provider,
@@ -25,7 +25,7 @@ async function createDIDSymfoni(alias?: string, provider = 'did:ethr:rinkeby', k
  * listDIDsSymfoniAll finds all DIDs created by the Symfoni agent.
  * @returns the DIDs in a list.
  */
-async function listDIDsSymfoniAll() {
+export async function listDIDsSymfoniAll() {
 	const DIDs = await agentSymfoni.didManagerFind();
 
 	return DIDs;
@@ -36,7 +36,7 @@ async function listDIDsSymfoniAll() {
  * @param alias the alias of the DID you want to find.
  * @returns a list of DIDs with the corresponding alias.
  */
-async function listDIDsSymfoniAlias(alias: string) {
+export async function listDIDsSymfoniAlias(alias: string) {
 	const DIDs = await agentSymfoni.didManagerFind({
 		alias: alias
 	});
@@ -49,7 +49,7 @@ async function listDIDsSymfoniAlias(alias: string) {
  * @param provider the provider of the DIDs you want to find, eg. 'did:web' and 'did:ethr:rinkeby'
  * @returns a list of DIDs with the corresponding provider.
  */
-async function listDIDsSymfoniProvider(provider: string) {
+export async function listDIDsSymfoniProvider(provider: string) {
 	const DIDs = await agentSymfoni.didManagerFind({
 		provider: provider
 	});
@@ -62,7 +62,7 @@ async function listDIDsSymfoniProvider(provider: string) {
  * @param didInput the did id as a string
  * @returns the corresponding did 
  */
-async function getDIDSymfoni(didInput: string) {
+export async function getDIDSymfoni(didInput: string) {
 	const DID = await agentSymfoni.didManagerGet({
 		did: didInput
 	});
@@ -75,7 +75,7 @@ async function getDIDSymfoni(didInput: string) {
  * @param credentialData JSON data of type employmentVC.
  * @returns the verifiable credential.
  */
-async function createEmploymentCredential(credentialData: employmentVC) {
+export async function createEmploymentCredential(credentialData: employmentVC) {
 	const employmentCredential = await agentSymfoni.createVerifiableCredential({
 		credential: {
 			credentialData
@@ -91,7 +91,7 @@ async function createEmploymentCredential(credentialData: employmentVC) {
  * @param didUrl the DID url of the DID document you want to retrieve.
  * @returns a DID document with the corresponding did URL.
  */
-async function resolveDIDSymfoni(didUrl: string) {
+export async function resolveDIDSymfoni(didUrl: string) {
 	const didDocument = await agentSymfoni.resolveDid({
 		didUrl: didUrl
 	});
