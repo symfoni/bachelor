@@ -37,6 +37,7 @@ import { CredentialIssuer, ICredentialIssuer } from '@veramo/credential-w3c';
 const NAV_DATABASE_FILE = '../database/nav-database.sqlite';
 const SYMFONI_DATABASE_FILE = '../database/symfoni-database.sqlite';
 const USER_DATABASE_FILE = '../database/user-database.sqlite';
+const TEST_DATABASE_FILE = '../database/test-database.sqlite';
 
 // See 'dotenv-template.env' for information about this variable.
 // TODO: Find a less hacky way to store infura ID as string
@@ -47,6 +48,7 @@ const INFURA_ID: string = process.env.INFURA_PROJECT_ID ?? 'no valid id';
 const NAV_KEY: string = process.env.NAV_KMS_SECRET_KEY ?? 'no valid key';
 const SYMFONI_KEY: string = process.env.SYMFONI_KMS_SECRET_KEY ?? 'no valid key';
 const USER_KEY: string = process.env.USER_KMS_SECRET_KEY ?? 'no valid key';
+const TEST_KEY: string = process.env.TEST_KMS_SECRET_KEY ?? 'no valid key';
 
 // Nav database
 const dbConnectionNAV = createConnection({
@@ -74,6 +76,17 @@ const dbConnectionSymfoni = createConnection({
 const dbConnectionUser = createConnection({
 	type: 'sqlite',
 	database: USER_DATABASE_FILE,
+	synchronize: false,
+	migrations,
+	migrationsRun: true,
+	logging: ['error', 'info', 'warn'],
+	entities: Entities,
+});
+
+// Test database
+const dbConnectionTest = createConnection({
+	type: 'sqlite',
+	database: TEST_DATABASE_FILE,
 	synchronize: false,
 	migrations,
 	migrationsRun: true,
@@ -173,5 +186,37 @@ export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & ID
 				...webDidResolver(),
 			}),
 		}),
+	],
+});
+
+export const agentTest = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
+	plugins: [
+		new KeyManager({
+			store: new KeyStore(dbConnectionTest),
+			kms: {
+				local: new KeyManagementSystem(new PrivateKeyStore(dbConnectionTest, new SecretBox(TEST_KEY))),
+			},
+		}),
+		new DIDManager({
+			store: new DIDStore(dbConnectionTest),
+			defaultProvider: 'did:ethr:rinkeby',
+			providers: {
+				'did:ethr:rinkeby': new EthrDIDProvider({
+					defaultKms: 'local',
+					network: 'rinkeby',
+					rpcUrl: 'https://rinkeby.infura.io/v3/' + INFURA_ID,
+				}),
+				'did:web': new WebDIDProvider({
+					defaultKms: 'local',
+				}),
+			},
+		}),
+		new DIDResolverPlugin({
+			resolver: new Resolver({
+				...ethrDidResolver({ infuraProjectId: INFURA_ID }),
+				...webDidResolver(),
+			}),
+		}),
+		new CredentialIssuer()
 	],
 });
