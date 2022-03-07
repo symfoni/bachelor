@@ -55,7 +55,7 @@ export class AgentController implements IAgentController {
 	 */
 	async listAllDIDs() {
 		try {
-			const DIDs = await this.agent.DIDManagerFind();
+			const DIDs = await this.agent.didManagerFind();
 
 			return DIDs;
 
@@ -72,7 +72,7 @@ export class AgentController implements IAgentController {
 	 */
 	async listDIDsBasedOnProvider(provider: string) {
 		try {
-			const dids = await this.agent.DIDManagerFind({
+			const dids = await this.agent.didManagerFind({
 				provider: provider
 			});
 			return dids;
@@ -89,7 +89,7 @@ export class AgentController implements IAgentController {
 	 */
 	async listDIDsBasedOnAlias(alias: string) {
 		try {
-			const dids = await this.agent.DIDManagerFind({
+			const dids = await this.agent.didManagerFind({
 				alias: alias
 			});
 			return dids;
@@ -136,5 +136,6 @@ export class AgentController implements IAgentController {
 
 	// TODO: Make a function that can verify a credential
 	// TODO: Make a function that saves a credential in the data store.
+	// TODO: Make a function that can retrieve a specific type of credential, eg. 'EmploymentVC'
 	// TODO: Make a function that can create VPs
 }
