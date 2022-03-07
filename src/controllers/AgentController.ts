@@ -124,9 +124,7 @@ export class AgentController implements IAgentController {
 	async createCredential(credentialData: verifiableCredential) {
 		try {
 			const credential = this.agent.createVerifiableCredential({
-				credential: {
-					credentialData
-				},
+				credential: credentialData,
 				proofFormat: PROOF_FORMAT_JWT
 			});
 			return credential;
