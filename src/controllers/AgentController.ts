@@ -54,15 +54,11 @@ export class AgentController implements IAgentController {
 	 * @returns all the DIDs in a list.
 	 */
 	async listAllDIDs() {
-		try {
-			const DIDs = await this.agent.didManagerFind();
 
-			return DIDs;
+		const DIDs = await this.agent.didManagerFind();
 
-		} catch (error) {
-			console.error('unable to list all DIDs', error);
-			return 'unable to list all DIDs';
-		}
+		return DIDs;
+
 	}
 
 	/**
@@ -132,6 +128,18 @@ export class AgentController implements IAgentController {
 			console.error('unable to create the verifiable credential', error);
 			return 'unable to create the verifiable credential';
 		}
+	}
+
+	/**
+	 * getAllCredentials retrieves all credential stored by this.agent
+	 * @returns returns a list of credentials
+	 */
+	async getAllCredentials() {
+
+		const credentials = await this.agent.dataStoreORMGetVerifiableCredentialsByClaims({
+			where: []
+		})
+		return credentials
 	}
 
 	// TODO: Make a function that can verify a credential
