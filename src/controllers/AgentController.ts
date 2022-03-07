@@ -11,12 +11,12 @@ export class AgentController implements IAgentController {
 	}
 
 	/**
-     * createDID creates a did for an agent.
-     * @param alias the alias of the did as a string
-     * @param provider the provider of the did, eg. 'did:web', or 'did:ethr:rinkeby', as a string.
-     * @param keyManagementSystem the key management systemm for the did, as a string.
-     * @returns the did that was created.
-     */
+	 * createDID creates a did for an agent.
+	 * @param alias the alias of the did as a string
+	 * @param provider the provider of the did, eg. 'did:web', or 'did:ethr:rinkeby', as a string.
+	 * @param keyManagementSystem the key management systemm for the did, as a string.
+	 * @returns the did that was created.
+	 */
 	async createDID(alias?: string, provider = 'did:ethr:rinkeby', keyManagementSystem = 'local'): Promise<any> {
 		try {
 			const did = await this.agent.didManagerCreate({
@@ -33,10 +33,10 @@ export class AgentController implements IAgentController {
 	}
 
 	/**
-     * getDID retrieves a DID based on its did url.
-     * @param didUrl the did url you want to search for.
-     * @returns returns the did that was found.
-     */
+	 * getDID retrieves a DID based on its did url.
+	 * @param didUrl the did url you want to search for.
+	 * @returns returns the did that was found.
+	 */
 	async getDID(did: string) {
 		try {
 			const didDocument = await this.agent.didManagerGet({
@@ -50,9 +50,9 @@ export class AgentController implements IAgentController {
 	}
 
 	/**
-     * listAllDIDs finds all DIDs created by the current agent.
-     * @returns all the DIDs in a list.
-     */
+	 * listAllDIDs finds all DIDs created by the current agent.
+	 * @returns all the DIDs in a list.
+	 */
 	async listAllDIDs() {
 		try {
 			const DIDs = await this.agent.DIDManagerFind();
@@ -66,10 +66,10 @@ export class AgentController implements IAgentController {
 	}
 
 	/**
-     * listDIDsBasedOnProvider finds all DIDs created by this agent based on the provider.
-     * @param provider the did method that the did is created by, eg. 'did:web', 'did:ethr'.
-     * @returns a list of dids with the corresponding provider.
-     */
+	 * listDIDsBasedOnProvider finds all DIDs created by this agent based on the provider.
+	 * @param provider the did method that the did is created by, eg. 'did:web', 'did:ethr'.
+	 * @returns a list of dids with the corresponding provider.
+	 */
 	async listDIDsBasedOnProvider(provider: string) {
 		try {
 			const dids = await this.agent.DIDManagerFind({
@@ -83,10 +83,10 @@ export class AgentController implements IAgentController {
 	}
 
 	/**
-     * listDIDsBasedOnAlias finds all DIDs created by this agent based on the provider.
-     * @param alias the alias for the did you want to find.
-     * @returns a list of dids with the corresponding alias.
-     */
+	 * listDIDsBasedOnAlias finds all DIDs created by this agent based on the provider.
+	 * @param alias the alias for the did you want to find.
+	 * @returns a list of dids with the corresponding alias.
+	 */
 	async listDIDsBasedOnAlias(alias: string) {
 		try {
 			const dids = await this.agent.DIDManagerFind({
@@ -100,13 +100,13 @@ export class AgentController implements IAgentController {
 	}
 
 	/**
-    * resolveDID resolves any DID based on its URL.
-    * @param didUrl the DID url of the DID document you want to retrieve.
-    * @returns a DID document with the corresponding did URL.
-    */
+	* resolveDID resolves any DID based on its URL.
+	* @param didUrl the DID url of the DID document you want to retrieve.
+	* @returns a DID document with the corresponding did URL.
+	*/
 	async resolveDID(didUrl: string) {
 		try {
-			const didDocument = await this.agent.resolveDID({
+			const didDocument = await this.agent.resolveDid({
 				didUrl: didUrl
 			});
 			return didDocument;
@@ -117,10 +117,10 @@ export class AgentController implements IAgentController {
 	}
 
 	/**
-     * createCredential uses the agent to create a verifiable credential.
-     * @param credentialData the data that the credential should contain.
-     * @returns a verifiable credential.
-     */
+	 * createCredential uses the agent to create a verifiable credential.
+	 * @param credentialData the data that the credential should contain.
+	 * @returns a verifiable credential.
+	 */
 	async createCredential(credentialData: verifiableCredential) {
 		try {
 			const credential = this.agent.createVerifiableCredential({
