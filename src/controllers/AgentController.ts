@@ -138,8 +138,8 @@ export class AgentController implements IAgentController {
 
 		const credentials = await this.agent.dataStoreORMGetVerifiableCredentialsByClaims({
 			where: []
-		})
-		return credentials
+		});
+		return credentials;
 	}
 
 	// TODO: Make a function that can verify a credential
