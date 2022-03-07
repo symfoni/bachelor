@@ -2,9 +2,9 @@
  * A custom type for the core properties of a verifiable credential.
  */
 export type verifiableCredential = {
-    '@Context': string[],
+    '@context': string[],
     'type': [string, string],
     'credentialSubject': object,
-    'issuer': string,
+    'issuer': { id: string },
     'expirationDate'?: string
 }
