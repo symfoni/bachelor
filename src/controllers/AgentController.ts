@@ -1,3 +1,4 @@
+import { VerifiableCredential } from '@veramo/core';
 import { PROOF_FORMAT_JWT } from '../constants/verifiableCredentialConstants';
 import { IAgentController } from '../interfaces/agentControllerInterface';
 import { verifiableCredential } from '../types/verifiableCredential';
@@ -127,6 +128,23 @@ export class AgentController implements IAgentController {
 		} catch (error) {
 			console.error('unable to create the verifiable credential', error);
 			return 'unable to create the verifiable credential';
+		}
+	}
+
+	/**
+	 * addCredential takes a credential as input and stores the credential in a database managed by 'this.agent'.
+	 * @param credential a verifiable credential.
+	 * @returns a string if it encounters an error.
+	 */
+	async addCredential(credential: VerifiableCredential): Promise<string | void> {
+		try {
+			await this.agent.dataStoreSaveVerifiableCredential({
+				verifiableCredential: credential
+			});
+		} catch (error) {
+			console.log('unable to add credential to database', error);
+
+			return 'unable to add credential to database';
 		}
 	}
 
