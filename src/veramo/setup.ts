@@ -27,7 +27,7 @@ import { getResolver as ethrDidResolver } from 'ethr-did-resolver';
 import { getResolver as webDidResolver } from 'web-did-resolver';
 
 // Storage plugin using TypeOrm
-import { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migrations } from '@veramo/data-store';
+import { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migrations, DataStore, DataStoreORM } from '@veramo/data-store';
 
 // TypeORM is installed with `@veramo/data-store`
 import { createConnection } from 'typeorm';
@@ -122,7 +122,9 @@ export const agentNAV = createAgent<IDIDManager & IKeyManager & IDataStore & IDa
 				...webDidResolver(),
 			}),
 		}),
-		new CredentialIssuer()
+		new CredentialIssuer(),
+		new DataStore(dbConnectionNAV),
+		new DataStoreORM(dbConnectionNAV)
 	],
 });
 
@@ -154,7 +156,9 @@ export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore &
 				...webDidResolver(),
 			}),
 		}),
-		new CredentialIssuer()
+		new CredentialIssuer(),
+		new DataStore(dbConnectionSymfoni),
+		new DataStoreORM(dbConnectionSymfoni)
 	],
 });
 
@@ -186,6 +190,8 @@ export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & ID
 				...webDidResolver(),
 			}),
 		}),
+		new DataStore(dbConnectionUser),
+		new DataStoreORM(dbConnectionUser)
 	],
 });
 
@@ -217,6 +223,8 @@ export const agentTest = createAgent<IDIDManager & IKeyManager & IDataStore & ID
 				...webDidResolver(),
 			}),
 		}),
-		new CredentialIssuer()
+		new CredentialIssuer(),
+		new DataStore(dbConnectionTest),
+		new DataStoreORM(dbConnectionTest)
 	],
 });
