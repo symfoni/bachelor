@@ -123,7 +123,7 @@ export class AgentController implements IAgentController {
 	 * @param credentialData the data that the credential should contain.
 	 * @returns a verifiable credential.
 	 */
-	async createCredential(credentialData: verifiableCredential): Promise<VerifiableCredential | string> {
+	async createCredential(credentialData: VerifiableCredential): Promise<VerifiableCredential | string> {
 		try {
 			return this.agent.createVerifiableCredential({
 				credential: credentialData,
@@ -179,14 +179,19 @@ export class AgentController implements IAgentController {
 	 * @param credentials the credentials you want to add into the presentation as an array of verifiable credentials.
 	 * @returns a verifiable presentation.
 	 */
-	async createPresentation(holder: string, credentials: VerifiableCredential[]): Promise<VerifiablePresentation> {
-		return await this.agent.createVerifiablePresentation({
-			presentation: {
-				holder: holder,
-				verifiableCredential: credentials
-			},
-			proofFormat: PROOF_FORMAT_JWT
-		});
+	async createPresentation(holder: string, credentials: VerifiableCredential[]): Promise<VerifiablePresentation | string> {
+		try {
+			return await this.agent.createVerifiablePresentation({
+				presentation: {
+					holder: holder,
+					verifiableCredential: credentials
+				},
+				proofFormat: PROOF_FORMAT_JWT
+			});
+		} catch (error) {
+			console.log('unable to create presentation', error);
+			return 'unable to create presentation';
+		}
 	}
 
 	// TODO: Make a function that can verify a credential
