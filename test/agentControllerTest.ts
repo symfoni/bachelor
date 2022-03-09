@@ -1,8 +1,9 @@
-import fs from 'fs'
+import fs from 'fs';
 import assert from 'assert';
 import { before, it } from 'mocha';
 import { AgentController } from '../src/controllers/AgentController';
 import { agentTest } from '../src/veramo/setup';
+import { IIdentifier } from '@veramo/core';
 
 /*
 * før hver test, rens databasen og legg til 'ferske' elementer
@@ -18,98 +19,101 @@ import { agentTest } from '../src/veramo/setup';
 const testAgentController = new AgentController(agentTest);
 
 before(function () {
-    // clean database file
-    fs.writeFile('./database/test-database.sqlite', '', function (err) {
-        if (err) throw err;
-        console.log('File is created successfully.');
-    });
+	// clean database file
+	fs.writeFile('./database/test-database.sqlite', '', function (err) {
+		if (err) throw err;
+		console.log('File is created successfully.');
+	});
 
-    testAgentController.createDID('test0')
-    testAgentController.createDID('test1', 'did:web')
-    testAgentController.createDID('test2')
-})
+	testAgentController.createDID('test0');
+	testAgentController.createDID('test1', 'did:web');
+	testAgentController.createDID('test2');
+});
 
 describe('AgentController', function () {
 
-    describe('createDID', function () {
+	describe('createDID', function () {
 
-        it('should create a DID with the correct alias, provider, and kms', function () {
-            const alias = 'test1';
-            const provider = 'did:ethr:rinkeby';
-            const keyManagementSystem = 'local'
-            testAgentController.createDID(alias).then((did) => {
-                // Works
-                assert.equal(did['alias'], alias);
-                assert.equal(did['provider'], provider);
-                assert.equal(did['keys'][0]['kms'], keyManagementSystem)
-            });
+		it('should create a DID with the correct alias, provider, and kms', function () {
+			const alias = 'test1';
+			const provider = 'did:ethr:rinkeby';
+			const keyManagementSystem = 'local';
+			testAgentController.createDID(alias).then((did) => {
+				// Works
+				if (typeof did === 'string') {
+					assert.fail();
+				}
+				assert.equal(did['alias'], alias);
+				assert.equal(did['provider'], provider);
+				assert.equal(did['keys'][0]['kms'], keyManagementSystem);
+			});
 
-        });
-
-
-        it('should return the expected error message if the provider does not exist', function () {
-            const provider = 'not:a:valid:did:method'
-            testAgentController.createDID(undefined, provider).then((did) => {
-                assert.equal(did, 'unable to create did')
-            })
-        });
-    });
-
-    describe('getDID', function () {
-
-        it('should return a DID with the url that you searched for', function () {
-            // assert 
-        });
-
-        it('should return a error message if it did not find anything', function () {
-
-        })
-    });
+		});
 
 
-    describe('listAllDIDs', function () {
+		it('should return the expected error message if the provider does not exist', function () {
+			const provider = 'not:a:valid:did:method';
+			testAgentController.createDID(undefined, provider).then((did) => {
+				assert.equal(did, 'unable to create did');
+			});
+		});
+	});
 
-        it('should return a DID with the correct alias, provider, and kms', function () {
-        });
+	describe('getDID', function () {
 
-    });
+		it('should return a DID with the url that you searched for', function () {
+			// assert 
+		});
 
-    describe('listDIDsBasedOnProvider', function () {
+		it('should return a error message if it did not find anything', function () {
 
-        it('should return all DIDs from the provider you searched for', function () {
-            // assert 
-        });
-        it('should only return DIDs returned has the provider you serched for', function () {
-            // assert 
-        });
+		});
+	});
 
-    });
 
-    describe('listDIDsBasedOnAlias', function () {
+	describe('listAllDIDs', function () {
 
-        it('should return all the DIDs based on the alias you searched for', function () {
-            // assert 
-        });
-        it('should only return DIDs with the same alias that you searched for', function () {
-            // assert 
-        });
+		it('should return a DID with the correct alias, provider, and kms', function () {
+		});
 
-    });
+	});
 
-    describe('resolveDID', function () {
+	describe('listDIDsBasedOnProvider', function () {
 
-        it('should retrieve a DID document with the same DID url that you searched for', function () {
-            // assert 
-        });
+		it('should return all DIDs from the provider you searched for', function () {
+			// assert 
+		});
+		it('should only return DIDs returned has the provider you serched for', function () {
+			// assert 
+		});
 
-    });
+	});
 
-    describe('createCredential', function () {
+	describe('listDIDsBasedOnAlias', function () {
 
-        it('it should create a credential with the matching credential data', function () {
-            // assert 
-        });
+		it('should return all the DIDs based on the alias you searched for', function () {
+			// assert 
+		});
+		it('should only return DIDs with the same alias that you searched for', function () {
+			// assert 
+		});
 
-    });
+	});
+
+	describe('resolveDID', function () {
+
+		it('should retrieve a DID document with the same DID url that you searched for', function () {
+			// assert 
+		});
+
+	});
+
+	describe('createCredential', function () {
+
+		it('it should create a credential with the matching credential data', function () {
+			// assert 
+		});
+
+	});
 
 });
