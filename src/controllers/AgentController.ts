@@ -1,5 +1,5 @@
 import { VerifiableCredential } from '@veramo/core';
-import { PROOF_FORMAT_JWT } from '../constants/verifiableCredentialConstants';
+import { PROOF_FORMAT_JWT, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
 import { IAgentController } from '../interfaces/agentControllerInterface';
 import { verifiableCredential } from '../types/verifiableCredential';
 
@@ -136,7 +136,7 @@ export class AgentController implements IAgentController {
 	 * @param credential a verifiable credential.
 	 * @returns a string if it encounters an error.
 	 */
-	async addCredential(credential: VerifiableCredential): Promise<string | void> {
+	async addCredential(credential: any): Promise<string | void> {
 		try {
 			await this.agent.dataStoreSaveVerifiableCredential({
 				verifiableCredential: credential
@@ -153,15 +153,42 @@ export class AgentController implements IAgentController {
 	 * @returns returns a list of credentials
 	 */
 	async getAllCredentials() {
-
 		const credentials = await this.agent.dataStoreORMGetVerifiableCredentialsByClaims({
 			where: []
 		});
 		return credentials;
 	}
 
+	/**
+	 * getCredentialBasedOnType retrieves credentials based on type, eg. 'EmploymentVC'.
+	 * @param credentialType the type of the credential you want to retrieve.
+	 * @returns credentials in a list with the matching type.
+	 */
+	async getCredentialBasedOnType(credentialType: string) {
+		const credential = await this.agent.dataStoreORMGetVerifiableCredentialsByClaims({
+			where: [{ column: 'credentialType', value: [`${TYPE_VERIFIABLE_CREDENTIAL},${credentialType}`] }]
+		});
+		return credential;
+	}
+
+	/**
+	 * createPresentation creates a verifiable presentation.
+	 * @param holder the holder of the presentation as a did.
+	 * @param credentials the credentials you want to add into the presentation as an array of verifiable credentials.
+	 * @returns a verifiable presentation.
+	 */
+	async createPresentation(holder: string, credentials: VerifiableCredential[]) {
+		const presentation = await this.agent.createVerifiablePresentation({
+			presentation: {
+				holder: holder,
+				verifiableCredential: credentials
+			},
+			proofFormat: PROOF_FORMAT_JWT
+		});
+		return presentation;
+	}
+
+
 	// TODO: Make a function that can verify a credential
-	// TODO: Make a function that saves a credential in the data store.
-	// TODO: Make a function that can retrieve a specific type of credential, eg. 'EmploymentVC'
-	// TODO: Make a function that can create VPs
+	// TODO: Make a function that can send a credential
 }
