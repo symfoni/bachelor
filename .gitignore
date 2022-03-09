@@ -221,6 +221,7 @@ keys.ts
 database/nav-database.sqlite
 database/symfoni-database.sqlite
 database/user-database.sqlite
+database/test-database.sqlite
 
 # Playground.ts for playing/interacting with the veramo client
 src/playground.ts
