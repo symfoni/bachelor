@@ -3,7 +3,6 @@ import assert from 'assert';
 import { before, it } from 'mocha';
 import { AgentController } from '../src/controllers/AgentController';
 import { agentTest } from '../src/veramo/setup';
-import { IIdentifier } from '@veramo/core';
 
 /*
 * før hver test, rens databasen og legg til 'ferske' elementer
