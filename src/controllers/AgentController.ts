@@ -12,7 +12,6 @@ import { ICredentialIssuer } from '@veramo/credential-w3c';
 import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/data-store';
 import { PROOF_FORMAT_JWT, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
 import { IAgentController } from '../interfaces/agentControllerInterface';
-import { verifiableCredential } from '../types/verifiableCredential';
 
 /**
  * AgentController is a class that handles fundemental operations provided by the veramo agent.
