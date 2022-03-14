@@ -1,6 +1,7 @@
 import { VerifiableCredential } from '@veramo/core';
-import { PROOF_FORMAT_JWT, SCHEMA_EMPLOYMENT_CONTRACT, SCHEMA_W3_CREDENTIAL } from '../constants/verifiableCredentialConstants';
+import { PROOF_FORMAT_JWT, SCHEMA_EMPLOYMENT_CONTRACT, SCHEMA_TERMINATION_CREDENTIAL, SCHEMA_W3_CREDENTIAL, TYPE_EMPLOYMENT_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
 import { employmentVC } from '../types/employmentVCType';
+import { terminationVC } from '../types/terminationVCType';
 import { agentSymfoni } from '../veramo/setup';
 import { AgentController } from './AgentController';
 
@@ -16,18 +17,41 @@ export class SymfoniAgentController extends AgentController {
 
 	/**
 	 * createEmploymentCredential generates an employment credential.
-	 * @param issuer the did of the issuer, default is the main identifier, 'this.did'.
+	 * @param issuer the did of the issuer.
 	 * @param credentialData the claims for the credential subject, see 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/employmentContractSchema.json', 
 	 * for schema. 
 	 * @returns an employment credential.
 	 */
 	async createEmploymentCredential(issuer: string, credentialData: employmentVC['credentialSubject']): Promise<VerifiableCredential | string> {
-		if (typeof issuer === 'undefined') {
-			return 'error';
-		}
 		const credential = await this.agent.createVerifiableCredential({
 			credential: {
 				'@context': [SCHEMA_W3_CREDENTIAL, SCHEMA_EMPLOYMENT_CONTRACT],
+				type: [TYPE_VERIFIABLE_CREDENTIAL, TYPE_EMPLOYMENT_CREDENTIAL],
+				issuer: {
+					id: issuer
+				},
+				credentialSubject: {
+					credentialData
+				}
+			},
+			proofFormat: PROOF_FORMAT_JWT
+		});
+
+		return credential;
+	}
+
+	/**
+	 * createTerminationCredential generates a termination credential.
+	 * @param issuer the did of the issuer.
+	 * @param credentialData the claims of the credential subject, see 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/terminationSchema.json',
+	 * for schema.
+	 * @returns a termination credential.
+	 */
+	async createTerminationCredential(issuer: string, credentialData: terminationVC['credentialSubject']) {
+		const credential = await this.agent.createVerifiableCredential({
+			credential: {
+				'@context': [SCHEMA_W3_CREDENTIAL, SCHEMA_TERMINATION_CREDENTIAL],
+				type: [TYPE_VERIFIABLE_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL],
 				issuer: {
 					id: issuer
 				},
