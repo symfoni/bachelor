@@ -174,7 +174,7 @@ export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore &
 	],
 });
 
-export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver>({
+export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
 		new KeyManager({
 			store: new KeyStore(dbConnectionUser),
@@ -202,6 +202,7 @@ export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & ID
 				...webDidResolver(),
 			}),
 		}),
+		new CredentialIssuer(),
 		new DataStore(dbConnectionUser),
 		new DataStoreORM(dbConnectionUser)
 	],
