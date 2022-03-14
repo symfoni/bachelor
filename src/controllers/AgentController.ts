@@ -30,6 +30,24 @@ export class AgentController implements IAgentController {
 	}
 
 	/**
+	 * getMainIdentifier retrieves the main identifier of 'this.agent', provided by 'this.mainIdentifierAlias'
+	 * if it does not exist, the function will create and return a new main identifier.
+	 * // TODO: Possibly make a 'this.mainDid' field and make a main identifier when a new instance of AgentController class is instanziated.
+	 * @returns either an existing identifier or a newly created identifier.
+	 */
+	async getMainIdentifier(): Promise<IIdentifier | string> {
+		try {
+			return await this.agent.didManagerGetByAlias({
+				alias: this.mainIdentifierAlias,
+				provider: 'did:ethr:rinkeby'
+			});
+		} catch (error) {
+			console.log('it did not exist');
+			return await this.createDID(this.mainIdentifierAlias);
+		}
+	}
+
+	/**
 	 * createDID creates a did for an agent.
 	 * @param alias the alias of the did as a string
 	 * @param provider the provider of the did, eg. 'did:web', or 'did:ethr:rinkeby', as a string.
