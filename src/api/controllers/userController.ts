@@ -12,7 +12,6 @@ const createDID = async (req: Request, res: Response) => {
 	const kms: string = req.body.kms;
 
 	await userAgentController.createDID(alias, provider, kms).then((did) => {
-		console.log(did);
 		return res.status(201).json({
 			did
 		});
@@ -20,7 +19,14 @@ const createDID = async (req: Request, res: Response) => {
 };
 
 // list dids
+const listDIDs = async (req: Request, res: Response) => {
+	await userAgentController.listAllDIDs().then((didList) => {
+		return res.status(200).json({
+			listOfDids: didList
+		});
+	});
+};
 
 // 
 
-export default { createDID };
+export default { createDID, listDIDs };
