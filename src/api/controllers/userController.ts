@@ -1,4 +1,5 @@
 /** source/controllers/posts.ts */
+import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 import { AgentController } from '../../controllers/AgentController';
 import { agentUser } from '../../veramo/setup';
@@ -21,7 +22,7 @@ const createDID = async (req: Request, res: Response) => {
 // get a specific did
 const getDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
-	await userAgentController.getDID(did).then((identifier)=>{
+	await userAgentController.getDID(did).then((identifier) => {
 		return res.status(200).json({
 			identifier
 		});
@@ -47,6 +48,26 @@ const resolveDID = async (req: Request, res: Response) => {
 	});
 };
 
-// 
+// save a credential
+const addCredential = async (req: Request, res: Response) => {
 
-export default { createDID, listDIDs, resolveDID, getDID };
+	const credential: VerifiableCredential = {
+		'@context': req.body['@context'],
+		type: req.body.type,
+		issuer: {
+			id: req.body.issuer.id
+		},
+		credentialSubject: req.body.credentialSubject,
+		proof: req.body.proof,
+		issuanceDate: req.body.issuanceDate
+	};
+
+	userAgentController.addCredential(credential).then((credentialHash) => {
+		return res.status(201).json({
+			credentialHash
+		});
+	});
+
+};
+
+export default { createDID, listDIDs, resolveDID, getDID, addCredential };
