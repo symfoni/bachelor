@@ -27,6 +27,16 @@ const listDIDs = async (req: Request, res: Response) => {
 	});
 };
 
+// resolves a did
+const resolveDID = async (req: Request, res: Response) => {
+	const did: string = req.params.did;
+	userAgentController.resolveDID(did).then((didDocument) => {
+		return res.status(200).json({
+			didDocument
+		});
+	});
+};
+
 // 
 
-export default { createDID, listDIDs };
+export default { createDID, listDIDs, resolveDID };
