@@ -8,6 +8,7 @@ router.get('/user/did/:did', userController.getDID);
 router.get('/user/dids', userController.listDIDs);
 router.get('/user/resolve/:did', userController.resolveDID);
 router.post('/user/db/credential', userController.addCredential);
+router.get('/user/db/credentials', userController.listCredentials);
 
 // symfoni endpoints
 
