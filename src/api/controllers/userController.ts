@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { AgentController } from '../../controllers/AgentController';
 import { agentUser } from '../../veramo/setup';
 
-const userAgentController = new AgentController(agentUser);
+const userAgentController = new AgentController(agentUser, 'user');
 
 // creates a DID
 const createDID = async (req: Request, res: Response) => {

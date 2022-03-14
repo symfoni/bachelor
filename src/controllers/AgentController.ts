@@ -18,12 +18,15 @@ import { IAgentController } from '../interfaces/agentControllerInterface';
  */
 export class AgentController implements IAgentController {
 
+	mainIdentifierAlias: string;
+
 	agent: TAgent<IDataStore & IDataStoreORM & ICredentialIssuer & IResolver & IDIDManager>;
 
 	// TODO: Find a better type than 'any'
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	constructor(agent: any) {
+	constructor(agent: any, mainIdentifierAlias: string) {
 		this.agent = agent;
+		this.mainIdentifierAlias = mainIdentifierAlias;
 	}
 
 	/**

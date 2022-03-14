@@ -15,7 +15,7 @@ import { agentTest } from '../src/veramo/setup';
 * createCredential, sjekk at credential dataen stemmer overens med det vi fylte inn
 */
 
-const testAgentController = new AgentController(agentTest);
+const testAgentController = new AgentController(agentTest, 'test');
 
 before(function () {
 	// clean database file

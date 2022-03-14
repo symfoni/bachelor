@@ -9,8 +9,8 @@ import { AgentController } from './AgentController';
  * StateAgentController is a class that manages the state agent.
  */
 export class StateAgentController extends AgentController {
-	constructor() {
-		super(agentState);
+	constructor(mainIdentifierAlias: string) {
+		super(agentState, mainIdentifierAlias);
 	}
 
 	/**
