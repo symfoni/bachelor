@@ -1,6 +1,6 @@
 /** source/controllers/posts.ts */
 import { VerifiableCredential } from '@veramo/core';
-import { json, Request, Response } from 'express';
+import { Request, Response } from 'express';
 import { AgentController } from '../../controllers/AgentController';
 import { agentUser } from '../../veramo/setup';
 
@@ -78,4 +78,14 @@ const listCredentials = async (req: Request, res: Response) => {
 	});
 };
 
-export default { createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials };
+// creates a presentation
+const getCredential = async (req: Request, res: Response) => {
+	const credentialType: string = req.params.type;
+	await userAgentController.getCredentialBasedOnType(credentialType).then((credentialList) => {
+		return res.status(200).json({
+			listOfCredentials: credentialList
+		});
+	});
+};
+
+export default { createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential };
