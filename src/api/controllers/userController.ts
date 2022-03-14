@@ -18,6 +18,16 @@ const createDID = async (req: Request, res: Response) => {
 	});
 };
 
+// get a specific did
+const getDID = async (req: Request, res: Response) => {
+	const did: string = req.params.did;
+	await userAgentController.getDID(did).then((identifier)=>{
+		return res.status(200).json({
+			identifier
+		});
+	});
+};
+
 // list dids
 const listDIDs = async (req: Request, res: Response) => {
 	await userAgentController.listAllDIDs().then((didList) => {
@@ -39,4 +49,4 @@ const resolveDID = async (req: Request, res: Response) => {
 
 // 
 
-export default { createDID, listDIDs, resolveDID };
+export default { createDID, listDIDs, resolveDID, getDID };
