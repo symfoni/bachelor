@@ -10,6 +10,7 @@ router.get('/user/resolve/:did', userController.resolveDID);
 router.post('/user/credential', userController.addCredential);
 router.get('/user/credentials', userController.listCredentials);
 router.get('/user/credential/:type', userController.getCredential);
+router.post('/user/presentation', userController.createPresentation);
 
 // symfoni endpoints
 

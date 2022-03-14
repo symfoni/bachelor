@@ -78,7 +78,7 @@ const listCredentials = async (req: Request, res: Response) => {
 	});
 };
 
-// creates a presentation
+// retrieve credential(s) based on type
 const getCredential = async (req: Request, res: Response) => {
 	const credentialType: string = req.params.type;
 	await userAgentController.getCredentialBasedOnType(credentialType).then((credentialList) => {
@@ -88,4 +88,29 @@ const getCredential = async (req: Request, res: Response) => {
 	});
 };
 
-export default { createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential };
+// create presentation
+const createPresentation = async (req: Request, res: Response) => {
+	const credentials: VerifiableCredential[] = [];
+	const holder: string = req.body.holder;
+    
+	// TODO: Add a typeguard that returns an error if credentials is not of type VC[]
+
+	if (req.body.listOfCredentials.length === 0) {
+		return res.status(400).json({
+			error: 'empty list of credentials'
+		});
+	}
+
+	req.body.listOfCredentials.forEach((credential: any) => {
+		credentials.push(credential['verifiableCredential']);
+	});
+    
+	await userAgentController.createPresentation(holder, credentials).then((presentation) => {
+		return res.status(201).json({
+			presentation
+		});
+	});
+
+};
+
+export default { createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential, createPresentation };
