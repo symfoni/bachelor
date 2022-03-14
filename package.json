@@ -6,7 +6,9 @@
   "scripts": {
     "test": "mocha --require ts-node/register 'test/**/*.ts'",
     "lint": "npx eslint src/**",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev": "nodemon src/api/server.ts",
+    "playground": "ts-node src/playground.ts"
   },
   "repository": {
     "type": "git",
