@@ -1,4 +1,5 @@
 import express from 'express';
+import stateController from '../controllers/stateController';
 import symfoniController from '../controllers/symfoniController';
 import userController from '../controllers/userController';
 const router = express.Router();
@@ -20,6 +21,8 @@ router.post('/symfoni/terminationCredential', symfoniController.createTerminatio
 
 // NAV endpoints
 
+
 // state endpoints
+router.post('/state/personCredential', stateController.createPersonCredential);
 
 export default router;
