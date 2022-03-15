@@ -1,4 +1,5 @@
 import express from 'express';
+import symfoniController from '../controllers/symfoniController';
 import userController from '../controllers/userController';
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.get('/user/credential/:type', userController.getCredential);
 router.post('/user/presentation', userController.createPresentation);
 
 // symfoni endpoints
+router.post('/symfoni/did', symfoniController.createDID);
 
 // NAV endpoints
 
