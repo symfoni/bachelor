@@ -101,6 +101,7 @@ const createPresentation = async (req: Request, res: Response) => {
 		});
 	}
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	req.body.listOfCredentials.forEach((credential: any) => {
 		credentials.push(credential['verifiableCredential']);
 	});
