@@ -24,5 +24,6 @@ router.post('/symfoni/terminationCredential', symfoniController.createTerminatio
 
 // state endpoints
 router.post('/state/personCredential', stateController.createPersonCredential);
+router.post('/state/businessCredential', stateController.createBusinessCredential);
 
 export default router;
