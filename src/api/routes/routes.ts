@@ -16,6 +16,7 @@ router.post('/user/presentation', userController.createPresentation);
 // symfoni endpoints
 router.post('/symfoni/did', symfoniController.createDID);
 router.post('/symfoni/employmentCredential', symfoniController.createEmploymentCredential);
+router.post('/symfoni/terminationCredential', symfoniController.createTerminationCredential);
 
 // NAV endpoints
 
