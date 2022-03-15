@@ -38,7 +38,7 @@ const createEmploymentCredential = async (req: Request, res: Response) => {
 
 	// make credential based on json input
 
-	symfoniAgentController.createEmploymentCredential(issuer, credentialClaims).then((credential) => {
+	await symfoniAgentController.createEmploymentCredential(issuer, credentialClaims).then((credential) => {
 		// TODO: Validate credential against schema
 		return res.status(201).json({ credential });
 	});
@@ -60,7 +60,7 @@ const createTerminationCredential = async (req: Request, res: Response) => {
 		});
 	}
 
-	symfoniAgentController.createTerminationCredential(issuer, credentialClaims).then((credential) => {
+	await symfoniAgentController.createTerminationCredential(issuer, credentialClaims).then((credential) => {
 		// TODO: Validate credential against context schema
 		return res.status(201).json({
 			credential
