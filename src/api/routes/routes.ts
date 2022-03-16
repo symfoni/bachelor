@@ -18,6 +18,14 @@ router.post('/user/presentation', userController.createPresentation);
 router.post('/symfoni/did', symfoniController.createDID);
 router.post('/symfoni/employmentCredential', symfoniController.createEmploymentCredential);
 router.post('/symfoni/terminationCredential', symfoniController.createTerminationCredential);
+router.post('/symfoni/did', symfoniController.createDID);
+router.get('/symfoni/did/:did', symfoniController.getDID);
+router.get('/symfoni/dids', symfoniController.listDIDs);
+router.get('/symfoni/resolve/:did', symfoniController.resolveDID);
+router.post('/symfoni/credential', symfoniController.addCredential);
+router.get('/symfoni/credentials', symfoniController.listCredentials);
+router.get('/symfoni/credential/:type', symfoniController.getCredential);
+router.post('/symfoni/presentation', symfoniController.createPresentation);
 
 // NAV endpoints
 
