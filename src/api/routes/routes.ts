@@ -1,4 +1,5 @@
 import express from 'express';
+import navController from '../controllers/navController';
 import stateController from '../controllers/stateController';
 import symfoniController from '../controllers/symfoniController';
 import userController from '../controllers/userController';
@@ -28,7 +29,15 @@ router.get('/symfoni/credential/:type', symfoniController.getCredential);
 router.post('/symfoni/presentation', symfoniController.createPresentation);
 
 // NAV endpoints
-
+// user endpoints
+router.post('/nav/did', navController.createDID);
+router.get('/nav/did/:did', navController.getDID);
+router.get('/nav/dids', navController.listDIDs);
+router.get('/nav/resolve/:did', navController.resolveDID);
+router.post('/nav/credential', navController.addCredential);
+router.get('/nav/credentials', navController.listCredentials);
+router.get('/nav/credential/:type', navController.getCredential);
+router.post('/nav/presentation', navController.createPresentation);
 
 // state endpoints
 router.post('/state/personCredential', stateController.createPersonCredential);
