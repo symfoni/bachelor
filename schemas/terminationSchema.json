@@ -1,78 +1,90 @@
 {
-    "$schema": "http://json-schema.org/draft-04/schema#",
-    "type": "object",
-    "properties": {
-      "credentialSubject": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "termination": {
-            "type": "object",
-            "properties": {
-              "employee": {
-                "type": "object",
-                "properties": {
-                  "lastDayAtWork": {
-                    "type": "string",
-                    "format": "date"
-                  },
-                  "lastPayday": {
-                    "type": "string",
-                    "format": "date"
-    
-                  },
-                  "terminationStatus": {
-                    "type": "string",
-                    "enum": ["resigned", "fired", "bankruptcy"]
-                    
-                  },
-                  "terminatedDuringTrialPeriod": {
-                    "type": "boolean"
-                  },
-                  "WeeklyWorkHours": {
-                    "type": "number"
-                  }
-                },
-                "required": [
-                  "lastDayAtWork",
-                  "lastPayday",
-                  "terminationStatus",
-                  "terminatedDuringTrialPeriod",
-                  "WeeklyWorkHours"
-                ]
-              },
-              "contractPDF": {
-                "type": "object",
-                "properties": {
-                  "URL": {
-                    "type": "string",
-                    "format": "uri"
-                  },
-                  "hash": {
-                    "type": "string"
-                  }
-                },
-                "required": [
-                  "URL",
-                  "hash"
-                ]
-              }
-            },
-            "required": [
-              "employee",
-              "contractPDF"
-            ]
-          }
+  "@id": "https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/terminationSchema.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "TerminationVC",
+  "type": "object",
+  "properties": {
+    "credentialSubject": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "The employees' DID"
         },
-        "required": [
-          "id",
-          "termination"
-        ]
-      }
-    },
-    "required": [
-      "credentialSubject"
-    ]
-  }
+        "termination": {
+          "type": "object",
+          "properties": {
+            "employee": {
+              "type": "object",
+              "properties": {
+                "lastDayAtWork": {
+                  "type": "string",
+                  "description": "The last day the employee was at work",
+                  "format": "date"
+                },
+                "lastPayday": {
+                  "type": "string",
+                  "description": "The last day the employee was paid",
+                  "format": "date"
+                },
+                "terminationStatus": {
+                  "type": "string",
+                  "description": "The reason behind the termination",
+                  "enum": [
+                    "resigned",
+                    "fired",
+                    "bankruptcy"
+                  ]
+                },
+                "terminatedDuringTrialPeriod": {
+                  "type": "boolean",
+                  "description": "If the employee was fired during their trial period"
+                },
+                "WeeklyWorkHours": {
+                  "type": "number",
+                  "description": "How many hours a week they worked on average the last 52 weeks"
+                }
+              },
+              "required": [
+                "lastDayAtWork",
+                "lastPayday",
+                "terminationStatus",
+                "terminatedDuringTrialPeriod",
+                "WeeklyWorkHours"
+              ]
+            },
+            "contractPDF": {
+              "type": "object",
+              "properties": {
+                "URL": {
+                  "type": "string",
+                  "description": "The link to the downloadable contract pdf",
+                  "format": "uri"
+                },
+                "hash": {
+                  "type": "string",
+                  "description": "The unique hash of the employment contract"
+                }
+              },
+              "required": [
+                "URL",
+                "hash"
+              ]
+            }
+          },
+          "required": [
+            "employee",
+            "contractPDF"
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "termination"
+      ]
+    }
+  },
+  "required": [
+    "credentialSubject"
+  ]
+}

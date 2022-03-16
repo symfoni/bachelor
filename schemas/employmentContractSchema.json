@@ -1,37 +1,47 @@
 {
+    "@id": "https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/employmentContractSchema.json",
     "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "EmploymentVC",
     "type": "object",
     "properties": {
         "credentialSubject": {
             "type": "object",
             "properties": {
                 "id": {
-                    "type": "string"
+                    "type": "string",
+                    "description": "The employees' DID"
                 },
                 "employment": {
                     "type": "object",
                     "properties": {
                         "employee": {
                             "type": "object",
+                            "description": "Describes attributes of the employee",
                             "properties": {
                                 "employeeId": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "The DID of the employee"
                                 },
                                 "jobTitle": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "The title of the employees' job"
                                 },
                                 "placeOfWork": {
-                                    "type": "string"
+                                    "type": "string",
+                                    "description": "Where the employee goes to work"
                                 },
                                 "hoursOfWork": {
-                                    "type": "number"
+                                    "type": "number",
+                                    "description": "Expected weekly work hours"
                                 },
                                 "startDate": {
                                     "type": "string",
+                                    "description": "The first day of work",
                                     "format": "date"
                                 },
                                 "endDate": {
                                     "type": "string",
+                                    "description": "When the contract expires",
                                     "format": "date"
                                 },
                                 "employmentStatus": {
@@ -39,6 +49,7 @@
                                     "properties": {
                                         "employmentType": {
                                             "type": "string",
+                                            "description": "Different type of employment relating to how much you work",
                                             "enum": [
                                                 "full time",
                                                 "part time",
@@ -46,7 +57,8 @@
                                             ]
                                         },
                                         "partTimePercentage": {
-                                            "type": "number"
+                                            "type": "number",
+                                            "description": "How many perecent you work part time of the standard weekly work hours"
                                         }
                                     },
                                     "required": [
@@ -56,9 +68,11 @@
                                 },
                                 "salary": {
                                     "type": "object",
+                                    "description": "How much money the employee earns",
                                     "properties": {
                                         "frequency": {
                                             "type": "string",
+                                            "description": "How often the employee is paid",
                                             "enum": [
                                                 "monthly",
                                                 "weekly",
@@ -66,10 +80,12 @@
                                             ]
                                         },
                                         "amount": {
-                                            "type": "number"
+                                            "type": "number",
+                                            "description": "How much the employee is paid in relation to frequency"
                                         },
                                         "currency": {
-                                            "type": "string"
+                                            "type": "string",
+                                            "description": "Which currency the employee is paid in"
                                         }
                                     },
                                     "required": [
@@ -80,13 +96,16 @@
                                 },
                                 "trialPeriod": {
                                     "type": "object",
+                                    "description": "The trial period of the employee",
                                     "properties": {
                                         "startDate": {
                                             "type": "string",
+                                            "description": "When the trial period starts",
                                             "format": "date"
                                         },
                                         "endDate": {
                                             "type": "string",
+                                            "description": "When the trial period ends",
                                             "format": "date"
                                         }
                                     },
@@ -96,13 +115,16 @@
                                     ]
                                 },
                                 "rightForPension": {
-                                    "type": "boolean"
+                                    "type": "boolean",
+                                    "description": "If the employer gives special pension benefits"
                                 },
                                 "nonCompeteClause": {
-                                    "type": "boolean"
+                                    "type": "boolean",
+                                    "description": "If the employee can do external work in the same field"
                                 },
                                 "requirementToWorkOverseas": {
-                                    "type": "boolean"
+                                    "type": "boolean",
+                                    "description": "If the job requires the employee to work overseas"
                                 }
                             },
                             "required": [
@@ -111,11 +133,10 @@
                                 "placeOfWork",
                                 "hoursOfWork",
                                 "startDate",
-                                "endDate",
                                 "employmentStatus",
                                 "salary",
-                                "trialPeriod",
                                 "rightForPension",
+                                "nonCompeteClause",
                                 "requirementToWorkOverseas"
                             ]
                         }
@@ -125,10 +146,12 @@
                         "properties": {
                             "URL": {
                                 "type": "string",
+                                "description": "The link to the downloadable contract pdf",
                                 "format": "uri"
                             },
                             "hash": {
-                                "type": "string"
+                                "type": "string",
+                                "description": "The unique hash of the employment contract"
                             }
                         },
                         "required": [
