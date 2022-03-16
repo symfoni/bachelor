@@ -33,5 +33,13 @@ router.post('/symfoni/presentation', symfoniController.createPresentation);
 // state endpoints
 router.post('/state/personCredential', stateController.createPersonCredential);
 router.post('/state/businessCredential', stateController.createBusinessCredential);
+router.post('/state/did', stateController.createDID);
+router.get('/state/did/:did', stateController.getDID);
+router.get('/state/dids', stateController.listDIDs);
+router.get('/state/resolve/:did', stateController.resolveDID);
+router.post('/state/credential', stateController.addCredential);
+router.get('/state/credentials', stateController.listCredentials);
+router.get('/state/credential/:type', stateController.getCredential);
+router.post('/state/presentation', stateController.createPresentation);
 
 export default router;
