@@ -11,3 +11,6 @@ To run the tests in this project, simply run, ```npm run test```.
 
 ## API
 To run the api, type ```npm run dev```.
+
+## App
+To run the application, use ```npm start```, and follow the instructions in the terminal.
