@@ -226,3 +226,18 @@ database/test-database.sqlite
 
 # Playground.ts for playing/interacting with the veramo client
 src/playground.ts
+
+# react-native gitignores
+.expo/
+dist/
+npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+web-build/
+
+## macOS
+.DS_Store
