@@ -11,8 +11,8 @@ import { AgentController } from './AgentController';
 export class SymfoniAgentController extends AgentController {
 	// TODO: make it so that the class automatically initializes and keeps a main did for the agent
 
-	constructor() {
-		super(agentSymfoni);
+	constructor(mainIdentifierAlias: string) {
+		super(agentSymfoni, mainIdentifierAlias);
 	}
 
 	/**

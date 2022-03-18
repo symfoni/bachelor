@@ -9,16 +9,16 @@ import { AgentController } from './AgentController';
  * StateAgentController is a class that manages the state agent.
  */
 export class StateAgentController extends AgentController {
-	constructor() {
-		super(agentState);
+	constructor(mainIdentifierAlias: string) {
+		super(agentState, mainIdentifierAlias);
 	}
 
 	/**
-     * createPersonCredential creates a verifiable person credential.
-     * @param issuerDid a did managed by the state agent that issues the credential.
-     * @param credentialSubjectData the claims of the person.
-     * @returns a verifiable person credential.
-     */
+	 * createPersonCredential creates a verifiable person credential.
+	 * @param issuerDid a did managed by the state agent that issues the credential.
+	 * @param credentialSubjectData the claims of the person.
+	 * @returns a verifiable person credential.
+	 */
 	async createPersonCredential(issuerDid: string, credentialSubjectData: personVerifiableCredential['credentialSubject']): Promise<VerifiableCredential> {
 		const credential = await this.agent.createVerifiableCredential({
 			credential: {
@@ -27,9 +27,7 @@ export class StateAgentController extends AgentController {
 				issuer: {
 					id: issuerDid
 				},
-				credentialSubject: {
-					credentialSubjectData
-				}
+				credentialSubject: credentialSubjectData
 			},
 			proofFormat: PROOF_FORMAT_JWT
 		});
@@ -38,11 +36,11 @@ export class StateAgentController extends AgentController {
 	}
 
 	/**
-     * createBusinessCredential creates a verifiable business credential.
-     * @param issuerDid a did managed by the state agent that issues the credential.
-     * @param credentialSubjectData the business claims.
-     * @returns a verifiable business credential.
-     */
+	 * createBusinessCredential creates a verifiable business credential.
+	 * @param issuerDid a did managed by the state agent that issues the credential.
+	 * @param credentialSubjectData the business claims.
+	 * @returns a verifiable business credential.
+	 */
 	async createBusinessCredential(issuerDid: string, credentialSubjectData: businessVerifiableCredential['credentialSubject']): Promise<VerifiableCredential> {
 		const credential = this.agent.createVerifiableCredential({
 			credential: {
@@ -51,9 +49,7 @@ export class StateAgentController extends AgentController {
 				issuer: {
 					id: issuerDid
 				},
-				credentialSubject: {
-					credentialSubjectData
-				}
+				credentialSubject: credentialSubjectData
 			},
 			proofFormat: PROOF_FORMAT_JWT
 		});

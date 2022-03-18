@@ -18,12 +18,33 @@ import { IAgentController } from '../interfaces/agentControllerInterface';
  */
 export class AgentController implements IAgentController {
 
+	mainIdentifierAlias: string;
+
 	agent: TAgent<IDataStore & IDataStoreORM & ICredentialIssuer & IResolver & IDIDManager>;
 
 	// TODO: Find a better type than 'any'
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	constructor(agent: any) {
+	constructor(agent: any, mainIdentifierAlias: string) {
 		this.agent = agent;
+		this.mainIdentifierAlias = mainIdentifierAlias;
+	}
+
+	/**
+	 * getMainIdentifier retrieves the main identifier of 'this.agent', provided by 'this.mainIdentifierAlias'
+	 * if it does not exist, the function will create and return a new main identifier.
+	 * // TODO: Possibly make a 'this.mainDid' field and make a main identifier when a new instance of AgentController class is instanziated.
+	 * @returns either an existing identifier or a newly created identifier.
+	 */
+	async getMainIdentifier(): Promise<IIdentifier | string> {
+		try {
+			return await this.agent.didManagerGetByAlias({
+				alias: this.mainIdentifierAlias,
+				provider: 'did:ethr:rinkeby'
+			});
+		} catch (error) {
+			console.log('it did not exist');
+			return await this.createDID(this.mainIdentifierAlias);
+		}
 	}
 
 	/**

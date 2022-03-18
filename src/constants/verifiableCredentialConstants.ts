@@ -6,7 +6,7 @@ export const SCHEMA_EMPLOYMENT_CONTRACT = 'https://raw.githubusercontent.com/sym
 
 export const SCHEMA_BUSINESS_CREDENTIAL = 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/tempJSON/businessSchema.json';
 
-export const SCHEMA_PERSON_CREDENTIAL = 'https://github.com/symfoni/bachelor/blob/dev/schemas/tempJSON/personSchema.json';
+export const SCHEMA_PERSON_CREDENTIAL = 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/tempJSON/personSchema.json';
 
 export const SCHEMA_TERMINATION_CREDENTIAL = 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/terminationSchema.json';
 

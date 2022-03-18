@@ -1,6 +1,6 @@
 // Secret environmental variables
 import dotenv from 'dotenv';
-dotenv.config({ path: '../dotenv.env' });
+dotenv.config({ path: 'dotenv.env' });
 
 // Core interfaces
 import { createAgent, IDIDManager, IResolver, IDataStore, IKeyManager } from '@veramo/core';
@@ -32,13 +32,12 @@ import { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migration
 // TypeORM is installed with `@veramo/data-store`
 import { createConnection } from 'typeorm';
 import { CredentialIssuer, ICredentialIssuer } from '@veramo/credential-w3c';
-
 // Local sqlite database for the different agents
-const NAV_DATABASE_FILE = '../database/nav-database.sqlite';
-const SYMFONI_DATABASE_FILE = '../database/symfoni-database.sqlite';
-const USER_DATABASE_FILE = '../database/user-database.sqlite';
-const STATE_DATABASE_FILE = '../database/state-database.sqlite';
-const TEST_DATABASE_FILE = '../database/test-database.sqlite';
+const NAV_DATABASE_FILE = './database/nav-database.sqlite';
+const SYMFONI_DATABASE_FILE = './database/symfoni-database.sqlite';
+const USER_DATABASE_FILE = './database/user-database.sqlite';
+const STATE_DATABASE_FILE = './database/state-database.sqlite';
+const TEST_DATABASE_FILE = './database/test-database.sqlite';
 
 // See 'dotenv-template.env' for information about this variable.
 // TODO: Find a less hacky way to store infura ID as string
@@ -175,7 +174,7 @@ export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore &
 	],
 });
 
-export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver>({
+export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
 		new KeyManager({
 			store: new KeyStore(dbConnectionUser),
@@ -203,6 +202,7 @@ export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & ID
 				...webDidResolver(),
 			}),
 		}),
+		new CredentialIssuer(),
 		new DataStore(dbConnectionUser),
 		new DataStoreORM(dbConnectionUser)
 	],
