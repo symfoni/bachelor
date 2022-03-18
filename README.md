@@ -6,5 +6,8 @@ First of all you have to initialize the project by running, ```npm ci```.
 
 To run the demo, make sure to create a new 'dotenv.env' file, and follow the instruction given in 'dotenv-template.env'.
 
-# test
+## test
 To run the tests in this project, simply run, ```npm run test```.
+
+## API
+To run the api, type ```npm run dev```.
