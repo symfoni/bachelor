@@ -22,22 +22,27 @@ export class SymfoniAgentController extends AgentController {
 	 * for schema. 
 	 * @returns an employment credential.
 	 */
-	async createEmploymentCredential(issuer: string, credentialData: employmentVC['credentialSubject']): Promise<VerifiableCredential | string> {
-		const credential = await this.agent.createVerifiableCredential({
-			credential: {
-				'@context': [SCHEMA_W3_CREDENTIAL, SCHEMA_EMPLOYMENT_CONTRACT],
-				type: [TYPE_VERIFIABLE_CREDENTIAL, TYPE_EMPLOYMENT_CREDENTIAL],
-				issuer: {
-					id: issuer
+	async createEmploymentCredential(issuer: string, credentialData: employmentVC['credentialSubject']): Promise<VerifiableCredential | unknown> {
+		try {
+			const credential = await this.agent.createVerifiableCredential({
+				credential: {
+					'@context': [SCHEMA_W3_CREDENTIAL, SCHEMA_EMPLOYMENT_CONTRACT],
+					type: [TYPE_VERIFIABLE_CREDENTIAL, TYPE_EMPLOYMENT_CREDENTIAL],
+					issuer: {
+						id: issuer
+					},
+					credentialSubject: {
+						credentialData
+					}
 				},
-				credentialSubject: {
-					credentialData
-				}
-			},
-			proofFormat: PROOF_FORMAT_JWT
-		});
-
-		return credential;
+				proofFormat: PROOF_FORMAT_JWT
+			});
+	
+			return credential;
+		} catch (error) {
+			console.error('unable to create the employment credential',error);
+			return error;
+		}
 	}
 
 	/**
@@ -47,21 +52,26 @@ export class SymfoniAgentController extends AgentController {
 	 * for schema.
 	 * @returns a termination credential.
 	 */
-	async createTerminationCredential(issuer: string, credentialData: terminationVC['credentialSubject']) {
-		const credential = await this.agent.createVerifiableCredential({
-			credential: {
-				'@context': [SCHEMA_W3_CREDENTIAL, SCHEMA_TERMINATION_CREDENTIAL],
-				type: [TYPE_VERIFIABLE_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL],
-				issuer: {
-					id: issuer
+	async createTerminationCredential(issuer: string, credentialData: terminationVC['credentialSubject']): Promise<VerifiableCredential | unknown> {
+		try {
+			const credential = await this.agent.createVerifiableCredential({
+				credential: {
+					'@context': [SCHEMA_W3_CREDENTIAL, SCHEMA_TERMINATION_CREDENTIAL],
+					type: [TYPE_VERIFIABLE_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL],
+					issuer: {
+						id: issuer
+					},
+					credentialSubject: {
+						credentialData
+					}
 				},
-				credentialSubject: {
-					credentialData
-				}
-			},
-			proofFormat: PROOF_FORMAT_JWT
-		});
-
-		return credential;
+				proofFormat: PROOF_FORMAT_JWT
+			});
+	
+			return credential;
+		} catch (error) {
+			console.error('unable to create the termination credential', error);
+			return error;
+		}
 	}
 }
