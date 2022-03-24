@@ -22,7 +22,7 @@ export class SymfoniAgentController extends AgentController {
 	 * for schema. 
 	 * @returns an employment credential.
 	 */
-	async createEmploymentCredential(issuer: string, credentialData: employmentVC['credentialSubject']): Promise<VerifiableCredential | unknown> {
+	async createEmploymentCredential(issuer: string, credentialData: employmentVC['credentialSubject']): Promise<VerifiableCredential | string> {
 		try {
 			const credential = await this.agent.createVerifiableCredential({
 				credential: {
@@ -41,7 +41,7 @@ export class SymfoniAgentController extends AgentController {
 			return credential;
 		} catch (error) {
 			console.error('unable to create the employment credential',error);
-			return error;
+			return 'unable to create the employment credential';
 		}
 	}
 
@@ -52,7 +52,7 @@ export class SymfoniAgentController extends AgentController {
 	 * for schema.
 	 * @returns a termination credential.
 	 */
-	async createTerminationCredential(issuer: string, credentialData: terminationVC['credentialSubject']): Promise<VerifiableCredential | unknown> {
+	async createTerminationCredential(issuer: string, credentialData: terminationVC['credentialSubject']): Promise<VerifiableCredential | string> {
 		try {
 			const credential = await this.agent.createVerifiableCredential({
 				credential: {
@@ -71,7 +71,7 @@ export class SymfoniAgentController extends AgentController {
 			return credential;
 		} catch (error) {
 			console.error('unable to create the termination credential', error);
-			return error;
+			return 'unable to create the termination credential';
 		}
 	}
 }
