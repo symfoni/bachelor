@@ -201,6 +201,11 @@ const createPresentation = async (req: Request, res: Response) => {
 	});
     
 	await symfoniAgentController.createPresentation(holder, credentials).then((presentation) => {
+		if (typeof presentation === 'string') {
+			return res.status(400).json({
+				error: presentation
+			});
+		}
 		return res.status(201).json({
 			presentation
 		});
