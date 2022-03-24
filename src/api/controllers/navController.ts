@@ -13,6 +13,11 @@ const createDID = async (req: Request, res: Response) => {
 	const kms: string = req.body.kms;
 
 	await navAgentController.createDID(alias, provider, kms).then((did) => {
+		if (typeof did === 'string') {
+			return res.status(400).json({
+				error: did
+			});
+		}
 		return res.status(201).json({
 			did
 		});
