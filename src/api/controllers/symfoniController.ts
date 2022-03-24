@@ -107,6 +107,15 @@ const listDIDs = async (req: Request, res: Response) => {
 const resolveDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	symfoniAgentController.resolveDID(did).then((didDocument) => {
+		if (typeof didDocument === 'string') {
+			return res.status(400).json({
+				error: didDocument
+			});
+		} else if (typeof didDocument.didDocument?.id === 'undefined') {
+			return res.status(400).json({
+				didDocument
+			});
+		}
 		return res.status(200).json({
 			didDocument
 		});
