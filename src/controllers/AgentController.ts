@@ -35,7 +35,7 @@ export class AgentController implements IAgentController {
 	 * // TODO: Possibly make a 'this.mainDid' field and make a main identifier when a new instance of AgentController class is instanziated.
 	 * @returns either an existing identifier or a newly created identifier.
 	 */
-	async getMainIdentifier(): Promise<IIdentifier | string> {
+	async getMainIdentifier(): Promise<IIdentifier | Error> {
 		try {
 			return await this.agent.didManagerGetByAlias({
 				alias: this.mainIdentifierAlias,
@@ -54,7 +54,7 @@ export class AgentController implements IAgentController {
 	 * @param keyManagementSystem the key management systemm for the did, as a string.
 	 * @returns the did that was created.
 	 */
-	async createDID(alias?: string, provider = 'did:ethr:rinkeby', keyManagementSystem = 'local'): Promise<IIdentifier | string> {
+	async createDID(alias?: string, provider = 'did:ethr:rinkeby', keyManagementSystem = 'local'): Promise<IIdentifier | Error> {
 		try {
 			return await this.agent.didManagerCreate({
 				alias: alias,
@@ -64,7 +64,7 @@ export class AgentController implements IAgentController {
 		}
 		catch (error) {
 			console.error('unable to create did', error);
-			return 'unable to create did';
+			return new Error('unable to create did');
 		}
 	}
 
@@ -73,14 +73,14 @@ export class AgentController implements IAgentController {
 	 * @param did the did url you want to search for.
 	 * @returns returns the did that was found.
 	 */
-	async getDID(did: string): Promise<IIdentifier | string> {
+	async getDID(did: string): Promise<IIdentifier | Error> {
 		try {
 			return await this.agent.didManagerGet({
 				did: did
 			});
 		} catch (error) {
 			console.error('unable to retrieve did', error);
-			return 'unable to retrieve did';
+			return new Error('unable to retrieve did');
 		}
 	}
 
@@ -97,14 +97,14 @@ export class AgentController implements IAgentController {
 	 * @param provider the did method that the did is created by, eg. 'did:web', 'did:ethr'.
 	 * @returns a list of dids with the corresponding provider.
 	 */
-	async listDIDsBasedOnProvider(provider: string): Promise<IIdentifier[] | string> {
+	async listDIDsBasedOnProvider(provider: string): Promise<IIdentifier[] | Error> {
 		try {
 			return await this.agent.didManagerFind({
 				provider: provider
 			});
 		} catch (error) {
 			console.error('no matches found  for this provider', error);
-			return 'no matches found  for this provider';
+			return new Error('no matches found  for this provider');
 		}
 	}
 
@@ -113,14 +113,14 @@ export class AgentController implements IAgentController {
 	 * @param alias the alias for the did you want to find.
 	 * @returns a list of dids with the corresponding alias.
 	 */
-	async listDIDsBasedOnAlias(alias: string): Promise<IIdentifier[] | string> {
+	async listDIDsBasedOnAlias(alias: string): Promise<IIdentifier[] | Error> {
 		try {
 			return await this.agent.didManagerFind({
 				alias: alias
 			});
 		} catch (error) {
 			console.error('no matches found for this alias', error);
-			return 'no matches found for this alias';
+			return new Error('no matches found for this alias');
 		}
 	}
 
@@ -129,14 +129,14 @@ export class AgentController implements IAgentController {
 	* @param didUrl the DID url of the DID document you want to retrieve.
 	* @returns a DID document with the corresponding did URL.
 	*/
-	async resolveDID(didUrl: string): Promise<DIDResolutionResult | string> {
+	async resolveDID(didUrl: string): Promise<DIDResolutionResult | Error> {
 		try {
 			return await this.agent.resolveDid({
 				didUrl: didUrl
 			});
 		} catch (error) {
 			console.error('was not able to resolve did', error);
-			return 'was not able to resolve did';
+			return new Error('was not able to resolve did');
 		}
 	}
 
@@ -145,7 +145,7 @@ export class AgentController implements IAgentController {
 	 * @param credentialData the data that the credential should contain.
 	 * @returns a verifiable credential.
 	 */
-	async createCredential(credentialData: VerifiableCredential): Promise<VerifiableCredential | string> {
+	async createCredential(credentialData: VerifiableCredential): Promise<VerifiableCredential | Error> {
 		try {
 			return this.agent.createVerifiableCredential({
 				credential: credentialData,
@@ -153,7 +153,7 @@ export class AgentController implements IAgentController {
 			});
 		} catch (error) {
 			console.error('unable to create the verifiable credential', error);
-			return 'unable to create the verifiable credential';
+			return new Error('unable to create the verifiable credential');
 		}
 	}
 
@@ -201,7 +201,7 @@ export class AgentController implements IAgentController {
 	 * @param credentials the credentials you want to add into the presentation as an array of verifiable credentials.
 	 * @returns a verifiable presentation.
 	 */
-	async createPresentation(holder: string, credentials: VerifiableCredential[]): Promise<VerifiablePresentation | string> {
+	async createPresentation(holder: string, credentials: VerifiableCredential[]): Promise<VerifiablePresentation | Error> {
 		try {
 			return await this.agent.createVerifiablePresentation({
 				presentation: {
@@ -212,7 +212,7 @@ export class AgentController implements IAgentController {
 			});
 		} catch (error) {
 			console.log('unable to create presentation', error);
-			return 'unable to create presentation';
+			return new Error('unable to create presentation');
 		}
 	}
 
