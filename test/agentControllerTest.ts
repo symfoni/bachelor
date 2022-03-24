@@ -39,7 +39,7 @@ describe('AgentController', function () {
 			const keyManagementSystem = 'local';
 			testAgentController.createDID(alias).then((did) => {
 				// Works
-				if (typeof did === 'string') {
+				if (did instanceof Error) {
 					assert.fail();
 				}
 				assert.equal(did['alias'], alias);

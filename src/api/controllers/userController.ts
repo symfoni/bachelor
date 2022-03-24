@@ -12,7 +12,12 @@ const createDID = async (req: Request, res: Response) => {
 	const provider: string = req.body.provider;
 	const kms: string = req.body.kms;
 
-	await userAgentController.createDID(alias, provider, kms).then((did) => {
+	await userAgentController.createDID(alias, provider, kms).then((did) => {	
+		if (did instanceof Error) {
+			return res.status(400).json({
+				error: did.message
+			});
+		}
 		return res.status(201).json({
 			did
 		});
@@ -23,6 +28,11 @@ const createDID = async (req: Request, res: Response) => {
 const getDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	await userAgentController.getDID(did).then((identifier) => {
+		if (identifier instanceof Error) {
+			return res.status(400).json({
+				error: identifier.message
+			});
+		}
 		return res.status(200).json({
 			identifier
 		});
@@ -32,6 +42,11 @@ const getDID = async (req: Request, res: Response) => {
 // list dids
 const listDIDs = async (req: Request, res: Response) => {
 	await userAgentController.listAllDIDs().then((didList) => {
+		if (typeof didList === 'undefined') {
+			return res.status(500).json({
+				error: 'unable to retrieve a list of dids'
+			});
+		}
 		return res.status(200).json({
 			listOfDids: didList
 		});
@@ -42,6 +57,15 @@ const listDIDs = async (req: Request, res: Response) => {
 const resolveDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	userAgentController.resolveDID(did).then((didDocument) => {
+		if (didDocument instanceof Error) {
+			return res.status(400).json({
+				error: didDocument.message
+			});
+		} else if (typeof didDocument.didDocument?.id === 'undefined') {
+			return res.status(400).json({
+				didDocument
+			});
+		}
 		return res.status(200).json({
 			didDocument
 		});
@@ -62,6 +86,12 @@ const addCredential = async (req: Request, res: Response) => {
 	};
 
 	await userAgentController.addCredential(credential).then((credentialHash) => {
+		if (typeof credentialHash !== 'string') {
+			return res.status(400).json({
+				error: credentialHash.message
+			});
+		}
+		
 		return res.status(201).json({
 			credentialHash
 		});
@@ -72,6 +102,11 @@ const addCredential = async (req: Request, res: Response) => {
 // list all saved credentials in the database
 const listCredentials = async (req: Request, res: Response) => {
 	await userAgentController.getAllCredentials().then((credentialList) => {
+		if (credentialList.length === 0) {
+			return res.status(400).json({
+				error: 'no credentials found'
+			});
+		}
 		return res.status(200).json({
 			listOfCredentials: credentialList
 		});
@@ -82,6 +117,11 @@ const listCredentials = async (req: Request, res: Response) => {
 const getCredential = async (req: Request, res: Response) => {
 	const credentialType: string = req.params.type;
 	await userAgentController.getCredentialBasedOnType(credentialType).then((credentialList) => {
+		if (credentialList.length === 0) {
+			return res.status(400).json({
+				error: 'no credentials found for that type'
+			});
+		}
 		return res.status(200).json({
 			listOfCredentials: credentialList
 		});
@@ -91,9 +131,23 @@ const getCredential = async (req: Request, res: Response) => {
 // create presentation
 const createPresentation = async (req: Request, res: Response) => {
 	const credentials: VerifiableCredential[] = [];
-	const holder: string = req.body.holder;
+	let holder: string = req.body.holder;
     
 	// TODO: Add a typeguard that returns an error if credentials is not of type VC[]
+
+	// if holder is not specified, use default DID
+	if (typeof holder === 'undefined') {
+		await userAgentController.getMainIdentifier().then((mainIdentifier)=>{
+			
+			if (mainIdentifier instanceof Error) {
+				return res.status(500).json({
+					fatal_error: 'unable to find or create the main identifier'
+				});
+			}
+
+			holder = mainIdentifier.did;
+		});
+	}
 
 	if (req.body.listOfCredentials.length === 0) {
 		return res.status(400).json({
@@ -107,6 +161,11 @@ const createPresentation = async (req: Request, res: Response) => {
 	});
     
 	await userAgentController.createPresentation(holder, credentials).then((presentation) => {
+		if (presentation instanceof Error) {
+			return res.status(400).json({
+				error: presentation.message
+			});
+		}
 		return res.status(201).json({
 			presentation
 		});

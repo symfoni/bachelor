@@ -13,9 +13,9 @@ const createPersonCredential = async (req: Request, res: Response) => {
 	// TODO: Possibly make this if statement a utility function as it used many times.
 	if (typeof issuer === 'undefined') {
 		await stateAgentController.getMainIdentifier().then((identifier) => {
-			if (typeof identifier === 'string') {
+			if (identifier instanceof Error) {
 				return res.status(500).json({
-					error: 'unable to retrieve main identifier'
+					error: identifier.message
 				});
 			}
 			issuer = identifier.did;
@@ -24,6 +24,11 @@ const createPersonCredential = async (req: Request, res: Response) => {
 
 	await stateAgentController.createPersonCredential(issuer, credentialSubject).then((credential) => {
 		// TODO: Validate against context schema
+		if (typeof credential === 'string') {
+			return res.status(400).json({
+				error: credential
+			});
+		}
 		return res.status(201).json({
 			credential
 		});
@@ -38,9 +43,9 @@ const createBusinessCredential = async (req: Request, res: Response) => {
 	// TODO: Possibly make this if statement a utility function as it used many times.
 	if (typeof issuer === 'undefined') {
 		await stateAgentController.getMainIdentifier().then((identifier) => {
-			if (typeof identifier === 'string') {
+			if (identifier instanceof Error) {
 				return res.status(500).json({
-					error: 'unable to retrieve main identifier'
+					error: identifier.message
 				});
 			}
 			issuer = identifier.did;
@@ -49,6 +54,11 @@ const createBusinessCredential = async (req: Request, res: Response) => {
 
 	await stateAgentController.createBusinessCredential(issuer, credentialSubject).then((credential) => {
 		// TODO: Validate against context schema
+		if (typeof credential === 'string') {
+			return res.status(400).json({
+				error: credential
+			});
+		}
 		return res.status(201).json({
 			credential
 		});
@@ -62,6 +72,11 @@ const createDID = async (req: Request, res: Response) => {
 	const kms: string = req.body.kms;
 
 	await stateAgentController.createDID(alias, provider, kms).then((did) => {
+		if (did instanceof Error) {
+			return res.status(400).json({
+				error: did.message
+			});
+		}
 		return res.status(201).json({
 			did
 		});
@@ -72,6 +87,11 @@ const createDID = async (req: Request, res: Response) => {
 const getDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	await stateAgentController.getDID(did).then((identifier) => {
+		if (identifier instanceof Error) {
+			return res.status(400).json({
+				error: identifier.message
+			});
+		}
 		return res.status(200).json({
 			identifier
 		});
@@ -81,6 +101,11 @@ const getDID = async (req: Request, res: Response) => {
 // list dids
 const listDIDs = async (req: Request, res: Response) => {
 	await stateAgentController.listAllDIDs().then((didList) => {
+		if (typeof didList === 'undefined') {
+			return res.status(500).json({
+				error: 'unable to retrieve a list of dids'
+			});
+		}
 		return res.status(200).json({
 			listOfDids: didList
 		});
@@ -91,6 +116,15 @@ const listDIDs = async (req: Request, res: Response) => {
 const resolveDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	stateAgentController.resolveDID(did).then((didDocument) => {
+		if (didDocument instanceof Error) {
+			return res.status(400).json({
+				error: didDocument.message
+			});
+		} else if (typeof didDocument.didDocument?.id === 'undefined') {
+			return res.status(400).json({
+				didDocument
+			});
+		}
 		return res.status(200).json({
 			didDocument
 		});
@@ -121,6 +155,11 @@ const addCredential = async (req: Request, res: Response) => {
 // list all saved credentials in the database
 const listCredentials = async (req: Request, res: Response) => {
 	await stateAgentController.getAllCredentials().then((credentialList) => {
+		if (credentialList.length === 0) {
+			return res.status(400).json({
+				error: 'no credentials found'
+			});
+		}
 		return res.status(200).json({
 			listOfCredentials: credentialList
 		});
@@ -131,6 +170,11 @@ const listCredentials = async (req: Request, res: Response) => {
 const getCredential = async (req: Request, res: Response) => {
 	const credentialType: string = req.params.type;
 	await stateAgentController.getCredentialBasedOnType(credentialType).then((credentialList) => {
+		if (credentialList.length === 0) {
+			return res.status(400).json({
+				error: 'no credentials found for that type'
+			});
+		}
 		return res.status(200).json({
 			listOfCredentials: credentialList
 		});
@@ -140,10 +184,24 @@ const getCredential = async (req: Request, res: Response) => {
 // create presentation
 const createPresentation = async (req: Request, res: Response) => {
 	const credentials: VerifiableCredential[] = [];
-	const holder: string = req.body.holder;
-    
-	// TODO: Add a typeguard that returns an error if credentials is not of type VC[]
+	let holder: string = req.body.holder;
 
+	// TODO: Add a typeguard that returns an error if credentials is not of type VC[]
+	
+	// if holder is not specified, use default DID
+	if (typeof holder === 'undefined') {
+		await stateAgentController.getMainIdentifier().then((mainIdentifier)=>{
+				
+			if (mainIdentifier instanceof Error) {
+				return res.status(500).json({
+					fatal_error: mainIdentifier.message
+				});
+			}
+	
+			holder = mainIdentifier.did;
+		});
+	}
+	
 	if (req.body.listOfCredentials.length === 0) {
 		return res.status(400).json({
 			error: 'empty list of credentials'
@@ -154,8 +212,13 @@ const createPresentation = async (req: Request, res: Response) => {
 	req.body.listOfCredentials.forEach((credential: any) => {
 		credentials.push(credential['verifiableCredential']);
 	});
-    
+
 	await stateAgentController.createPresentation(holder, credentials).then((presentation) => {
+		if (presentation instanceof Error) {
+			return res.status(400).json({
+				error: presentation.message
+			});
+		}
 		return res.status(201).json({
 			presentation
 		});
