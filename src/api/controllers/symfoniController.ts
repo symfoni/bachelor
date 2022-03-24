@@ -15,7 +15,7 @@ const createEmploymentCredential = async (req: Request, res: Response) => {
 
 	if (typeof issuer === 'undefined') {
 		await symfoniAgentController.getMainIdentifier().then((identifier) => {
-			if (typeof identifier === 'string') {
+			if (identifier instanceof Error) {
 				return res.status(500).json({
 					error: 'unable to retrieve main identifier'
 				});
@@ -44,7 +44,7 @@ const createTerminationCredential = async (req: Request, res: Response) => {
 
 	if (typeof issuer === 'undefined') {
 		await symfoniAgentController.getMainIdentifier().then((identifier) => {
-			if (typeof identifier === 'string') {
+			if (identifier instanceof Error) {
 				return res.status(500).json({
 					error: 'unable to retrieve main identifier'
 				});
@@ -117,7 +117,7 @@ const listDIDs = async (req: Request, res: Response) => {
 const resolveDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	symfoniAgentController.resolveDID(did).then((didDocument) => {
-		if (typeof didDocument === 'string') {
+		if (didDocument instanceof Error) {
 			return res.status(400).json({
 				error: didDocument
 			});
@@ -193,7 +193,7 @@ const createPresentation = async (req: Request, res: Response) => {
 	if (typeof holder === 'undefined') {
 		await symfoniAgentController.getMainIdentifier().then((mainIdentifier)=>{
 			
-			if (typeof mainIdentifier === 'string') {
+			if (mainIdentifier instanceof Error) {
 				return res.status(500).json({
 					fatal_error: 'unable to find or create the main identifier'
 				});

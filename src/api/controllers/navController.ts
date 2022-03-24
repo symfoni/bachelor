@@ -13,9 +13,9 @@ const createDID = async (req: Request, res: Response) => {
 	const kms: string = req.body.kms;
 
 	await navAgentController.createDID(alias, provider, kms).then((did) => {
-		if (typeof did === 'string') {
+		if (did instanceof Error) {
 			return res.status(400).json({
-				error: did
+				error: did.message
 			});
 		}
 		return res.status(201).json({
@@ -28,9 +28,9 @@ const createDID = async (req: Request, res: Response) => {
 const getDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	await navAgentController.getDID(did).then((identifier) => {
-		if (typeof identifier === 'string') {
+		if (identifier instanceof Error) {
 			return res.status(400).json({
-				error: identifier
+				error: identifier.message
 			});
 		}
 		return res.status(200).json({
@@ -57,13 +57,13 @@ const listDIDs = async (req: Request, res: Response) => {
 const resolveDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	navAgentController.resolveDID(did).then((didDocument) => {
-		if (typeof didDocument === 'string') {
+		if (didDocument instanceof Error) {
 			return res.status(400).json({
-				error: didDocument
+				error: didDocument.message
 			});
 		} else if (typeof didDocument.didDocument?.id === 'undefined') {
 			return res.status(400).json({
-				didDocument
+				error: didDocument
 			});
 		}
 		return res.status(200).json({
@@ -86,6 +86,12 @@ const addCredential = async (req: Request, res: Response) => {
 	};
 
 	await navAgentController.addCredential(credential).then((credentialHash) => {
+		if (credentialHash instanceof Error) {
+			return res.status(400).json({
+				error: credentialHash.message
+			});
+		}
+		
 		return res.status(201).json({
 			credentialHash
 		});
@@ -133,9 +139,9 @@ const createPresentation = async (req: Request, res: Response) => {
 	if (typeof holder === 'undefined') {
 		await navAgentController.getMainIdentifier().then((mainIdentifier)=>{
 			
-			if (typeof mainIdentifier === 'string') {
+			if (mainIdentifier instanceof Error) {
 				return res.status(500).json({
-					fatal_error: 'unable to find or create the main identifier'
+					fatal_error: mainIdentifier.message
 				});
 			}
 

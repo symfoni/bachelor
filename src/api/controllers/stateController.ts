@@ -13,9 +13,9 @@ const createPersonCredential = async (req: Request, res: Response) => {
 	// TODO: Possibly make this if statement a utility function as it used many times.
 	if (typeof issuer === 'undefined') {
 		await stateAgentController.getMainIdentifier().then((identifier) => {
-			if (typeof identifier === 'string') {
+			if (identifier instanceof Error) {
 				return res.status(500).json({
-					error: 'unable to retrieve main identifier'
+					error: identifier.message
 				});
 			}
 			issuer = identifier.did;
@@ -43,9 +43,9 @@ const createBusinessCredential = async (req: Request, res: Response) => {
 	// TODO: Possibly make this if statement a utility function as it used many times.
 	if (typeof issuer === 'undefined') {
 		await stateAgentController.getMainIdentifier().then((identifier) => {
-			if (typeof identifier === 'string') {
+			if (identifier instanceof Error) {
 				return res.status(500).json({
-					error: 'unable to retrieve main identifier'
+					error: identifier.message
 				});
 			}
 			issuer = identifier.did;
@@ -72,9 +72,9 @@ const createDID = async (req: Request, res: Response) => {
 	const kms: string = req.body.kms;
 
 	await stateAgentController.createDID(alias, provider, kms).then((did) => {
-		if (typeof did === 'string') {
+		if (did instanceof Error) {
 			return res.status(400).json({
-				error: did
+				error: did.message
 			});
 		}
 		return res.status(201).json({
@@ -87,9 +87,9 @@ const createDID = async (req: Request, res: Response) => {
 const getDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	await stateAgentController.getDID(did).then((identifier) => {
-		if (typeof identifier === 'string') {
+		if (identifier instanceof Error) {
 			return res.status(400).json({
-				error: identifier
+				error: identifier.message
 			});
 		}
 		return res.status(200).json({
@@ -116,9 +116,9 @@ const listDIDs = async (req: Request, res: Response) => {
 const resolveDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	stateAgentController.resolveDID(did).then((didDocument) => {
-		if (typeof didDocument === 'string') {
+		if (didDocument instanceof Error) {
 			return res.status(400).json({
-				error: didDocument
+				error: didDocument.message
 			});
 		} else if (typeof didDocument.didDocument?.id === 'undefined') {
 			return res.status(400).json({
@@ -192,9 +192,9 @@ const createPresentation = async (req: Request, res: Response) => {
 	if (typeof holder === 'undefined') {
 		await stateAgentController.getMainIdentifier().then((mainIdentifier)=>{
 				
-			if (typeof mainIdentifier === 'string') {
+			if (mainIdentifier instanceof Error) {
 				return res.status(500).json({
-					fatal_error: 'unable to find or create the main identifier'
+					fatal_error: mainIdentifier.message
 				});
 			}
 	
@@ -214,9 +214,9 @@ const createPresentation = async (req: Request, res: Response) => {
 	});
 
 	await stateAgentController.createPresentation(holder, credentials).then((presentation) => {
-		if (typeof presentation === 'string') {
+		if (presentation instanceof Error) {
 			return res.status(400).json({
-				error: presentation
+				error: presentation.message
 			});
 		}
 		return res.status(201).json({
