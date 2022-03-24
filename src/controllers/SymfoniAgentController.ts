@@ -1,5 +1,6 @@
 import { VerifiableCredential } from '@veramo/core';
 import { PROOF_FORMAT_JWT, SCHEMA_EMPLOYMENT_CONTRACT, SCHEMA_TERMINATION_CREDENTIAL, SCHEMA_W3_CREDENTIAL, TYPE_EMPLOYMENT_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
+import { ISymfoniAgentController } from '../interfaces/symfoniControllerInterface';
 import { employmentVC } from '../types/employmentVCType';
 import { terminationVC } from '../types/terminationVCType';
 import { agentSymfoni } from '../veramo/setup';
@@ -8,7 +9,7 @@ import { AgentController } from './AgentController';
 /**
  * AgentSymfoniController is a factory class that controls the actions of the symfoni agent.
  */
-export class SymfoniAgentController extends AgentController {
+export class SymfoniAgentController extends AgentController implements ISymfoniAgentController{
 	// TODO: make it so that the class automatically initializes and keeps a main did for the agent
 
 	constructor(mainIdentifierAlias: string) {
@@ -22,7 +23,7 @@ export class SymfoniAgentController extends AgentController {
 	 * for schema. 
 	 * @returns an employment credential.
 	 */
-	async createEmploymentCredential(issuer: string, credentialData: employmentVC['credentialSubject']): Promise<VerifiableCredential | string> {
+	async createEmploymentCredential(issuer: string, credentialData: employmentVC['credentialSubject']): Promise<VerifiableCredential | Error> {
 		try {
 			const credential = await this.agent.createVerifiableCredential({
 				credential: {
@@ -41,7 +42,7 @@ export class SymfoniAgentController extends AgentController {
 			return credential;
 		} catch (error) {
 			console.error('unable to create the employment credential',error);
-			return 'unable to create the employment credential';
+			return new Error('unable to create the employment credential');
 		}
 	}
 
@@ -52,7 +53,7 @@ export class SymfoniAgentController extends AgentController {
 	 * for schema.
 	 * @returns a termination credential.
 	 */
-	async createTerminationCredential(issuer: string, credentialData: terminationVC['credentialSubject']): Promise<VerifiableCredential | string> {
+	async createTerminationCredential(issuer: string, credentialData: terminationVC['credentialSubject']): Promise<VerifiableCredential | Error> {
 		try {
 			const credential = await this.agent.createVerifiableCredential({
 				credential: {
@@ -71,7 +72,7 @@ export class SymfoniAgentController extends AgentController {
 			return credential;
 		} catch (error) {
 			console.error('unable to create the termination credential', error);
-			return 'unable to create the termination credential';
+			return new Error('unable to create the termination credential');
 		}
 	}
 }
