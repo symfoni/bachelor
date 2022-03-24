@@ -32,8 +32,9 @@ export class StateAgentController extends AgentController {
 				},
 				proofFormat: PROOF_FORMAT_JWT
 			});
-	
+			
 			return credential;
+		
 		} catch (error) {
 			console.error('unable to create the credential', error);
 			return 'unable to create the credential';
@@ -48,7 +49,7 @@ export class StateAgentController extends AgentController {
 	 */
 	async createBusinessCredential(issuerDid: string, credentialSubjectData: businessVerifiableCredential['credentialSubject']): Promise<VerifiableCredential | string> {
 		try {
-			const credential = this.agent.createVerifiableCredential({
+			const credential = await this.agent.createVerifiableCredential({
 				credential: {
 					'@context': [SCHEMA_W3_CREDENTIAL, SCHEMA_BUSINESS_CREDENTIAL],
 					type: [TYPE_VERIFIABLE_CREDENTIAL, TYPE_BUSINESS_CREDENTIAL],
@@ -59,7 +60,9 @@ export class StateAgentController extends AgentController {
 				},
 				proofFormat: PROOF_FORMAT_JWT
 			});
+		
 			return credential;
+		
 		} catch (error) {
 			console.error('unable to create the credential', error);
 			return 'unable to create the credential';
