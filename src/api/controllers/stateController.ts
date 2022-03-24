@@ -24,6 +24,11 @@ const createPersonCredential = async (req: Request, res: Response) => {
 
 	await stateAgentController.createPersonCredential(issuer, credentialSubject).then((credential) => {
 		// TODO: Validate against context schema
+		if (typeof credential === 'string') {
+			return res.status(400).json({
+				error: credential
+			});
+		}
 		return res.status(201).json({
 			credential
 		});
@@ -49,6 +54,11 @@ const createBusinessCredential = async (req: Request, res: Response) => {
 
 	await stateAgentController.createBusinessCredential(issuer, credentialSubject).then((credential) => {
 		// TODO: Validate against context schema
+		if (typeof credential === 'string') {
+			return res.status(400).json({
+				error: credential
+			});
+		}
 		return res.status(201).json({
 			credential
 		});
@@ -175,7 +185,7 @@ const getCredential = async (req: Request, res: Response) => {
 const createPresentation = async (req: Request, res: Response) => {
 	const credentials: VerifiableCredential[] = [];
 	const holder: string = req.body.holder;
-    
+
 	// TODO: Add a typeguard that returns an error if credentials is not of type VC[]
 
 	if (req.body.listOfCredentials.length === 0) {
@@ -188,7 +198,7 @@ const createPresentation = async (req: Request, res: Response) => {
 	req.body.listOfCredentials.forEach((credential: any) => {
 		credentials.push(credential['verifiableCredential']);
 	});
-    
+
 	await stateAgentController.createPresentation(holder, credentials).then((presentation) => {
 		return res.status(201).json({
 			presentation
