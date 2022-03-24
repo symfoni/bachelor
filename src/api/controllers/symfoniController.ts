@@ -185,9 +185,23 @@ const getCredential = async (req: Request, res: Response) => {
 // create presentation
 const createPresentation = async (req: Request, res: Response) => {
 	const credentials: VerifiableCredential[] = [];
-	const holder: string = req.body.holder;
+	let holder: string = req.body.holder;
     
 	// TODO: Add a typeguard that returns an error if credentials is not of type VC[]
+	
+	// if holder is not specified, use default DID
+	if (typeof holder === 'undefined') {
+		await symfoniAgentController.getMainIdentifier().then((mainIdentifier)=>{
+			
+			if (typeof mainIdentifier === 'string') {
+				return res.status(500).json({
+					fatal_error: 'unable to find or create the main identifier'
+				});
+			}
+
+			holder = mainIdentifier.did;
+		});
+	}
 
 	if (req.body.listOfCredentials.length === 0) {
 		return res.status(400).json({
