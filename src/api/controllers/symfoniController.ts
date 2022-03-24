@@ -28,6 +28,11 @@ const createEmploymentCredential = async (req: Request, res: Response) => {
 
 	await symfoniAgentController.createEmploymentCredential(issuer, credentialClaims).then((credential) => {
 		// TODO: Validate credential against schema
+		if (typeof credential === 'string') {
+			return res.status(400).json({
+				error: credential
+			});
+		}
 		return res.status(201).json({ credential });
 	});
 };
@@ -50,6 +55,11 @@ const createTerminationCredential = async (req: Request, res: Response) => {
 
 	await symfoniAgentController.createTerminationCredential(issuer, credentialClaims).then((credential) => {
 		// TODO: Validate credential against context schema
+		if (typeof credential === 'string') {
+			return res.status(400).json({
+				error: credential
+			});
+		}
 		return res.status(201).json({
 			credential
 		});
