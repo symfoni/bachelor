@@ -86,6 +86,12 @@ const addCredential = async (req: Request, res: Response) => {
 	};
 
 	await userAgentController.addCredential(credential).then((credentialHash) => {
+		if (typeof credentialHash !== 'string') {
+			return res.status(400).json({
+				error: credentialHash.message
+			});
+		}
+		
 		return res.status(201).json({
 			credentialHash
 		});
