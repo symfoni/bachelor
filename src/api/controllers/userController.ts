@@ -106,6 +106,11 @@ const listCredentials = async (req: Request, res: Response) => {
 const getCredential = async (req: Request, res: Response) => {
 	const credentialType: string = req.params.type;
 	await userAgentController.getCredentialBasedOnType(credentialType).then((credentialList) => {
+		if (credentialList.length === 0) {
+			return res.status(400).json({
+				error: 'no credentials found for that type'
+			});
+		}
 		return res.status(200).json({
 			listOfCredentials: credentialList
 		});
