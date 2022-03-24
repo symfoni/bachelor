@@ -77,6 +77,11 @@ const createDID = async (req: Request, res: Response) => {
 const getDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	await stateAgentController.getDID(did).then((identifier) => {
+		if (typeof identifier === 'string') {
+			return res.status(400).json({
+				error: identifier
+			});
+		}
 		return res.status(200).json({
 			identifier
 		});
