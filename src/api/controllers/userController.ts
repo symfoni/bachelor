@@ -96,6 +96,11 @@ const addCredential = async (req: Request, res: Response) => {
 // list all saved credentials in the database
 const listCredentials = async (req: Request, res: Response) => {
 	await userAgentController.getAllCredentials().then((credentialList) => {
+		if (credentialList.length === 0) {
+			return res.status(400).json({
+				error: 'no credentials found'
+			});
+		}
 		return res.status(200).json({
 			listOfCredentials: credentialList
 		});
