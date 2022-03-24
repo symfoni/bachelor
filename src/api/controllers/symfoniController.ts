@@ -92,6 +92,11 @@ const getDID = async (req: Request, res: Response) => {
 // list dids
 const listDIDs = async (req: Request, res: Response) => {
 	await symfoniAgentController.listAllDIDs().then((didList) => {
+		if (typeof didList === 'undefined') {
+			return res.status(500).json({
+				error: 'unable to retrieve a list of dids'
+			});
+		}
 		return res.status(200).json({
 			listOfDids: didList
 		});
