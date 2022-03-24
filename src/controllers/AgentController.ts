@@ -162,7 +162,7 @@ export class AgentController implements IAgentController {
 	 * @param credential a verifiable credential.
 	 * @returns the hash of the credential that was created.
 	 */
-	async addCredential(credential: VerifiableCredential): Promise<string> {
+	async addCredential(credential: VerifiableCredential): Promise<string | Error> {
 		try {
 			return await this.agent.dataStoreSaveVerifiableCredential({
 				verifiableCredential: credential
@@ -170,7 +170,7 @@ export class AgentController implements IAgentController {
 		} catch (error) {
 			console.log('unable to add credential to database', error);
 
-			return 'unable to add credential to database';
+			return new Error('unable to add credential to database');
 		}
 	}
 
