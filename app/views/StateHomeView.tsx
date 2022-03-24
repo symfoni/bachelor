@@ -1,6 +1,7 @@
 import React from 'react';
-import { Alert, Button, StyleSheet } from 'react-native';
+import { Alert, Button } from 'react-native';
 import { Text, View } from 'react-native';
+import { styles } from '../styles';
 
 export default function StateHomeView(){
 	return (
@@ -15,12 +16,3 @@ export default function StateHomeView(){
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});

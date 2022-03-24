@@ -1,6 +1,7 @@
 import React from 'react';
-import { Alert, Button, StyleSheet } from 'react-native';
+import { Alert, Button } from 'react-native';
 import { Text, View } from 'react-native';
+import { styles } from '../styles';
 
 export default function UserHomeView(){
 	return (
@@ -25,12 +26,3 @@ export default function UserHomeView(){
 		</View>
 	);
 }
-
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-	},
-});

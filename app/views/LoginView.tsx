@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Button, Text, View } from 'react-native';
+import { styles } from '../styles';
 
 // TODO: Fix type issue, it is not safe to have 'any' as type here
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -35,12 +36,3 @@ export default function LoginView( { navigation }: any ) {
 	);
 }
 
-const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		backgroundColor: '#fff',
-		alignItems: 'center',
-		justifyContent: 'center',
-		marginVertical: 8,
-	},
-});
