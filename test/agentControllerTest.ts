@@ -65,7 +65,7 @@ describe('AgentController', function () {
 		});
 
 		it('should return a error message if it did not find anything', function () {
-
+			// assert
 		});
 	});
 
@@ -73,6 +73,7 @@ describe('AgentController', function () {
 	describe('listAllDIDs', function () {
 
 		it('should return a DID with the correct alias, provider, and kms', function () {
+			// assert
 		});
 
 	});
