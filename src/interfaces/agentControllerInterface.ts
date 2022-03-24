@@ -20,7 +20,7 @@ export interface IAgentController {
 
     createCredential(credentialData: VerifiableCredential): Promise<VerifiableCredential | string>
 
-    addCredential(credential: VerifiableCredential): Promise<string>
+    addCredential(credential: VerifiableCredential): Promise<string | Error>
 
     getAllCredentials(): Promise<UniqueVerifiableCredential[]>
 
