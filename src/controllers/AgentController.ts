@@ -70,10 +70,10 @@ export class AgentController implements IAgentController {
 
 
 	/**
-	 * verifyJWT uses the veramo message handler to verify if the JWT is valid
-	 * and not tampered with
-	 * @param jwt the jwt token as a string
-	 * @returns true of false
+	 * verifyJWT uses the Veramo message handler to verify if the JWT is valid
+	 * and not tampered with.
+	 * @param jwt the jwt token as a string.
+	 * @returns true or false.
 	 */
 	async verifyJWT(jwt: string): Promise<boolean | Error> {
 		try {
