@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginView from './app/views/LoginView';
-import NAVHomeView from './app/views/NavHomeView';
-import StateHomeView from './app/views/StateHomeView';
-import SymfoniHomeView from './app/views/SymfoniHomeView';
-import UserHomeView from './app/views/UserHomeView';
+import NAVHomeView from './app/views/NAVViews/NavHomeView';
+import StateHomeView from './app/views/StateViews/StateHomeView';
+import SymfoniHomeView from './app/views/SymfoniViews/SymfoniHomeView';
+import UserHomeView from './app/views/UserViews/UserHomeView';
 
 const Stack = createNativeStackNavigator();
 
