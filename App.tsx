@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginView from './app/views/LoginView';
 import NAVHomeView from './app/views/NAVViews/NavHomeView';
+import { StateCreatePersonVCView } from './app/views/StateViews/StateCreatePersonVCView';
 import StateHomeView from './app/views/StateViews/StateHomeView';
 import { SymfoniCreateEmploymentVCView } from './app/views/SymfoniViews/SymfoniCreateEmploymentVCView';
 import { SymfoniCreateTerminationVCView } from './app/views/SymfoniViews/SymfoniCreateTerminationVCView';
@@ -31,6 +32,8 @@ export default function App() {
 				
 				
 				<Stack.Screen name='StateHome' component={StateHomeView} options={{title: 'State Agent'}}></Stack.Screen>
+				<Stack.Screen name='StateCreatePersonVC' component={StateCreatePersonVCView} options={{title: 'Create personVC'}}></Stack.Screen>
+
 				
 				<Stack.Screen name='NAVHome' component={NAVHomeView} options={{title: 'NAV Agent'}}></Stack.Screen>
 			</Stack.Navigator>

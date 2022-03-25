@@ -4,14 +4,15 @@ import { Text, View } from 'react-native';
 import NavigationButton from '../../components/navigationButton';
 import { styles } from '../../styles';
 
-export default function StateHomeView(){
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function StateHomeView({navigation}: any){
 	return (
 		<View style={styles.container}>
 			<Text>This is the state home page.</Text>
 
 			<NavigationButton
 				title='Create personVC'
-				onPress={()=>Alert.alert('test','test')}
+				onPress={()=> navigation.navigate('StateCreatePersonVC')}
 			></NavigationButton>
 
 		</View>
