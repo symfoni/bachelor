@@ -1,27 +1,27 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import { Text, View } from 'react-native';
 import NavigationButton from '../../components/navigationButton';
 import { styles } from '../../styles';
 
-export default function UserHomeView(){
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function UserHomeView({navigation}: any){
 	return (
 		<View style={styles.container}>
 			<Text>This is the user home page.</Text>
 
 			<NavigationButton
 				title='Recieve VC'
-				onPress={()=> Alert.alert('Test','Test')}
+				onPress={()=> navigation.navigate('UserRecieveVC')}
 			></NavigationButton>
 
 			<NavigationButton
 				title='List VCs'
-				onPress={()=> Alert.alert('Test','Test')}
+				onPress={()=>navigation.navigate('UserListVCs')}
 			></NavigationButton>
 
 			<NavigationButton
-				title='Send VP'
-				onPress={()=> Alert.alert('Test','Test')}
+				title='Create VP'
+				onPress={()=> navigation.navigate('UserCreateVP')}
 			></NavigationButton>
 
 		</View>
