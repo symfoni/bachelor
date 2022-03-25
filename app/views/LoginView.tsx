@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { Button, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 import NavigationButton from '../components/navigationButton';
 import { styles } from '../styles';
 
