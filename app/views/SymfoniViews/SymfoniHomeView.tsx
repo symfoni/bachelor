@@ -1,5 +1,4 @@
 import React from 'react';
-import { Alert } from 'react-native';
 import { Text, View } from 'react-native';
 import NavigationButton from '../../components/navigationButton';
 import { styles } from '../../styles';
