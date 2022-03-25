@@ -29,9 +29,13 @@ import { getResolver as webDidResolver } from 'web-did-resolver';
 // Storage plugin using TypeOrm
 import { Entities, KeyStore, DIDStore, IDataStoreORM, PrivateKeyStore, migrations, DataStore, DataStoreORM } from '@veramo/data-store';
 
+// Message handlers for validating JWT-tokens
+import { MessageHandler } from '@veramo/message-handler';
+import { JwtMessageHandler } from '@veramo/did-jwt';
+
 // TypeORM is installed with `@veramo/data-store`
 import { createConnection } from 'typeorm';
-import { CredentialIssuer, ICredentialIssuer } from '@veramo/credential-w3c';
+import { CredentialIssuer, ICredentialIssuer, W3cMessageHandler } from '@veramo/credential-w3c';
 // Local sqlite database for the different agents
 const NAV_DATABASE_FILE = './database/nav-database.sqlite';
 const SYMFONI_DATABASE_FILE = './database/symfoni-database.sqlite';
@@ -135,6 +139,9 @@ export const agentNAV = createAgent<IDIDManager & IKeyManager & IDataStore & IDa
 			}),
 		}),
 		new CredentialIssuer(),
+		new MessageHandler({
+			messageHandlers: [new JwtMessageHandler(), new W3cMessageHandler()],
+		}),
 		new DataStore(dbConnectionNAV),
 		new DataStoreORM(dbConnectionNAV)
 	],
@@ -169,6 +176,9 @@ export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore &
 			}),
 		}),
 		new CredentialIssuer(),
+		new MessageHandler({
+			messageHandlers: [new JwtMessageHandler(), new W3cMessageHandler()],
+		}),
 		new DataStore(dbConnectionSymfoni),
 		new DataStoreORM(dbConnectionSymfoni)
 	],
@@ -203,6 +213,9 @@ export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & ID
 			}),
 		}),
 		new CredentialIssuer(),
+		new MessageHandler({
+			messageHandlers: [new JwtMessageHandler(), new W3cMessageHandler()],
+		}),
 		new DataStore(dbConnectionUser),
 		new DataStoreORM(dbConnectionUser)
 	],
@@ -237,6 +250,9 @@ export const agentState = createAgent<IDIDManager & IKeyManager & IDataStore & I
 			}),
 		}),
 		new CredentialIssuer(),
+		new MessageHandler({
+			messageHandlers: [new JwtMessageHandler(), new W3cMessageHandler()],
+		}),
 		new DataStore(dbConnectionState),
 		new DataStoreORM(dbConnectionState)
 	],
@@ -271,6 +287,9 @@ export const agentTest = createAgent<IDIDManager & IKeyManager & IDataStore & ID
 			}),
 		}),
 		new CredentialIssuer(),
+		new MessageHandler({
+			messageHandlers: [new JwtMessageHandler(), new W3cMessageHandler()],
+		}),
 		new DataStore(dbConnectionTest),
 		new DataStoreORM(dbConnectionTest)
 	],
