@@ -14,6 +14,7 @@ router.post('/user/credential', userController.addCredential);
 router.get('/user/credentials', userController.listCredentials);
 router.get('/user/credential/:type', userController.getCredential);
 router.post('/user/presentation', userController.createPresentation);
+router.post('/user/verifyJWT', userController.verifyJWT);
 
 // symfoni endpoints
 router.post('/symfoni/did', symfoniController.createDID);
@@ -27,9 +28,9 @@ router.post('/symfoni/credential', symfoniController.addCredential);
 router.get('/symfoni/credentials', symfoniController.listCredentials);
 router.get('/symfoni/credential/:type', symfoniController.getCredential);
 router.post('/symfoni/presentation', symfoniController.createPresentation);
+router.post('/symfoni/verifyJWT', userController.verifyJWT);
 
 // NAV endpoints
-// user endpoints
 router.post('/nav/did', navController.createDID);
 router.get('/nav/did/:did', navController.getDID);
 router.get('/nav/dids', navController.listDIDs);
@@ -38,6 +39,7 @@ router.post('/nav/credential', navController.addCredential);
 router.get('/nav/credentials', navController.listCredentials);
 router.get('/nav/credential/:type', navController.getCredential);
 router.post('/nav/presentation', navController.createPresentation);
+router.post('/nav/verifyJWT', userController.verifyJWT);
 
 // state endpoints
 router.post('/state/personCredential', stateController.createPersonCredential);
@@ -50,5 +52,6 @@ router.post('/state/credential', stateController.addCredential);
 router.get('/state/credentials', stateController.listCredentials);
 router.get('/state/credential/:type', stateController.getCredential);
 router.post('/state/presentation', stateController.createPresentation);
+router.post('/state/verifyJWT', userController.verifyJWT);
 
 export default router;
