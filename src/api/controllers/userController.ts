@@ -128,6 +128,28 @@ const getCredential = async (req: Request, res: Response) => {
 	});
 };
 
+// verify a jwt
+const verifyJWT = async (req: Request, res: Response) => {
+	const jwt: string = req.body.jwt;
+
+	if(typeof jwt === 'undefined') {
+		return res.status(400).json({
+			error: 'jwt missing'
+		});
+	}
+
+	await userAgentController.verifyJWT(jwt).then((isValid) => {
+		if(isValid instanceof Error ) {
+			return res.status(500).json({
+				fatal_error: isValid.message
+			});
+		}
+		return res.status(200).json({
+			isValid
+		});
+	});
+};
+
 // create presentation
 const createPresentation = async (req: Request, res: Response) => {
 	const credentials: VerifiableCredential[] = [];
@@ -173,4 +195,4 @@ const createPresentation = async (req: Request, res: Response) => {
 
 };
 
-export default { createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential, createPresentation };
+export default { createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential, createPresentation, verifyJWT };

@@ -14,6 +14,7 @@ router.post('/user/credential', userController.addCredential);
 router.get('/user/credentials', userController.listCredentials);
 router.get('/user/credential/:type', userController.getCredential);
 router.post('/user/presentation', userController.createPresentation);
+router.post('/user/verifyJWT', userController.verifyJWT);
 
 // symfoni endpoints
 router.post('/symfoni/did', symfoniController.createDID);
