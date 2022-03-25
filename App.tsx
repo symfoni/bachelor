@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginView from './app/views/LoginView';
 import NAVHomeView from './app/views/NAVViews/NavHomeView';
+import { NAVRecieveVPView } from './app/views/NAVViews/NAVRecieveVPView';
 import { StateCreatePersonVCView } from './app/views/StateViews/StateCreatePersonVCView';
 import StateHomeView from './app/views/StateViews/StateHomeView';
 import { SymfoniCreateEmploymentVCView } from './app/views/SymfoniViews/SymfoniCreateEmploymentVCView';
@@ -36,6 +37,8 @@ export default function App() {
 
 				
 				<Stack.Screen name='NAVHome' component={NAVHomeView} options={{title: 'NAV Agent'}}></Stack.Screen>
+				<Stack.Screen name='NAVRecieveVP' component={NAVRecieveVPView} options={{title: 'Send your VP here and get it verified, or not'}}></Stack.Screen>
+
 			</Stack.Navigator>
 		</NavigationContainer>
 	);
