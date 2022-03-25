@@ -1,8 +1,13 @@
 import React from 'react';
 import { Text, View } from 'react-native';
 import NavigationButton from '../../components/navigationButton';
-import { styles } from '../../styles';
+import { buttonStyles, styles } from '../../styles';
 
+/**
+ * SymfoniHomeView is a view component for Symfonis homepage.
+ * @param param0 takes a navigation object as a parameter.
+ * @returns the homepage view for Symfoni.
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function SymfoniHomeView({navigation}: any){
 	return (
@@ -11,11 +16,13 @@ export default function SymfoniHomeView({navigation}: any){
 
 			<NavigationButton
 				title='Create employment contract'
+				customStyle={buttonStyles.navigationButtonSymfoni}
 				onPress={()=> navigation.navigate('SymfoniCreateEmploymentVC')}
 			></NavigationButton>
 
 			<NavigationButton
 				title='Create termination contract'
+				customStyle={buttonStyles.navigationButtonSymfoni}
 				onPress={()=> navigation.navigate('SymfoniCreateTerminationVC')}
 			></NavigationButton>
 
