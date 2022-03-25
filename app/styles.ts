@@ -8,4 +8,17 @@ export const styles = StyleSheet.create({
 		justifyContent: 'center',
 		marginVertical: 8,
 	},
+	navigationButton: {
+		backgroundColor: '#170c5a',
+		alignItems: 'center',
+		justifyContent: 'center',
+		paddingVertical: 12,
+		paddingHorizontal: 32,
+		borderRadius: 4,
+		elevation: 3,
+		margin: 5
+	},
+	navigationButtonText: {
+		color: '#fff',
+	}
 });
