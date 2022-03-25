@@ -4,6 +4,11 @@ import NavigationButton from '../components/navigationButton';
 import { styles } from '../styles';
 
 // TODO: Fix type issue, it is not safe to have 'any' as type here
+/**
+ * LoginView is the initial view component for the application.
+ * @param param0 takes a navigation object as a parameter.
+ * @returns a login page view component.
+ */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function LoginView( { navigation }: any ) {
 	return (
