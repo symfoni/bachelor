@@ -2,8 +2,13 @@ import React from 'react';
 import { Button, TextInput, View } from 'react-native';
 import { styles } from '../styles';
 import { Formik } from 'formik';
+import * as yup from 'yup';
 
-const 
+const EmploymentSchema = yup.object({
+	jobTitle: yup.string().required(),
+	hoursOfWork: yup.number().required(),
+	startDate: yup.date().required()
+});
 
 export default function EmploymentForm() {
 
@@ -12,6 +17,7 @@ export default function EmploymentForm() {
 		<View style={styles.container}>
 			<Formik
 				initialValues={{ jobTitle: '', hoursOfWork: '', startDate: '' }}
+				validationSchema={EmploymentSchema}
 				onSubmit={(values, actions) => {
 					actions.resetForm();
 					console.log(values);
