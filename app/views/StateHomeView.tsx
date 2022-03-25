@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, Button } from 'react-native';
 import { Text, View } from 'react-native';
+import NavigationButton from '../components/navigationButton';
 import { styles } from '../styles';
 
 export default function StateHomeView(){
@@ -8,10 +9,10 @@ export default function StateHomeView(){
 		<View style={styles.container}>
 			<Text>This is the state home page.</Text>
 
-			<Button
+			<NavigationButton
 				title='Create personVC'
 				onPress={()=>Alert.alert('test','test')}
-			></Button>
+			></NavigationButton>
 
 		</View>
 	);

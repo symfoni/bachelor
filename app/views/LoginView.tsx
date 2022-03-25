@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import { Button, Text, View } from 'react-native';
+import NavigationButton from '../components/navigationButton';
 import { styles } from '../styles';
 
 // TODO: Fix type issue, it is not safe to have 'any' as type here
@@ -10,28 +11,26 @@ export default function LoginView( { navigation }: any ) {
 			<Text>Choose your agent!</Text>
 			<StatusBar style="auto" />
 			
-			<Button
+			<NavigationButton
 				title='User agent'
-				onPress={()=> navigation.navigate('UserHome') }
-
-			/>
+				onPress={()=> navigation.navigate('UserHome')}
+			></NavigationButton>
 			
-			<Button 
+			<NavigationButton
 				title='Symfoni agent'
 				onPress={()=>navigation.navigate('SymfoniHome')}
+			></NavigationButton>
 
-			/>
-
-			<Button 
+			<NavigationButton
 				title='NAV agent'
 				onPress={()=>navigation.navigate('NAVHome')}
-			/>
+			></NavigationButton>
 
-			<Button 
+			<NavigationButton
 				title='State agent'
 				onPress={()=>navigation.navigate('StateHome')}
+			></NavigationButton>
 
-			/>
 		</View>
 	);
 }

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Alert, Button } from 'react-native';
 import { Text, View } from 'react-native';
+import NavigationButton from '../components/navigationButton';
 import { styles } from '../styles';
 
 export default function NAVHomeView(){
@@ -8,10 +9,10 @@ export default function NAVHomeView(){
 		<View style={styles.container}>
 			<Text>This is the NAV home page.</Text>
 
-			<Button
+			<NavigationButton
 				title='Søk dagpenger'
 				onPress={()=>{Alert.alert('test','test');}}
-			></Button>
+			></NavigationButton>
 
 		</View>
 	);
