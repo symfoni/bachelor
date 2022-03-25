@@ -32,7 +32,14 @@ export const styles = StyleSheet.create({
 		fontSize: 22,
 		color: '#fff',
 		marginBottom: 15
-	}
+	},
+	input: {
+		borderWidth: 1,
+		borderColor: '#ddd',
+		padding: 10,
+		fontSize: 18,
+		borderRadius: 6,
+	},
 });
 
 // Button styles
