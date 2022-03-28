@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { FlatList, Text, View, ActivityIndicator, Platform } from 'react-native';
+import { FlatList, View, ActivityIndicator, Platform } from 'react-native';
+import { CredentialCard } from '../../components/credentialCard';
 import { styles } from '../../styles';
 
 
-// TODO: find out why the endpoint doesn't work on mobile
-const userCredentialEndpoint = Platform.OS === 'android' ? 'http://10.0.2.2:6060/user/credentials' : 'http://localhost:6060/user/credentials';
+// TODO: find a way to run the local HTTP from the phone itself. It should not be dependent on a computer to work.
+// You have to replace the 'localhost' part in the first string with your IPV4 address.
+// You can find it by typing 'ipconfig' in your command line.
+const userCredentialEndpoint = Platform.OS === 'android' ? 'http://localhost:6060/user/credentials' : 'http://localhost:6060/user/credentials';
 
-
-
+/**
+ * UserListVCView is a view that fetches all locally stored credentials and displays them for the user.
+ * @returns a view with a list of credentials owned by the user.
+ */
 export default function UserListVCView() {
 	const [isLoading, setLoading] = useState(true);
 	const [data, setData] = useState([]);
@@ -16,19 +21,13 @@ export default function UserListVCView() {
 		try {
 			const response = await fetch(userCredentialEndpoint);
 			const json = await response.json();
-        
 			setData(json.listOfCredentials);
-		} catch (error) {
-			console.log('hello');
-            
+		} catch (error) {        
 			console.error(error);
-            
 		} finally {
 			setLoading(false);
 		}
-    
 	};
-	
 
 	useEffect(() => {
 		getCredentials();
@@ -41,9 +40,8 @@ export default function UserListVCView() {
 					data={data}
 					keyExtractor={({ id }) => id}
 					renderItem={({ item }: any ) => (
-						<View style={styles.credentialCard}>
-							<Text style={styles.defaultText}>{item.verifiableCredential.type.at(1)}</Text>
-						</View>
+						// TODO: Fix 'each child in list should have a unique key' on mobile build.
+						<CredentialCard key={item.hash} item={item}></CredentialCard>
 					)}
 				/>
 			)}
