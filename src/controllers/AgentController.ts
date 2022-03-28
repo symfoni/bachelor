@@ -210,7 +210,8 @@ export class AgentController implements IAgentController {
 	 */
 	async getCredentialBasedOnType(credentialType: string): Promise<UniqueVerifiableCredential[]> {
 		return await this.agent.dataStoreORMGetVerifiableCredentialsByClaims({
-			where: [{ column: 'credentialType', value: [`${TYPE_VERIFIABLE_CREDENTIAL},${credentialType}`] }]
+			where: [{ column: 'credentialType', value: [`${TYPE_VERIFIABLE_CREDENTIAL},${credentialType}`] }],
+			order: [{direction: 'DESC', column: 'issuanceDate'}]
 		});
 	}
 

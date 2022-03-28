@@ -15,6 +15,24 @@ export const styles = StyleSheet.create({
 		justifyContent: 'center',
 		marginVertical: 8,
 	},
+	credentialCard: {
+		padding: 60,
+		marginVertical: 10,
+		marginHorizontal: 16,
+		backgroundColor: userColor,
+		borderRadius: 4,
+		elevation: 3,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	defaultText: {
+		color: '#fff'
+	},
+	headingText: {
+		fontSize: 22,
+		color: '#fff',
+		marginBottom: 15
+	}
 });
 
 // Button styles
@@ -23,8 +41,8 @@ export const buttonStyles = StyleSheet.create({
 		backgroundColor: '#000',
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingVertical: 12,
-		paddingHorizontal: 32,
+		paddingVertical: 24,
+		paddingHorizontal: 64,
 		borderRadius: 4,
 		elevation: 3,
 		margin: 5
