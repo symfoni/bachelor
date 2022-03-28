@@ -39,6 +39,10 @@ export function CredentialCard({item}: any) {
 		return (
 			<View style={styles.credentialCard}>
 				<Text style={styles.headingText}>{item.verifiableCredential.type[1]}</Text>
+				<Text style={styles.defaultText}>Name: {item.verifiableCredential.credentialSubject.business.name}</Text>
+				<Text style={styles.defaultText}>
+					Address: {item.verifiableCredential.credentialSubject.business.address.city}, {item.verifiableCredential.credentialSubject.business.address.streetName}, {item.verifiableCredential.credentialSubject.business.address.streetNumber}
+				</Text>
 			</View>
 		);
 	}
