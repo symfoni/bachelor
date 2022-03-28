@@ -7,6 +7,7 @@ import { styles } from '../styles';
  * @param param0 takes in verifiable credential data.
  * @returns a credential card for a specific credential type.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function CredentialCard({item}: any) {
 	if (item.verifiableCredential.type[1] === TYPE_EMPLOYMENT_CREDENTIAL) {
 		return (

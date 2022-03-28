@@ -39,6 +39,7 @@ export default function UserListVCView() {
 				<FlatList
 					data={data}
 					keyExtractor={({ id }) => id}
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					renderItem={({ item }: any ) => (
 						// TODO: Fix 'each child in list should have a unique key' on mobile build.
 						<CredentialCard key={item.hash} item={item}></CredentialCard>
