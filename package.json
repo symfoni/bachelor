@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/symfoni/bachelor#readme",
   "dependencies": {
+    "@react-native-picker/picker": "^2.4.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.2",
     "@types/axios": "^0.14.0",
