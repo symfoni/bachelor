@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 // Main color for different actors
-const symfoniColor = '#170c5a';
-const navColor = '#C30000';
-const userColor =  '#003399';
-const stateColor = '#6f2c3f';
+export const symfoniColor = '#170c5a';
+export const navColor = '#C30000';
+export const userColor =  '#003399';
+export const stateColor = '#6f2c3f';
 
 // General styles
 export const styles = StyleSheet.create({

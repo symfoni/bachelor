@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, TextInput, View, Text } from 'react-native';
-import { styles } from '../styles';
+import { styles, symfoniColor } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -8,7 +8,7 @@ import * as yup from 'yup';
 const EmploymentSchema = yup.object({
 	jobTitle: yup.string().required().min(4),
 	hoursOfWork: yup.number().required(),
-	//startDate: yup.date().required()
+	startDate: yup.date().required()
 });
 
 // TODO: Add a way to navigate to the QR page when submitting the form
@@ -59,7 +59,7 @@ export default function EmploymentForm() {
 						<Text>start Date</Text>
 						<TextInput 
 							style={styles.input}
-							placeholder='01-01-2022'
+							placeholder='MM-DD-YYYY'
 							onChangeText={props.handleChange('startDate')}
 							value={props.values.startDate}
 							onBlur={props.handleBlur('startDate')}
@@ -68,7 +68,7 @@ export default function EmploymentForm() {
 
 						<Text>{props.touched.startDate && props.errors.startDate}</Text>
             
-						<Button color='maroon' title="Submit" onPress={props.submitForm} /> 
+						<Button color={symfoniColor} title="Submit" onPress={props.submitForm} /> 
 					</View>
 				)}
 			</Formik>
