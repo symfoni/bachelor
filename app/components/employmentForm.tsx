@@ -1,13 +1,13 @@
 import React from 'react';
-import { Button, TextInput, View } from 'react-native';
+import { Button, TextInput, View, Label, Text } from 'react-native';
 import { styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 
 const EmploymentSchema = yup.object({
-	jobTitle: yup.string().required(),
+	jobTitle: yup.string().required().min(4),
 	hoursOfWork: yup.number().required(),
-	startDate: yup.date().required()
+	//startDate: yup.date().required()
 });
 
 export default function EmploymentForm() {
@@ -32,14 +32,17 @@ export default function EmploymentForm() {
 							value={props.values.jobTitle}
 						/>
 
+						<Text>{props.touched.jobTitle && props.errors.jobTitle}</Text>
+						
 						<TextInput
 							style={styles.input}
-							multiline
 							placeholder='Hours per week'
 							onChangeText={props.handleChange('hoursOfWork')}
 							value={props.values.hoursOfWork}
 							keyboardType='numeric'
 						/>
+
+						<Text>{props.touched.hoursOfWork && props.errors.hoursOfWork}</Text>
 
 						<TextInput 
 							style={styles.input}
@@ -48,6 +51,8 @@ export default function EmploymentForm() {
 							value={props.values.startDate}
 							
 						/>
+
+						<Text>{props.touched.startDate && props.errors.startDate}</Text>
             
 						<Button color='maroon' title="Submit" onPress={props.submitForm} /> 
 					</View>
