@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
 		marginVertical: 8,
 	},
 	credentialCard: {
-		padding: 20,
+		padding: 60,
 		marginVertical: 10,
 		marginHorizontal: 16,
 		backgroundColor: userColor,
@@ -27,6 +27,11 @@ export const styles = StyleSheet.create({
 	},
 	defaultText: {
 		color: '#fff'
+	},
+	headingText: {
+		fontSize: 22,
+		color: '#fff',
+		marginBottom: 15
 	}
 });
 
