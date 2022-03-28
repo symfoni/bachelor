@@ -32,9 +32,7 @@ export class SymfoniAgentController extends AgentController implements ISymfoniA
 					issuer: {
 						id: issuer
 					},
-					credentialSubject: {
-						credentialData
-					}
+					credentialSubject: credentialData
 				},
 				proofFormat: PROOF_FORMAT_JWT
 			});
@@ -62,9 +60,7 @@ export class SymfoniAgentController extends AgentController implements ISymfoniA
 					issuer: {
 						id: issuer
 					},
-					credentialSubject: {
-						credentialData
-					}
+					credentialSubject: credentialData
 				},
 				proofFormat: PROOF_FORMAT_JWT
 			});
