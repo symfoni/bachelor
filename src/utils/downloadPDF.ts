@@ -1,17 +1,18 @@
 import fs from 'fs';
 import fetch from 'cross-fetch';
 
+const FILE_STORE_PATH = './src/utils/tempContract.pdf';
 /**
- * downloadPDF is a function downloads a pdf from the internet through a URL
- * @param url is the URL you want to download from
- * @param filename is by default set to tempContract.pdf, but can be set manually if another name or location for file is prefered
+ * downloadPDF is a function that downloads a pdf from the internet through a URL
+ * @param url is the URL you want to download from and the URL must end with .pdf
+ * @param filename is by default set to tempContract.pdf and stored in the utils-folder. another name can be set if prefered. The new filename should have the .pdf extension
  */
-export function downloadPDF(url: string, filename = 'tempContract.pdf') {
+export function downloadPDF(url: string) {
 	if(url.endsWith('.pdf')) {
 		fetch(url).then((response) => response.arrayBuffer()).then(data => {
 
 			const fileData = new DataView(data);
-			fs.writeFile(filename, fileData, (err) => {
+			fs.writeFile(FILE_STORE_PATH, fileData, (err) => {
 				if (err)
 					console.log(err);
 			});
