@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/symfoni/bachelor#readme",
   "dependencies": {
+    "@react-native-community/checkbox": "^0.5.12",
     "@react-native-picker/picker": "^2.4.0",
     "@react-navigation/native": "^6.0.8",
     "@react-navigation/native-stack": "^6.5.2",
@@ -54,6 +55,7 @@
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-native": "0.64.3",
+    "react-native-elements": "^3.4.2",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
     "react-native-web": "0.17.1",
