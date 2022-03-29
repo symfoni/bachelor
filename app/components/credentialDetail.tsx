@@ -100,24 +100,19 @@ export function CredentialDetail({item}: any){
 	} else if (item.verifiableCredential.type[1] === TYPE_BUSINESS_CREDENTIAL) {
 		return (
 			<View style={styles.credentialDetailView}>
-				<View>
-					<Text style={styles.headingTextBlack}>{item.verifiableCredential.type[1]}</Text>
-					<Text>Business info</Text>
-					<Text>Name: {item.verifiableCredential.credentialSubject.business.name}</Text>
-					<Text>Industrial code: {item.verifiableCredential.credentialSubject.business.industrialCode}</Text>
-					<Text>Organisation structure: {item.verifiableCredential.credentialSubject.business.organisationStructure}</Text>
-					<Text>Organisation number: {item.verifiableCredential.credentialSubject.business.organisationNumber}</Text>
-				</View>
+				<Text style={styles.headingTextBlack}>{item.verifiableCredential.type[1]}</Text>
+				<Text>Business info</Text>
+				<Text>Name: {item.verifiableCredential.credentialSubject.business.name}</Text>
+				<Text>Industrial code: {item.verifiableCredential.credentialSubject.business.industrialCode}</Text>
+				<Text>Organisation structure: {item.verifiableCredential.credentialSubject.business.organisationStructure}</Text>
+				<Text>Organisation number: {item.verifiableCredential.credentialSubject.business.organisationNumber}</Text>
 				
-				<View>
-					<Text>Address</Text>
-					<Text>Country code: {item.verifiableCredential.credentialSubject.business.address.countryCode}</Text>
-					<Text>City: {item.verifiableCredential.credentialSubject.business.address.city}</Text>
-					<Text>Zip: {item.verifiableCredential.credentialSubject.business.address.zipCode}</Text>
-					<Text>Street: {item.verifiableCredential.credentialSubject.business.address.streetName}</Text>
-					<Text>Street number: {item.verifiableCredential.credentialSubject.business.address.streetNumber}</Text>
-				</View>
-				
+				<Text>Address</Text>
+				<Text>Country code: {item.verifiableCredential.credentialSubject.business.address.countryCode}</Text>
+				<Text>City: {item.verifiableCredential.credentialSubject.business.address.city}</Text>
+				<Text>Zip: {item.verifiableCredential.credentialSubject.business.address.zipCode}</Text>
+				<Text>Street: {item.verifiableCredential.credentialSubject.business.address.streetName}</Text>
+				<Text>Street number: {item.verifiableCredential.credentialSubject.business.address.streetNumber}</Text>
 			</View>
 		);
 	}
