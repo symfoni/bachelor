@@ -1,6 +1,6 @@
 import { Picker } from '@react-native-picker/picker';
-import { Button, TextInput, View, Text} from 'react-native';
-import { styles, symfoniColor } from '../styles';
+import { Button, TextInput, View, Text, ScrollView, Pressable} from 'react-native';
+import { buttonStyles, formStyles, styles, symfoniColor } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import React, { useState } from 'react';
@@ -30,18 +30,18 @@ export default function EmploymentForm() {
 		 */
 		<View style={styles.container}>
 			<Formik
-				initialValues={{ jobTitle: '', placeOfWork: '', hoursOfWork: '', startDate: '', endDate: '',  employmentType: '', partTimePercentage: '', amount: '',
-					currency: '', trialStartDate: '', trialEndDate: '', rightForPension: false, nonCompeteClause: false, requirementToWorkOversees: false, employmentStatus: ''}}
+				initialValues={{ jobTitle: '', placeOfWork: '', hoursOfWork: '', startDate: '', endDate: '', partTimePercentage: '', amount: '',
+					currency: '', trialStartDate: '', trialEndDate: '', rightForPension: false, nonCompeteClause: false, requirementToWorkOverseas: false}}
 				validationSchema={EmploymentSchema}
 				onSubmit={(values, actions) => {
 					actions.resetForm();		
 				}}
 			>
 				{props => (
-					<View>
-						<Text>Job Title</Text>
+					<ScrollView>
+						<Text style={formStyles.textLabel}>Job Title</Text>
 						<TextInput
-							style={styles.input}
+							style={formStyles.textInput}
 							placeholder='Job title'
 							onChangeText={props.handleChange('jobTitle')}
 							value={props.values.jobTitle}
@@ -50,18 +50,18 @@ export default function EmploymentForm() {
 
 						<Text>{props.touched.jobTitle && props.errors.jobTitle}</Text>
 
-						<Text>Place of Work</Text>
+						<Text style={formStyles.textLabel}>Place of Work</Text>
 						<TextInput
-							style={styles.input}
+							style={formStyles.textInput}
 							placeholder='Place of Work'
 							onChangeText={props.handleChange('placeOfWork')}
 							value={props.values.placeOfWork}
 							onBlur={props.handleBlur('placeOfWork')}
 						/>
 
-						<Text>Hours per week</Text>
+						<Text style={formStyles.textLabel}>Hours per week</Text>
 						<TextInput
-							style={styles.input}
+							style={formStyles.textInput}
 							placeholder='Hours per week'
 							onChangeText={props.handleChange('hoursOfWork')}
 							value={props.values.hoursOfWork}
@@ -71,26 +71,27 @@ export default function EmploymentForm() {
 
 						<Text>{props.touched.hoursOfWork && props.errors.hoursOfWork}</Text>
 
-						<Text>Contract start Date</Text>
+						<Text style={formStyles.textLabel}>Contract start Date</Text>
 						<TextInput 
-							style={styles.input}
+							style={formStyles.textInput}
 							placeholder='MM-DD-YYYY'
 							onChangeText={props.handleChange('startDate')}
 							value={props.values.startDate}
 							onBlur={props.handleBlur('startDate')}
 						/>
 
-						<Text>Contract end Date</Text>
+						<Text style={formStyles.textLabel}>Contract end Date</Text>
 						<TextInput 
-							style={styles.input}
+							style={formStyles.textInput}
 							placeholder='MM-DD-YYYY'
 							onChangeText={props.handleChange('endDate')}
 							value={props.values.endDate}
 							onBlur={props.handleBlur('endDate')}
 						/>
 
-						<Text>Employment status</Text>
+						<Text style={formStyles.textLabel}>Employment status</Text>
 						<Picker
+							style={formStyles.picker}
 							selectedValue={selectedEmploymentState}
 							onValueChange={(itemValue) => setSelectedEmploymentState(itemValue)}
 						>
@@ -99,10 +100,18 @@ export default function EmploymentForm() {
 							<Picker.Item label='freelance' value='freelance'></Picker.Item>
 						</Picker>
 
-						<Text>Salary</Text>
-
+						<Text style={formStyles.textLabel}>Part time percentage</Text>
 						<TextInput 
-							style={styles.input}
+							style={formStyles.textInput}
+							placeholder='Part time percentage'
+							onChangeText={props.handleChange('partTimePercentage')}
+							value={props.values.partTimePercentage}
+							onBlur={props.handleBlur('partTimePercentage')}
+						/>
+
+						<Text style={formStyles.textLabel}>Salary</Text>
+						<TextInput 
+							style={formStyles.textInput}
 							placeholder='Amount'
 							onChangeText={props.handleChange('amount')}
 							value={props.values.amount}
@@ -110,40 +119,60 @@ export default function EmploymentForm() {
 						/>
 
 						<TextInput 
-							style={styles.input}
+							style={formStyles.textInput}
 							placeholder='Currency'
 							onChangeText={props.handleChange('currency')}
 							value={props.values.currency}
 							onBlur={props.handleBlur('currency')}
 						/>
 
-						<Text>Trial period</Text>
+						<Text style={formStyles.textLabel}>Trial period</Text>
 						<TextInput 
-							style={styles.input}
+							style={formStyles.textInput}
 							placeholder='Start: MM-DD-YYYY'
 							onChangeText={props.handleChange('trialStartDate')}
-							value={props.values.startDate}
+							value={props.values.trialStartDate}
 							onBlur={props.handleBlur('trialStartDate')}
 						/>
 						<TextInput 
-							style={styles.input}
+							style={formStyles.textInput}
 							placeholder='End: MM-DD-YYYY'
 							onChangeText={props.handleChange('trialEndDate')}
-							value={props.values.startDate}
+							value={props.values.trialEndDate}
 							onBlur={props.handleBlur('trialEndDate')}
 						/>
 
-						<Text> Right for pension </Text>
+						<Text style={formStyles.textLabel}>Special clauses</Text>
+
 						<CheckBox
-							containerStyle={styles.container}
+							containerStyle={formStyles.checkBoxContainer}
 							checkedIcon="check-box"
 							iconType="material"
 							uncheckedIcon="check-box-outline-blank"
-							title="Agree to terms and conditions"
+							title="Right for pension"
 							checked={props.values.rightForPension}
 							onPress={() => props.setFieldValue('rightForPension', !props.values.rightForPension)}
 						/>
 						
+						<CheckBox
+							containerStyle={formStyles.checkBoxContainer}
+							checkedIcon="check-box"
+							iconType="material"
+							uncheckedIcon="check-box-outline-blank"
+							title="Non-compete Clause"
+							checked={props.values.nonCompeteClause}
+							onPress={() => props.setFieldValue('nonCompeteClause', !props.values.nonCompeteClause)}
+						/>
+
+						<CheckBox
+							containerStyle={formStyles.checkBoxContainer}
+							checkedIcon="check-box"
+							iconType="material"
+							uncheckedIcon="check-box-outline-blank"
+							title="Requirement to work overseas"
+							checked={props.values.requirementToWorkOverseas}
+							onPress={() => props.setFieldValue('requirementToWorkOverseas', !props.values.requirementToWorkOverseas)}
+						/>
 
 						
 							
@@ -151,8 +180,10 @@ export default function EmploymentForm() {
 
 						
             
-						<Button color={symfoniColor} title="Submit" onPress={props.submitForm} /> 
-					</View>
+						<Pressable style={buttonStyles.submitButtonFormSymfoni} onPress={props.submitForm}>
+							<Text style={buttonStyles.submitButtonText}>Submit</Text>
+						</Pressable>
+					</ScrollView>
 				)}
 			</Formik>
 		</View>
