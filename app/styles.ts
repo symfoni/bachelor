@@ -49,11 +49,8 @@ export const styles = StyleSheet.create({
 export const formStyles = StyleSheet.create({
 	picker: {
 		height: 35,
-		width: 120,
 		margin: 10,
 		marginTop: 1, 	
-		//backgroundColor: '#000000'
-
 	}, 
 	textInput: {
 		borderWidth: 1,
