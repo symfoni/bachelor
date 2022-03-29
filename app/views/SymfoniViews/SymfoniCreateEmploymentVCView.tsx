@@ -1,6 +1,6 @@
 import { Text, View } from 'react-native';
 import { styles } from '../../styles';
-import EmploymentForm from '../../Components/employmentForm';
+import EmploymentForm from '../../components/employmentForm';
 
 export function SymfoniCreateEmploymentVCView() {
 
