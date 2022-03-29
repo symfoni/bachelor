@@ -37,8 +37,22 @@ export default function EmploymentForm() {
 		 */
 		<View style={styles.container}>
 			<Formik
-				initialValues={{ jobTitle: '', placeOfWork: '', hoursOfWork: '', startDate: '', endDate: '', partTimePercentage: '', amount: '',
-					currency: '', trialStartDate: '', trialEndDate: '', rightForPension: false, nonCompeteClause: false, requirementToWorkOverseas: false}}
+				initialValues={{ 
+					jobTitle: '', 
+					placeOfWork: '', 
+					hoursOfWork: '', 
+					startDate: '', 
+					endDate: '', 
+					partTimePercentage: '', 
+					amount: '',
+					currency: '', 
+					trialStartDate: '', 
+					trialEndDate: '', 
+					rightForPension: false, 
+					nonCompeteClause: false, 
+					requirementToWorkOverseas: false
+				}}
+
 				validationSchema={EmploymentSchema}
 				onSubmit={(values, actions) => {
 					actions.resetForm();		
