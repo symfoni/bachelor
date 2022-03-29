@@ -1,6 +1,6 @@
 import { Picker } from '@react-native-picker/picker';
-import { Button, TextInput, View, Text, ScrollView, Pressable} from 'react-native';
-import { buttonStyles, formStyles, styles, symfoniColor } from '../styles';
+import { TextInput, View, Text, ScrollView, Pressable} from 'react-native';
+import { buttonStyles, formStyles, styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import React, { useState } from 'react';
@@ -8,9 +8,15 @@ import { CheckBox } from 'react-native-elements';
 
 // A schema for validating the form inputs using the yup library
 const EmploymentSchema = yup.object({
-	jobTitle: yup.string().required().min(4),
-	hoursOfWork: yup.number().required(),
-	startDate: yup.date().required()
+	jobTitle: yup.string().required('Required Field'),
+	placeOfWork: yup.string().required('Required Field'),
+	hoursOfWork: yup.number().required('Required Field'),
+	startDate: yup.date().required('Required Field'),
+	partTimePercentage: yup.number(),
+	amount: yup.number().required('Required Field'),
+	currency: yup.string().required('Required Field'),
+	trialStartDate: yup.date(),
+	trialEndDate: yup.date(),
 });
 
 
