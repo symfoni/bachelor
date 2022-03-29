@@ -32,6 +32,17 @@ export const styles = StyleSheet.create({
 		fontSize: 22,
 		color: '#fff',
 		marginBottom: 15
+	},
+	headingTextBlack: {
+		fontSize: 22,
+		color: '#000',
+		marginBottom: 15
+	},
+	credentialDetailView: {
+		flex: 1,
+		backgroundColor: '#fff',
+		justifyContent: 'center',
+		marginVertical: 8,
 	}
 });
 

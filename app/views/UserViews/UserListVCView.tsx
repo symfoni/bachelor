@@ -13,7 +13,7 @@ const userCredentialEndpoint = Platform.OS === 'android' ? 'http://localhost:606
  * UserListVCView is a view that fetches all locally stored credentials and displays them for the user.
  * @returns a view with a list of credentials owned by the user.
  */
-export default function UserListVCView() {
+export default function UserListVCView({navigation}: any) {
 	const [isLoading, setLoading] = useState(true);
 	const [data, setData] = useState([]);
 
@@ -42,7 +42,7 @@ export default function UserListVCView() {
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					renderItem={({ item }: any ) => (
 						// TODO: Fix 'each child in list should have a unique key' on mobile build.
-						<CredentialCard key={item.hash} item={item}></CredentialCard>
+						<CredentialCard key={item.hash} item={item} navigation={navigation}></CredentialCard>
 					)}
 				/>
 			)}
