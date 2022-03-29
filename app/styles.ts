@@ -1,10 +1,10 @@
 import { StyleSheet } from 'react-native';
 
 // Main color for different actors
-const symfoniColor = '#170c5a';
-const navColor = '#C30000';
-const userColor =  '#003399';
-const stateColor = '#6f2c3f';
+export const symfoniColor = '#170c5a';
+export const navColor = '#C30000';
+export const userColor =  '#003399';
+export const stateColor = '#6f2c3f';
 
 // General styles
 export const styles = StyleSheet.create({
@@ -46,8 +46,55 @@ export const styles = StyleSheet.create({
 	}
 });
 
+export const formStyles = StyleSheet.create({
+	picker: {
+		height: 35,
+		margin: 10,
+		marginTop: 1, 	
+	}, 
+	textInput: {
+		borderWidth: 1,
+		borderColor: '#000000',
+		padding: 10,
+		fontSize: 18,
+		borderRadius: 6,
+		margin: 10,
+		marginTop: 1
+	},
+	scrollView: {
+
+	}, 
+	checkBoxContainer: {
+		flex: 1,
+		borderWidth: 1,
+		borderColor: '#000000',
+		backgroundColor: '#fff',
+		alignItems: 'flex-start',
+		justifyContent: 'center',
+		margin: 10,
+		marginTop: 1,
+		borderRadius: 6,
+	},
+	textLabel: {
+		margin: 10, 
+		marginBottom: 1
+	}
+
+});
+
 // Button styles
 export const buttonStyles = StyleSheet.create({
+	submitButtonFormSymfoni: {
+		margin: 10,
+		backgroundColor: symfoniColor,
+		borderRadius: 6,
+		alignItems: 'center',
+		padding: 10
+	},
+	submitButtonText: {
+		color: '#fff',
+		fontSize: 18
+	},
 	navigationButtonDefault: {
 		backgroundColor: '#000',
 		alignItems: 'center',

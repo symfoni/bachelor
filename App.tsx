@@ -7,6 +7,7 @@ import { StateCreatePersonVCView } from './app/views/StateViews/StateCreatePerso
 import StateHomeView from './app/views/StateViews/StateHomeView';
 import { SymfoniCreateEmploymentVCView } from './app/views/SymfoniViews/SymfoniCreateEmploymentVCView';
 import { SymfoniCreateTerminationVCView } from './app/views/SymfoniViews/SymfoniCreateTerminationVCView';
+import { SymfoniQrCodeView } from './app/views/SymfoniViews/SymfoniQrCodeView';
 import SymfoniHomeView from './app/views/SymfoniViews/SymfoniHomeView';
 import { UserCreateVPView } from './app/views/UserViews/UserCreateVPView';
 import UserHomeView from './app/views/UserViews/UserHomeView';
@@ -31,6 +32,7 @@ export default function App() {
 				<Stack.Screen name='SymfoniHome' component={SymfoniHomeView} options={{title: 'Symfoni Agent'}}></Stack.Screen>
 				<Stack.Screen name='SymfoniCreateEmploymentVC' component={SymfoniCreateEmploymentVCView} options={{title: 'Create employment VC'}}></Stack.Screen>
 				<Stack.Screen name='SymfoniCreateTerminationVC' component={SymfoniCreateTerminationVCView} options={{title: 'Create termination VC'}}></Stack.Screen>
+				<Stack.Screen name='SymfoniQrCodeView' component={SymfoniQrCodeView} options={{title: 'Symfoni QR code'}}></Stack.Screen>
 				
 				
 				<Stack.Screen name='StateHome' component={StateHomeView} options={{title: 'State Agent'}}></Stack.Screen>

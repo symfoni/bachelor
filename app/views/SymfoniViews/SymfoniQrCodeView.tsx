@@ -1,12 +1,10 @@
 import { Text, View } from 'react-native';
 import { styles } from '../../styles';
-import EmploymentForm from '../../components/employmentForm';
 
-export function SymfoniCreateEmploymentVCView() {
-
+export function SymfoniQrCodeView() {
 	return (
 		<View style={styles.container}>
-			<EmploymentForm />
+			<Text>This is where Symfoni creates the QR code.</Text>
 		</View>
 	);
 }
