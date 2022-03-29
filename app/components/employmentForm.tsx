@@ -1,22 +1,23 @@
 import { Picker } from '@react-native-picker/picker';
-import { TextInput, View, Text, ScrollView, Pressable} from 'react-native';
+import { TextInput, View, Text, ScrollView, Pressable, Button} from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 
-// A schema for validating the form inputs using the yup library
+// EmploymentSchema for validating the form inputs using the yup library.
 const EmploymentSchema = yup.object({
 	jobTitle: yup.string().required('Required Field'),
 	placeOfWork: yup.string().required('Required Field'),
-	hoursOfWork: yup.number().required('Required Field'),
-	startDate: yup.date().required('Required Field'),
-	partTimePercentage: yup.number(),
-	amount: yup.number().required('Required Field'),
+	hoursOfWork: yup.number().required('Required Field').typeError('Invalid, must be a number'),
+	startDate: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
+	endDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
+	partTimePercentage: yup.number().typeError('Invalid, must be a number'),
+	amount: yup.number().required('Required Field').typeError('Invalid, must be a number'),
 	currency: yup.string().required('Required Field'),
-	trialStartDate: yup.date(),
-	trialEndDate: yup.date(),
+	trialStartDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
+	trialEndDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
 });
 
 
@@ -65,6 +66,8 @@ export default function EmploymentForm() {
 							onBlur={props.handleBlur('placeOfWork')}
 						/>
 
+						<Text>{props.touched.placeOfWork && props.errors.placeOfWork}</Text>
+
 						<Text style={formStyles.textLabel}>Hours per week</Text>
 						<TextInput
 							style={formStyles.textInput}
@@ -86,6 +89,8 @@ export default function EmploymentForm() {
 							onBlur={props.handleBlur('startDate')}
 						/>
 
+						<Text>{props.touched.startDate && props.errors.startDate}</Text>
+
 						<Text style={formStyles.textLabel}>Contract end Date</Text>
 						<TextInput 
 							style={formStyles.textInput}
@@ -94,6 +99,8 @@ export default function EmploymentForm() {
 							value={props.values.endDate}
 							onBlur={props.handleBlur('endDate')}
 						/>
+
+						<Text>{props.touched.endDate && props.errors.endDate}</Text>
 
 						<Text style={formStyles.textLabel}>Employment status</Text>
 						<Picker
@@ -115,6 +122,8 @@ export default function EmploymentForm() {
 							onBlur={props.handleBlur('partTimePercentage')}
 						/>
 
+						<Text>{props.touched.partTimePercentage && props.errors.partTimePercentage}</Text>
+
 						<Text style={formStyles.textLabel}>Salary</Text>
 						<TextInput 
 							style={formStyles.textInput}
@@ -124,6 +133,8 @@ export default function EmploymentForm() {
 							onBlur={props.handleBlur('amount')}
 						/>
 
+						<Text>{props.touched.amount && props.errors.amount}</Text>
+
 						<TextInput 
 							style={formStyles.textInput}
 							placeholder='Currency'
@@ -131,6 +142,8 @@ export default function EmploymentForm() {
 							value={props.values.currency}
 							onBlur={props.handleBlur('currency')}
 						/>
+
+						<Text>{props.touched.currency && props.errors.currency}</Text>
 
 						<Text style={formStyles.textLabel}>Trial period</Text>
 						<TextInput 
@@ -140,6 +153,9 @@ export default function EmploymentForm() {
 							value={props.values.trialStartDate}
 							onBlur={props.handleBlur('trialStartDate')}
 						/>
+
+						<Text>{props.touched.trialStartDate && props.errors.trialStartDate}</Text>
+
 						<TextInput 
 							style={formStyles.textInput}
 							placeholder='End: MM-DD-YYYY'
@@ -147,6 +163,8 @@ export default function EmploymentForm() {
 							value={props.values.trialEndDate}
 							onBlur={props.handleBlur('trialEndDate')}
 						/>
+
+						<Text>{props.touched.trialEndDate && props.errors.trialEndDate}</Text>
 
 						<Text style={formStyles.textLabel}>Special clauses</Text>
 
@@ -179,16 +197,11 @@ export default function EmploymentForm() {
 							checked={props.values.requirementToWorkOverseas}
 							onPress={() => props.setFieldValue('requirementToWorkOverseas', !props.values.requirementToWorkOverseas)}
 						/>
-
-						
-							
-						
-
-						
             
 						<Pressable style={buttonStyles.submitButtonFormSymfoni} onPress={props.submitForm}>
 							<Text style={buttonStyles.submitButtonText}>Submit</Text>
 						</Pressable>
+						
 					</ScrollView>
 				)}
 			</Formik>
