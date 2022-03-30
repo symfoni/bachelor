@@ -4,9 +4,25 @@ import { TextInput, View, Text, ScrollView, Pressable} from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import personDetails from '../personDetails.json';
 
+
+
 export default function StateForm() {
 
-	const approvedName = ['Nordmann','Gluppe'];
+	const credentialData = personDetails.credentialSubject; 
+
+	const approvedName = 'Nordmann';
+
+	const requestOptions = {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ credentialSubject: credentialData })
+	};
+
+	const createPersonVC = async () => {
+		console.log({ credentialSubject: credentialData });
+        
+		await fetch('http://localhost:6060/state/personCredential', requestOptions).then((data) => console.log(data));
+	};
 
 
 	return(
@@ -16,7 +32,7 @@ export default function StateForm() {
 					lastName: ''
 				}}
 				onSubmit={() => {
-					//DO something
+					createPersonVC();
 				}}
 			>
 				{props => (
