@@ -4,8 +4,12 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
+import { Picker } from '@react-native-picker/picker';
 
 export default function TerminationForm() {
+
+    const [selectedTermintionState, setSelectedTerminationState] = useState('fullTime');
+
 	return (
 		<View>
 			<Formik
@@ -57,8 +61,19 @@ export default function TerminationForm() {
 							uncheckedIcon="check-box-outline-blank"
 							title="Terminated during trial period"
 							checked={props.values.terminatedDuringTrialPeriod}
-							onPress={() => props.setFieldValue('terminatedDuringTrialPeriod', !props.values.requirementToWorkOverseas)}
+							onPress={() => props.setFieldValue('terminatedDuringTrialPeriod', !props.values.terminatedDuringTrialPeriod)}
 						/>
+
+						<Text style={formStyles.textLabel}>Termination status</Text>
+						<Picker
+							style={formStyles.picker}
+							selectedValue={selectedTermintionState}
+							onValueChange={(itemValue) => setSelectedTerminationState(itemValue)}
+						>
+							<Picker.Item label='full time' value='full time'></Picker.Item>
+							<Picker.Item label='part time' value='part time'></Picker.Item>
+							<Picker.Item label='freelance' value='freelance'></Picker.Item>
+						</Picker>
 
 						<Pressable style={buttonStyles.submitButtonFormSymfoni} onPress={props.submitForm}>
 							<Text style={buttonStyles.submitButtonText}>Submit</Text>
