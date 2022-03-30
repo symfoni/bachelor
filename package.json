@@ -27,6 +27,7 @@
   },
   "homepage": "https://github.com/symfoni/bachelor#readme",
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.1",
     "@react-native-community/checkbox": "^0.5.12",
     "@react-native-picker/picker": "2.2.1",
     "@react-navigation/native": "^6.0.8",
@@ -43,6 +44,7 @@
     "@veramo/did-resolver": "^3.1.0",
     "@veramo/key-manager": "^3.1.0",
     "@veramo/kms-local": "^3.1.0",
+    "@walletconnect/react-native-dapp": "^1.7.7",
     "axios": "^0.26.1",
     "dotenv": "^16.0.0",
     "ethr-did-resolver": "^5.0.4",
@@ -61,6 +63,7 @@
     "react-native-permissions": "^3.3.1",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-svg": "^9.6.4",
     "react-native-web": "0.17.1",
     "sqlite3": "^5.0.2",
     "ts-node": "^10.5.0",
