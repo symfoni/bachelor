@@ -6,9 +6,15 @@ import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
 
+const TerminationSchema = yup.object({
+	lastDayAtWork: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
+	lastPayDay: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
+	weeklyWorkHours: yup.number().typeError('Invalid, must be a number')
+});
+
 export default function TerminationForm() {
 
-    const [selectedTermintionState, setSelectedTerminationState] = useState('fullTime');
+	const [selectedTermintionState, setSelectedTerminationState] = useState('fullTime');
 
 	return (
 		<View>
@@ -20,8 +26,10 @@ export default function TerminationForm() {
 					weeklyWorkHours: ''
 				}}
 
-				onSubmit={() => {
-					//Do something
+				validationSchema = {TerminationSchema}
+
+				onSubmit={(actions) => {
+					// Do something
 				}}
 			>
 
@@ -36,6 +44,8 @@ export default function TerminationForm() {
 							onBlur={props.handleBlur('lastDayAtWork')}
 						/>
 
+						<Text>{props.touched.lastDayAtWork && props.errors.lastDayAtWork}</Text>
+
 						<Text style={formStyles.textLabel}>Last day at work</Text>
 						<TextInput
 							style={formStyles.textInput}
@@ -45,6 +55,8 @@ export default function TerminationForm() {
 							onBlur={props.handleBlur('lastPayDay')}
 						/>
 
+						<Text>{props.touched.lastPayDay && props.errors.lastPayDay}</Text>
+
 						<Text style={formStyles.textLabel}>Weekly work hours</Text>
 						<TextInput
 							style={formStyles.textInput}
@@ -53,6 +65,8 @@ export default function TerminationForm() {
 							value={props.values.weeklyWorkHours}
 							onBlur={props.handleBlur('weeklyWorkHours')}
 						/>
+
+						<Text>{props.touched.weeklyWorkHours && props.errors.weeklyWorkHours}</Text>
 
 						<CheckBox
 							containerStyle={formStyles.checkBoxContainer}
