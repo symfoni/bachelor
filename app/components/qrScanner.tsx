@@ -21,6 +21,7 @@ export function QRScanner() {
 		})();
 	}, []);
 
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const handleBarCodeScanned = ({ type, data }: any) => {
 		if (type === QR_TYPE) {
 			setScanned(true);
