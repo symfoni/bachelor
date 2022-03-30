@@ -3,27 +3,63 @@ import * as yup from 'yup';
 import { TextInput, View, Text, ScrollView, Pressable} from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import personDetails from '../personDetails.json';
+import { ProfileDiscoveryProvider } from '@veramo/data-store';
+//import person from '../mockData.ts'
 
 
 
 export default function StateForm() {
 
-	const credentialData = personDetails.credentialSubject; 
+	const person = 
+		{
+			credentialSubject: {
+				person: {
+					dateOfDeath: '2020-01-01T19:23:24Z',
+					countryOfDeath: 'NO',
+					placeOfDeath: 'Gjøvik',
+					countryOfBirth: 'NO',
+					placeOfBirth: 'Addressevegen 22',
+					dateOfBirth: '2010-01-01T19:23:24Z',
+					gender: 'male',
+					name: {
+						lastName: 'Nordmann',
+						firstName: 'Ola',
+						middleName: 'Amadeus'
+					},
+					originalName: 'Ola Amadeus Nordmann',
+					maritalStatus: 'unmarried',
+					citizenship: 'US',
+					address: {
+						countryCode: 'NO',
+						city: 'gjøvik',
+						zipCode: 1212,
+						streetName: 'veigate',
+						streetNumber: 12,
+						floor: '4'
+					}
+	
+				}
+			}
+		};
 
-	const approvedName = 'Nordmann';
+	const credentialData = personDetails.credentialSubject;
+
+	const approvedSocialSecurityNumber = 1234;
 
 	const requestOptions = {
 		method: 'POST',
-		headers: { 'Content-Type': 'application/json' },
-		body: JSON.stringify({ credentialSubject: credentialData })
+		headers: { 
+			Accept: 'application/json',
+			'Content-Type': 'application/json'
+		},
+			
+		body: JSON.stringify({ person })
 	};
 
 	const createPersonVC = async () => {
-		console.log({ credentialSubject: credentialData });
-        
+		console.log({ person });  
 		await fetch('http://localhost:6060/state/personCredential', requestOptions).then((data) => console.log(data));
 	};
-
 
 	return(
 		<View style={styles.container}>
@@ -31,7 +67,7 @@ export default function StateForm() {
 				initialValues={{
 					lastName: ''
 				}}
-				onSubmit={() => {
+				onSubmit={() => { 
 					createPersonVC();
 				}}
 			>
