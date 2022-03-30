@@ -1,0 +1,29 @@
+{
+	"credentialSubject": {
+		"person": {
+			"dateOfdDeath": "2020-01-01T19:23:24Z",
+			"countryOfDeath": "NO",
+			"placeOfDeath": "Gjøvik",
+			"countryOfBirth": "NO",
+			"placeOfBirth": "Addressevegen 22",
+			"dateOfBirth": "2010-01-01T19:23:24Z",
+			"gender": "male",
+			"name": {
+				"lastName": "Nordmann",
+				"firstName": "Ola",
+				"middleName": "Amadeus"
+			},
+			"originalName": "Ola Amadeus Nordmann",
+			"maritalStatus": "unmarried",
+			"citizenship": "US",
+			"address": {
+				"countryCode": "NO",
+				"city": "gjøvik",
+				"zipCode": 1212,
+				"streetName": "veigaten",
+				"streetNumber": 12,
+				"floor": "4"
+			}
+		}
+	}
+}
