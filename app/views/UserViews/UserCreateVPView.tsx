@@ -1,10 +1,11 @@
-import { Text, View } from 'react-native';
-import { styles } from '../../styles';
+import { QRScanner } from '../../components/qrScanner';
 
+/**
+ * UserCreateVPView is the view where the user makes their VP upon scanning a QR code.
+ * @returns a view where the user uses their phone to scan a QR code for sending their presentation.
+ */
 export function UserCreateVPView() {
 	return (
-		<View style={styles.container}>
-			<Text>This is where the user lists their VCs.</Text>
-		</View>
+		<QRScanner></QRScanner>
 	);
 }
