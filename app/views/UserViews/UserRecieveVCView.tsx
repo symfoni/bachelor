@@ -1,11 +1,12 @@
-import { Text, View } from 'react-native';
-import { styles } from '../../styles';
+import React, {  } from 'react';
+import { QRScanner } from '../../components/qrScanner';
 
-
+/**
+ * UserRecieveVCView is the view the user will use to recieve their VC.
+ * @returns a view where the user can recieve their VC.
+ */
 export default function UserRecieveVCView() {
 	return (
-		<View style={styles.container}>
-			<Text>This is where the user recieves their VC.</Text>
-		</View>
+		<QRScanner />
 	);
 }

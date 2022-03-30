@@ -8,6 +8,7 @@ import { styles } from '../../styles';
  * @param param0 a verifiable credential object.
  * @returns the details within the verifiable credential that was passed from the parameter.
  */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function UserVCDetailView({route}:any) {
 	const {item} = route.params;
 
