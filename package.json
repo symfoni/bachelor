@@ -65,7 +65,8 @@
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5",
     "web-did-resolver": "^2.0.12",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "expo-camera": "~12.1.2"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
