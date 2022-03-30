@@ -1,5 +1,5 @@
 import { Picker } from '@react-native-picker/picker';
-import { TextInput, View, Text, ScrollView, Pressable, Button} from 'react-native';
+import { TextInput, View, Text, ScrollView, Pressable} from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
