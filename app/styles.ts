@@ -79,7 +79,6 @@ export const formStyles = StyleSheet.create({
 		margin: 10, 
 		marginBottom: 1
 	}
-
 });
 
 // Button styles
@@ -100,7 +99,7 @@ export const buttonStyles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 		paddingVertical: 24,
-		paddingHorizontal: 64,
+		width: 200,
 		borderRadius: 4,
 		elevation: 3,
 		margin: 5
@@ -109,8 +108,8 @@ export const buttonStyles = StyleSheet.create({
 		backgroundColor: symfoniColor,
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingVertical: 12,
-		paddingHorizontal: 32,
+		paddingVertical: 24,
+		width: 250,
 		borderRadius: 4,
 		elevation: 3,
 		margin: 5
@@ -119,8 +118,8 @@ export const buttonStyles = StyleSheet.create({
 		backgroundColor: navColor,
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingVertical: 12,
-		paddingHorizontal: 32,
+		paddingVertical: 24,
+		width: 200,
 		borderRadius: 4,
 		elevation: 3,
 		margin: 5
@@ -129,8 +128,8 @@ export const buttonStyles = StyleSheet.create({
 		backgroundColor: userColor,
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingVertical: 12,
-		paddingHorizontal: 32,
+		paddingVertical: 24,
+		width: 200,
 		borderRadius: 4,
 		elevation: 3,
 		margin: 5
@@ -139,8 +138,8 @@ export const buttonStyles = StyleSheet.create({
 		backgroundColor: stateColor,
 		alignItems: 'center',
 		justifyContent: 'center',
-		paddingVertical: 12,
-		paddingHorizontal: 32,
+		paddingVertical: 24,
+		width: 200,
 		borderRadius: 4,
 		elevation: 3,
 		margin: 5
