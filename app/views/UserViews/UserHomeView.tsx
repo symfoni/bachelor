@@ -12,7 +12,7 @@ import { buttonStyles, styles } from '../../styles';
 export default function UserHomeView({navigation}: any){
 	return (
 		<View style={styles.container}>
-			<Text>This is the user home page.</Text>
+			<Text style={styles.headingTextBlack}>This is the user home page.</Text>
 
 			<NavigationButton
 				title='Recieve VC'

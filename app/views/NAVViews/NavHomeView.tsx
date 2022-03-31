@@ -12,7 +12,7 @@ import { buttonStyles, styles } from '../../styles';
 export default function NAVHomeView({navigation}:any){
 	return (
 		<View style={styles.container}>
-			<Text>This is the NAV home page.</Text>
+			<Text style={styles.headingTextBlack}>This is the NAV home page.</Text>
 
 			<NavigationButton
 				title='Søk dagpenger'
