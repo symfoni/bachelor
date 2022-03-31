@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, View, Pressable } from 'react-native';
 import { buttonStyles, styles } from '../../styles';
 
-export default function StateHomeView(){
+export default function RequestCredentialView(){
 
 	// Pre-defined data for creating a person VC
 	const person = 
