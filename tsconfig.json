@@ -6,7 +6,8 @@
     "rootDir": "./",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "downlevelIteration": true
+    "downlevelIteration": true,
+    "resolveJsonModule": true
   },
   "extends": "expo/tsconfig.base"
 }

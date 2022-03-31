@@ -14,6 +14,7 @@ import UserHomeView from './app/views/UserViews/UserHomeView';
 import UserListVCView from './app/views/UserViews/UserListVCView';
 import UserRecieveVCView from './app/views/UserViews/UserRecieveVCView';
 import { UserVCDetailView } from './app/views/UserViews/UserVCDetailView';
+import RequestCredentialView from './app/views/StateViews/RequestCredentialView';
 
 const Stack = createNativeStackNavigator();
 
@@ -37,6 +38,7 @@ export default function App() {
 				
 				<Stack.Screen name='StateHome' component={StateHomeView} options={{title: 'State Agent'}}></Stack.Screen>
 				<Stack.Screen name='StateCreatePersonVC' component={StateCreatePersonVCView} options={{title: 'Create personVC'}}></Stack.Screen>
+				<Stack.Screen name='RequestCredential' component={RequestCredentialView} options={{title: 'State Agent'}}></Stack.Screen>
 
 				
 				<Stack.Screen name='NAVHome' component={NAVHomeView} options={{title: 'NAV Agent'}}></Stack.Screen>

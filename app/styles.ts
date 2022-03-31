@@ -147,5 +147,15 @@ export const buttonStyles = StyleSheet.create({
 	},
 	navigationButtonText: {
 		color: '#fff',
+	},
+	createVcButtonState: {
+		backgroundColor: stateColor,
+		alignItems: 'center',
+		justifyContent: 'center',
+		paddingVertical: 12,
+		paddingHorizontal: 32,
+		borderRadius: 4,
+		elevation: 3,
+		
 	}
 });
