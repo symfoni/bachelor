@@ -3,7 +3,7 @@ import { TextInput, View, Text, ScrollView, Pressable, Platform} from 'react-nat
 import { buttonStyles, formStyles, styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CheckBox } from 'react-native-elements';
 
 // EmploymentSchema for validating the form inputs using the yup library.
@@ -21,11 +21,58 @@ const EmploymentSchema = yup.object({
 });
 
 const showScrollIndicator = Platform.OS === 'android' ? false : true;
+const employmentCredentialEndpoint = Platform.OS === 'android' ? 'http://localhost:6060/symfoni/employmentCredential' : 'http://localhost:6060/symfoni/employmentCredential';
+
+function createCredential(jobTitle: string, placeOfWork: string, hoursOfWork: string, startDate: string, endDate: string,
+	partTimePercentage: string, amount: string, currency: string, trialStartDate: string, trialEndDate: string,
+	rightForPension: boolean, nonCompeteClause: boolean, requirementToWorkOverseas: boolean, employmentType: string) {
+	const jsonData = {
+		'credentialSubject': {
+			'id': 'did:ethr:rinkeby:0x0206bc2d719721519fd7e0ac58224688e1c5cc9be5cf3fc67ec4f937db9585eef6',
+			'employment': {
+				'employee': {
+					'employeeId': '15f56',
+					'jobTitle': jobTitle,
+					'placeofWork': placeOfWork,
+					'hoursOfWork': hoursOfWork,
+					'startDate': startDate,
+					'endDate': endDate,
+					'employmentStatus': {
+						'employmentType': 'part time',
+						'partTimePercentage': partTimePercentage
+					},
+					'salary': {
+						'frequency': 'monthly',
+						'amount': amount,
+						'currency': currency
+					},
+					'trialPeriod': {
+						'startDate': trialStartDate,
+						'endDate': trialEndDate
+					},
+					'rightForPension': rightForPension,
+					'nonCompeteClause': nonCompeteClause,
+					'requirementToWorkOverseas': requirementToWorkOverseas
+				},
+				'employerId': 'string',
+				'contractPDF': {
+					'URL': 'https://symfonicontracts/contract.pdf',
+					'hash': '48d7771ecb7f4eca920ca46957506a17d8fea963031f8a8dddc5be40b7366961'
+				}
+			}
+		}
+	};
+	return jsonData;
+}
+
+
 
 // TODO: Add a way to navigate to the QR page when submitting the form
 // TODO: Implement a way to pass the props to the proper endpoint
 
 export default function EmploymentForm() {
+
+	
 
 	const [selectedEmploymentState, setSelectedEmploymentState] = useState('fullTime');
 
@@ -55,7 +102,24 @@ export default function EmploymentForm() {
 
 				validationSchema={EmploymentSchema}
 				onSubmit={(values, actions) => {
-					actions.resetForm();		
+
+					const requestOptions = {
+						method: 'POST',
+						headers: { 
+							Accept: 'application/json',
+							'Content-Type': 'application/json'
+						},
+								
+						body: JSON.stringify( createCredential(values.jobTitle, values.placeOfWork, values.hoursOfWork, values.startDate, values.endDate, values.partTimePercentage,
+							values.amount, values.currency, values.trialStartDate, values.trialEndDate, values.rightForPension, values.nonCompeteClause, values.requirementToWorkOverseas, selectedEmploymentState) )
+					};
+					
+					// createPersonVC is a post request for creating a employment VC using the API.
+					const createEmploymentVC = async () => {
+						await fetch(employmentCredentialEndpoint, requestOptions);
+					};
+
+					createEmploymentVC();
 				}}
 			>
 				{props => (
