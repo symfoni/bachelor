@@ -8,6 +8,7 @@ import { Picker } from '@react-native-picker/picker';
 
 // Typeguards and error handling for the input in the form using the yup library.
 const TerminationSchema = yup.object({
+	socialSecurityNumber: yup.string().required('Required Field'),
 	lastDayAtWork: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
 	lastPayDay: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
 	weeklyWorkHours: yup.number().typeError('Invalid, must be a number')
@@ -25,6 +26,7 @@ export default function TerminationForm() {
 		<View>
 			<Formik
 				initialValues={{
+					socialSecurityNumber: '',
 					lastDayAtWork: '',
 					lastPayDay: '',
 					terminatedDuringTrialPeriod: false,
@@ -40,6 +42,17 @@ export default function TerminationForm() {
 
 				{props => (
 					<View>
+						<Text style={formStyles.textLabel}>Social Security Number</Text>
+						<TextInput
+							style={formStyles.textInput}
+							placeholder='Social Security Number'
+							onChangeText={props.handleChange('socialSecurityNumber')}
+							value={props.values.socialSecurityNumber}
+							onBlur={props.handleBlur('socialSecurityNumber')}
+						/>
+
+						<Text>{props.touched.socialSecurityNumber && props.errors.socialSecurityNumber}</Text>
+
 						<Text style={formStyles.textLabel}>Last day at work</Text>
 						<TextInput
 							style={formStyles.textInput}
