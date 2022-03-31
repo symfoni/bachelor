@@ -35,7 +35,7 @@ export default function TerminationForm({ screenName }: any) {
 		 * A form for creating an termination VC with the information about an employee.
 		 * Uses the Formik library to pass the props for each field. 
 		 */
-		<View>
+		<View style={styles.container}>
 			<Formik
 				initialValues={{
 					socialSecurityNumber: '',
