@@ -22,14 +22,21 @@ const EmploymentSchema = yup.object({
 	trialEndDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
 });
 
+// Const for determining the os the app runs on.
+// Hides the scrollbar if on android
 const showScrollIndicator = Platform.OS === 'android' ? false : true;
 
-// TODO: Add a way to navigate to the QR page when submitting the form
+
 // TODO: Implement a way to pass the props to the proper endpoint
 
+// TerminationForm is a form component for providing the information for a termination VC.
+// On successful submit takes you back to the homepage.
 export default function EmploymentForm({ screenName }: any) {
 
+	// Const used for determining the state of the picker.
 	const [selectedEmploymentState, setSelectedEmploymentState] = useState('fullTime');
+
+	// Need to use useNavigation for handling components not in the screen stack.
 	const navigation = useNavigation();
 
 	return (

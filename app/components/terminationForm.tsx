@@ -15,11 +15,19 @@ const TerminationSchema = yup.object({
 	weeklyWorkHours: yup.number().typeError('Invalid, must be a number')
 });
 
+// Const for determining the os the app runs on.
+// Hides the scrollbar if on android
 const showScrollIndicator = Platform.OS === 'android' ? false : true;
 
+
+// TerminationForm is a form component for providing the information for a termination VC.
+// On successful submit takes you back to the homepage.
 export default function TerminationForm({ screenName }: any) {
 
+	// Const used for determining the state of the picker.
 	const [selectedTerminationState, setSelectedTerminationState] = useState('fullTime');
+
+	// Need to use useNavigation for handling components not in the screen stack.
 	const navigation = useNavigation();
 
 	return (
