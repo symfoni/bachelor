@@ -1,5 +1,5 @@
 import { Picker } from '@react-native-picker/picker';
-import { TextInput, View, Text, ScrollView, Pressable} from 'react-native';
+import { TextInput, View, Text, ScrollView, Pressable, Platform} from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -20,7 +20,7 @@ const EmploymentSchema = yup.object({
 	trialEndDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
 });
 
-
+const showScrollIndicator = Platform.OS === 'android' ? false : true;
 
 // TODO: Add a way to navigate to the QR page when submitting the form
 // TODO: Implement a way to pass the props to the proper endpoint
@@ -59,7 +59,11 @@ export default function EmploymentForm() {
 				}}
 			>
 				{props => (
-					<ScrollView>
+					<ScrollView
+					
+						showsVerticalScrollIndicator={showScrollIndicator}
+
+					>
 						<Text style={formStyles.textLabel}>Job Title</Text>
 						<TextInput
 							style={formStyles.textInput}

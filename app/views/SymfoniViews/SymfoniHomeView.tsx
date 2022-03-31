@@ -12,7 +12,7 @@ import { buttonStyles, styles } from '../../styles';
 export default function SymfoniHomeView({navigation}: any){
 	return (
 		<View style={styles.container}>
-			<Text>This is the symfoni home page.</Text>
+			<Text style={styles.headingTextBlack}>This is the symfoni home page.</Text>
 
 			<NavigationButton
 				title='Create employment contract'
