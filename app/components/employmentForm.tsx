@@ -5,9 +5,11 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
 // EmploymentSchema for validating the form inputs using the yup library.
 const EmploymentSchema = yup.object({
+	socialSecurityNumber: yup.string().required(),
 	jobTitle: yup.string().required('Required Field'),
 	placeOfWork: yup.string().required('Required Field'),
 	hoursOfWork: yup.number().required('Required Field').typeError('Invalid, must be a number'),
@@ -20,14 +22,22 @@ const EmploymentSchema = yup.object({
 	trialEndDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
 });
 
+// Const for determining the os the app runs on.
+// Hides the scrollbar if on android
 const showScrollIndicator = Platform.OS === 'android' ? false : true;
 
-// TODO: Add a way to navigate to the QR page when submitting the form
+
 // TODO: Implement a way to pass the props to the proper endpoint
 
-export default function EmploymentForm() {
+// TerminationForm is a form component for providing the information for a termination VC.
+// On successful submit takes you back to the homepage.
+export default function EmploymentForm({ screenName }: any) {
 
+	// Const used for determining the state of the picker.
 	const [selectedEmploymentState, setSelectedEmploymentState] = useState('fullTime');
+
+	// Need to use useNavigation for handling components not in the screen stack.
+	const navigation = useNavigation();
 
 	return (
     
@@ -38,6 +48,7 @@ export default function EmploymentForm() {
 		<View style={styles.container}>
 			<Formik
 				initialValues={{ 
+					socialSecurityNumber: '',
 					jobTitle: '', 
 					placeOfWork: '', 
 					hoursOfWork: '', 
@@ -55,15 +66,25 @@ export default function EmploymentForm() {
 
 				validationSchema={EmploymentSchema}
 				onSubmit={(values, actions) => {
-					actions.resetForm();		
+					actions.resetForm();
+					navigation.navigate(screenName);		
 				}}
 			>
 				{props => (
 					<ScrollView
 					
 						showsVerticalScrollIndicator={showScrollIndicator}
-
 					>
+
+						<Text style={formStyles.textLabel}>Social Security Number</Text>
+						<TextInput
+							style={formStyles.textInput}
+							placeholder='Social Security Number'
+							onChangeText={props.handleChange('socialSecurityNumber')}
+							value={props.values.socialSecurityNumber}
+							onBlur={props.handleBlur('socialSecurityNumber')}
+						/>
+
 						<Text style={formStyles.textLabel}>Job Title</Text>
 						<TextInput
 							style={formStyles.textInput}
