@@ -15,13 +15,13 @@ export default function SymfoniHomeView({navigation}: any){
 			<Text style={styles.headingTextBlack}>This is the symfoni home page.</Text>
 
 			<NavigationButton
-				title='Create employment contract'
+				title='Add employee'
 				customStyle={buttonStyles.navigationButtonSymfoni}
 				onPress={()=> navigation.navigate('SymfoniCreateEmploymentVC')}
 			></NavigationButton>
 
 			<NavigationButton
-				title='Create termination contract'
+				title='Terminate employee'
 				customStyle={buttonStyles.navigationButtonSymfoni}
 				onPress={()=> navigation.navigate('SymfoniCreateTerminationVC')}
 			></NavigationButton>

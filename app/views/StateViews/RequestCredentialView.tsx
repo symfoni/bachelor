@@ -56,8 +56,9 @@ export default function RequestCredentialView(){
 
 	return (
 		<View style={styles.container}>
+			<Text style={styles.headingTextBlack}>Get your person credential!</Text>
 			<Pressable style={buttonStyles.createVcButtonState} onPress={createPersonVC}>
-				<Text style={buttonStyles.submitButtonText}>Create Person VC</Text>
+				<Text style={buttonStyles.submitButtonText}>Request person VC</Text>
 			</Pressable>
 		</View>
 	);

@@ -55,8 +55,8 @@ export default function StateForm({ screenName }: any) {
 
 						<Text>{props.touched.socialSecurityNumber && props.errors.socialSecurityNumber}</Text>
 
-						<Pressable style={buttonStyles.submitButtonFormSymfoni} onPress={props.submitForm}>
-							<Text style={buttonStyles.submitButtonText}>Submit</Text>
+						<Pressable style={buttonStyles.submitButtonFormState} onPress={props.submitForm}>
+							<Text style={buttonStyles.submitButtonText}>Login</Text>
 						</Pressable>
 					</View>
 				)}

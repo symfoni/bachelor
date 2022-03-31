@@ -15,7 +15,7 @@ export default function StateHomeView({navigation}: any){
 			<Text style={styles.headingTextBlack}>This is the state home page.</Text>
 
 			<NavigationButton
-				title='Create personVC'
+				title='Login'
 				customStyle={buttonStyles.navigationButtonState}
 				onPress={()=> navigation.navigate('StateCreatePersonVC')}
 			></NavigationButton>
