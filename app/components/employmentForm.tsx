@@ -8,6 +8,7 @@ import { CheckBox } from 'react-native-elements';
 
 // EmploymentSchema for validating the form inputs using the yup library.
 const EmploymentSchema = yup.object({
+	socialSecurityNumber: yup.string().required(),
 	jobTitle: yup.string().required('Required Field'),
 	placeOfWork: yup.string().required('Required Field'),
 	hoursOfWork: yup.number().required('Required Field').typeError('Invalid, must be a number'),
@@ -38,6 +39,7 @@ export default function EmploymentForm() {
 		<View style={styles.container}>
 			<Formik
 				initialValues={{ 
+					socialSecurityNumber: '',
 					jobTitle: '', 
 					placeOfWork: '', 
 					hoursOfWork: '', 
@@ -62,8 +64,17 @@ export default function EmploymentForm() {
 					<ScrollView
 					
 						showsVerticalScrollIndicator={showScrollIndicator}
-
 					>
+
+						<Text style={formStyles.textLabel}>Social Security Number</Text>
+						<TextInput
+							style={formStyles.textInput}
+							placeholder='Social Security Number'
+							onChangeText={props.handleChange('socialSecurityNumber')}
+							value={props.values.socialSecurityNumber}
+							onBlur={props.handleBlur('socialSecurityNumber')}
+						/>
+
 						<Text style={formStyles.textLabel}>Job Title</Text>
 						<TextInput
 							style={formStyles.textInput}
