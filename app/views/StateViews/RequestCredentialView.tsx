@@ -4,6 +4,7 @@ import { buttonStyles, styles } from '../../styles';
 
 export default function StateHomeView(){
 
+	// Pre-defined data for creating a person VC
 	const person = 
 		{
 			credentialSubject: {
@@ -36,6 +37,7 @@ export default function StateHomeView(){
 			}
 		};
 
+	// Request options for a post request. Defines the method, content type and the data in the body.
 	const requestOptions = {
 		method: 'POST',
 		headers: { 
@@ -46,6 +48,7 @@ export default function StateHomeView(){
 		body: JSON.stringify( person )
 	};
     
+	// createPersonVC is a post request for creating a person VC using the API.
 	const createPersonVC = async () => {
 		console.log({ person });  
 		await fetch('http://localhost:6060/state/personCredential', requestOptions).then((data) => console.log(data));

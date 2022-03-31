@@ -1,75 +1,34 @@
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import { TextInput, View, Text, ScrollView, Pressable} from 'react-native';
+import { TextInput, View, Text, Pressable} from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
-//import person from '../mockData.ts'
 
+// Enum for validating preset Social Security Numbers.
 enum SocialSecurityNumber {
 	SSN_1 = '1234',
 	SSN_2 = '5678',
 	SSN_3 = '1337'
 }
 
+// Validation schema using the yup library.
 const ValidationSchema = yup.object({
 	lastName: yup.mixed<SocialSecurityNumber>().oneOf(Object.values(SocialSecurityNumber), 'Must be a valid Social Security Number').required()
 	
 });
 
 
-
+/**
+ * StateForm is a form component for writing in your social security number. 
+ * This is just mocked data, as there is no database only an enum with approved SSN.
+ * If the form validation passes it takes you to a new screen.
+ * @returns 
+ */
 export default function StateForm({ screenName }: any) {
 
+	// Need to use useNavigation for handeling components not in the screen stack.
 	const navigation = useNavigation();
-
-	const person = 
-		{
-			credentialSubject: {
-				person: {
-					dateOfDeath: '2020-01-01T19:23:24Z',
-					countryOfDeath: 'NO',
-					placeOfDeath: 'Gjøvik',
-					countryOfBirth: 'NO',
-					placeOfBirth: 'Addressevegen 22',
-					dateOfBirth: '2010-01-01T19:23:24Z',
-					gender: 'male',
-					name: {
-						lastName: 'Nordmann',
-						firstName: 'Ola',
-						middleName: 'Amadeus'
-					},
-					originalName: 'Ola Amadeus Nordmann',
-					maritalStatus: 'unmarried',
-					citizenship: 'US',
-					address: {
-						countryCode: 'NO',
-						city: 'gjøvik',
-						zipCode: 1212,
-						streetName: 'veigate',
-						streetNumber: 12,
-						floor: '4'
-					}
-	
-				}
-			}
-		};
-
-	
-	const requestOptions = {
-		method: 'POST',
-		headers: { 
-			Accept: 'application/json',
-			'Content-Type': 'application/json'
-		},
-			
-		body: JSON.stringify( person )
-	};
-
-	const createPersonVC = async () => {
-		console.log({ person });  
-		await fetch('http://localhost:6060/state/personCredential', requestOptions).then((data) => console.log(data));
-	};
 
 	return(
 		<View style={styles.container}>
@@ -79,11 +38,7 @@ export default function StateForm({ screenName }: any) {
 				}}
 				validationSchema={ValidationSchema}
 				onSubmit={() => { 
-					//createPersonVC();
 					navigation.navigate(screenName);
-					
-					
-					
 				}}
 			>
 				{props => (
