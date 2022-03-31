@@ -13,7 +13,7 @@ import { styles } from '../styles';
 export default function LoginView( { navigation }: any ) {
 	return (
 		<View style={styles.container}>
-			<Text>Choose your agent!</Text>
+			<Text style={styles.headingTextBlack}>Choose your agent!</Text>
 			<StatusBar style="auto" />
 			
 			<NavigationButton
