@@ -2,8 +2,8 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import { TextInput, View, Text, ScrollView, Pressable} from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
-import personDetails from '../personDetails.json';
-import { ProfileDiscoveryProvider } from '@veramo/data-store';
+import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 //import person from '../mockData.ts'
 
 enum SocialSecurityNumber {
@@ -19,7 +19,9 @@ const ValidationSchema = yup.object({
 
 
 
-export default function StateForm() {
+export default function StateForm({ screenName }: any) {
+
+	const navigation = useNavigation();
 
 	const person = 
 		{
@@ -53,6 +55,7 @@ export default function StateForm() {
 			}
 		};
 
+	
 	const requestOptions = {
 		method: 'POST',
 		headers: { 
@@ -76,7 +79,11 @@ export default function StateForm() {
 				}}
 				validationSchema={ValidationSchema}
 				onSubmit={() => { 
-					createPersonVC();
+					//createPersonVC();
+					navigation.navigate(screenName);
+					
+					
+					
 				}}
 			>
 				{props => (
@@ -100,5 +107,7 @@ export default function StateForm() {
 				)}
 			</Formik>
 		</View>
+
+		
 	);
 }

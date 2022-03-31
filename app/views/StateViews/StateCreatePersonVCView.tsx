@@ -6,11 +6,11 @@ import { Text, FlatList, View, ActivityIndicator, Platform } from 'react-native'
 import StateForm from '../../Components/stateForm';
 //import { Button } from 'react-native-elements/dist/buttons/Button';
 
-export function StateCreatePersonVCView() {
+export function StateCreatePersonVCView({ screenName }: any) {
 	
 	return (
 		<View style={styles.container}>
-			<StateForm/>
+			<StateForm screenName='StateHome'/>
 		</View>
 	);
 }
