@@ -1,4 +1,4 @@
-import { TextInput, View, Text, ScrollView, Pressable, Button} from 'react-native';
+import { TextInput, View, Text, ScrollView, Pressable, Platform} from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -14,6 +14,8 @@ const TerminationSchema = yup.object({
 	lastPayDay: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
 	weeklyWorkHours: yup.number().typeError('Invalid, must be a number')
 });
+
+const showScrollIndicator = Platform.OS === 'android' ? false : true;
 
 export default function TerminationForm({ screenName }: any) {
 
@@ -37,13 +39,16 @@ export default function TerminationForm({ screenName }: any) {
 
 				validationSchema = {TerminationSchema}
 
-				onSubmit={(actions) => {
+				onSubmit={() => {
 					navigation.navigate(screenName);
 				}}
 			>
 
 				{props => (
-					<View>
+					<ScrollView
+					
+						showsVerticalScrollIndicator={showScrollIndicator}
+					>
 						<Text style={formStyles.textLabel}>Social Security Number</Text>
 						<TextInput
 							style={formStyles.textInput}
@@ -112,7 +117,7 @@ export default function TerminationForm({ screenName }: any) {
 							<Text style={buttonStyles.submitButtonText}>Submit</Text>
 						</Pressable>
 
-					</View>
+					</ScrollView>
 				)}
 
 			</Formik>
