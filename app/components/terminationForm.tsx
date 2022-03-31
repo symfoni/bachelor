@@ -5,6 +5,7 @@ import * as yup from 'yup';
 import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
+import { useNavigation } from '@react-navigation/native';
 
 // Typeguards and error handling for the input in the form using the yup library.
 const TerminationSchema = yup.object({
@@ -14,9 +15,10 @@ const TerminationSchema = yup.object({
 	weeklyWorkHours: yup.number().typeError('Invalid, must be a number')
 });
 
-export default function TerminationForm() {
+export default function TerminationForm({ screenName }: any) {
 
 	const [selectedTerminationState, setSelectedTerminationState] = useState('fullTime');
+	const navigation = useNavigation();
 
 	return (
 	/**
@@ -36,7 +38,7 @@ export default function TerminationForm() {
 				validationSchema = {TerminationSchema}
 
 				onSubmit={(actions) => {
-					// Do something
+					navigation.navigate(screenName);
 				}}
 			>
 

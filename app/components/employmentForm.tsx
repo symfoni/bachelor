@@ -5,6 +5,7 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
+import { useNavigation } from '@react-navigation/native';
 
 // EmploymentSchema for validating the form inputs using the yup library.
 const EmploymentSchema = yup.object({
@@ -26,9 +27,10 @@ const showScrollIndicator = Platform.OS === 'android' ? false : true;
 // TODO: Add a way to navigate to the QR page when submitting the form
 // TODO: Implement a way to pass the props to the proper endpoint
 
-export default function EmploymentForm() {
+export default function EmploymentForm({ screenName }: any) {
 
 	const [selectedEmploymentState, setSelectedEmploymentState] = useState('fullTime');
+	const navigation = useNavigation();
 
 	return (
     
@@ -57,7 +59,8 @@ export default function EmploymentForm() {
 
 				validationSchema={EmploymentSchema}
 				onSubmit={(values, actions) => {
-					actions.resetForm();		
+					actions.resetForm();
+					navigation.navigate(screenName);		
 				}}
 			>
 				{props => (

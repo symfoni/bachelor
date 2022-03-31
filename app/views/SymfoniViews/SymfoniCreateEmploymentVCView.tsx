@@ -6,7 +6,7 @@ export function SymfoniCreateEmploymentVCView() {
 
 	return (
 		<View style={styles.container}>
-			<EmploymentForm />
+			<EmploymentForm screenName='SymfoniHome'/>
 		</View>
 	);
 }

@@ -1,12 +1,12 @@
 
 import { Text, View } from 'react-native';
 import { styles } from '../../styles';
-import TerminationForm from '../../Components/terminationForm';
+import TerminationForm from '../../components/terminationForm';
 
 export function SymfoniCreateTerminationVCView() {
 	return (
 		<View style={styles.container}>
-			<TerminationForm />
+			<TerminationForm screenName='SymfoniHome'/>
 		</View>
 	);
 }
