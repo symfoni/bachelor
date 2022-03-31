@@ -1,16 +1,10 @@
-import { useWalletConnect } from '@walletconnect/react-native-dapp';
-import * as React from 'react';
-import { Button, View } from 'react-native';
+import { Text, View } from 'react-native';
 import { styles } from '../../styles';
 
 export function NAVRecieveVPView() {
-	const connector = useWalletConnect();
-	if (!connector.connected) {
-		return (
-			<View style={styles.container}>
-				<Button title="Connect" onPress={() => connector.connect()} />
-			</View>
-		);
-	}
-	return <Button title="Kill Session" onPress={() => connector.killSession()} />;
+	return (
+		<View style={styles.container}>
+			<Text>This is where NAV recieves a VP.</Text>
+		</View>
+	);
 }
