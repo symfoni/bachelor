@@ -6,6 +6,17 @@ import personDetails from '../personDetails.json';
 import { ProfileDiscoveryProvider } from '@veramo/data-store';
 //import person from '../mockData.ts'
 
+enum SocialSecurityNumber {
+	SSN_1 = '1234',
+	SSN_2 = '5678',
+	SSN_3 = '1337'
+}
+
+const ValidationSchema = yup.object({
+	lastName: yup.mixed<SocialSecurityNumber>().oneOf(Object.values(SocialSecurityNumber), 'Must be a valid Social Security Number').required()
+	
+});
+
 
 
 export default function StateForm() {
@@ -42,10 +53,6 @@ export default function StateForm() {
 			}
 		};
 
-	const credentialData = personDetails.credentialSubject;
-
-	const approvedSocialSecurityNumber = 1234;
-
 	const requestOptions = {
 		method: 'POST',
 		headers: { 
@@ -53,7 +60,7 @@ export default function StateForm() {
 			'Content-Type': 'application/json'
 		},
 			
-		body: JSON.stringify({ person })
+		body: JSON.stringify( person )
 	};
 
 	const createPersonVC = async () => {
@@ -67,6 +74,7 @@ export default function StateForm() {
 				initialValues={{
 					lastName: ''
 				}}
+				validationSchema={ValidationSchema}
 				onSubmit={() => { 
 					createPersonVC();
 				}}
@@ -82,6 +90,8 @@ export default function StateForm() {
 							value={props.values.lastName}
 							onBlur={props.handleBlur('lastName')} 
 						/>
+
+						<Text>{props.touched.lastName && props.errors.lastName}</Text>
 
 						<Pressable style={buttonStyles.submitButtonFormSymfoni} onPress={props.submitForm}>
 							<Text style={buttonStyles.submitButtonText}>Submit</Text>
