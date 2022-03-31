@@ -90,6 +90,13 @@ export const buttonStyles = StyleSheet.create({
 		alignItems: 'center',
 		padding: 10
 	},
+	submitButtonFormState: {
+		margin: 10,
+		backgroundColor: stateColor,
+		borderRadius: 6,
+		alignItems: 'center',
+		padding: 10
+	},
 	submitButtonText: {
 		color: '#fff',
 		fontSize: 18
