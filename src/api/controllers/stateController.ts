@@ -3,11 +3,25 @@ import { Request, Response } from 'express';
 import { StateAgentController } from '../../controllers/StateAgentController';
 import { businessVerifiableCredential } from '../../types/businessVCtype';
 import { personVerifiableCredential } from '../../types/personVCType';
+import { validateSchema } from '../../utils/schemaValidation';
 
+const PERSON_VC_SCHEMA_FILE_PATH = 'schemas/tempJSON/personSchema.json';
+const BUSINESS_VC_SCHEMA_FILE_PATH = 'schemas/tempJSON/businessSchema.json';
 const stateAgentController = new StateAgentController('state');
 
 const createPersonCredential = async (req: Request, res: Response) => {
 	let issuer: string = req.body.issuer;
+
+
+	const validationResult = validateSchema(PERSON_VC_SCHEMA_FILE_PATH, req.body);
+
+	if (validationResult !== true) {
+		return res.status(400).json({
+			error: 'unable to create VC',
+			errorMessage: validationResult
+		});
+	}
+
 	const credentialSubject: personVerifiableCredential['credentialSubject'] = req.body.credentialSubject;
 
 	// TODO: Possibly make this if statement a utility function as it used many times.
@@ -38,6 +52,16 @@ const createPersonCredential = async (req: Request, res: Response) => {
 // create business credential
 const createBusinessCredential = async (req: Request, res: Response) => {
 	let issuer: string = req.body.issuer;
+
+	const validationResult = validateSchema(BUSINESS_VC_SCHEMA_FILE_PATH, req.body);
+
+	if (validationResult !== true) {
+		return res.status(400).json({
+			error: 'unable to create VC',
+			errorMessage: validationResult
+		});
+	}
+
 	const credentialSubject: businessVerifiableCredential['credentialSubject'] = req.body.credentialSubject;
 
 	// TODO: Possibly make this if statement a utility function as it used many times.
@@ -138,7 +162,7 @@ const addCredential = async (req: Request, res: Response) => {
 			error: 'no credential object found, make sure that the verifiable credential is wrapped in a credential object.'
 		});
 	}
-	
+
 	const credential: VerifiableCredential = {
 		'@context': req.body.credential['@context'],
 		type: req.body.credential.type,
@@ -191,14 +215,14 @@ const getCredential = async (req: Request, res: Response) => {
 const verifyJWT = async (req: Request, res: Response) => {
 	const jwt: string = req.body.jwt;
 
-	if(typeof jwt === 'undefined') {
+	if (typeof jwt === 'undefined') {
 		return res.status(400).json({
 			error: 'jwt missing'
 		});
 	}
 
 	await stateAgentController.verifyJWT(jwt).then((isValid) => {
-		if(isValid instanceof Error ) {
+		if (isValid instanceof Error) {
 			return res.status(500).json({
 				fatal_error: isValid.message
 			});
@@ -215,21 +239,21 @@ const createPresentation = async (req: Request, res: Response) => {
 	let holder: string = req.body.holder;
 
 	// TODO: Add a typeguard that returns an error if credentials is not of type VC[]
-	
+
 	// if holder is not specified, use default DID
 	if (typeof holder === 'undefined') {
-		await stateAgentController.getMainIdentifier().then((mainIdentifier)=>{
-				
+		await stateAgentController.getMainIdentifier().then((mainIdentifier) => {
+
 			if (mainIdentifier instanceof Error) {
 				return res.status(500).json({
 					fatal_error: mainIdentifier.message
 				});
 			}
-	
+
 			holder = mainIdentifier.did;
 		});
 	}
-	
+
 	if (req.body.listOfCredentials.length === 0) {
 		return res.status(400).json({
 			error: 'empty list of credentials'
