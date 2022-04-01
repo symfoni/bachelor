@@ -1,5 +1,5 @@
 {
-  "@id": "https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/terminationSchema.json",
+  "id": "https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/terminationSchema.json",
   "$schema": "http://json-schema.org/draft-04/schema#",
   "title": "TerminationVC",
   "type": "object",
