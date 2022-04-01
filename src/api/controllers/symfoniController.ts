@@ -134,15 +134,21 @@ const resolveDID = async (req: Request, res: Response) => {
 
 // save a credential
 const addCredential = async (req: Request, res: Response) => {
+	if (typeof req.body.credential === 'undefined') {
+		return res.status(400).json({
+			error: 'no credential object found, make sure that the verifiable credential is wrapped in a credential object.'
+		});
+	}
+
 	const credential: VerifiableCredential = {
-		'@context': req.body['@context'],
-		type: req.body.type,
+		'@context': req.body.credential['@context'],
+		type: req.body.credential.type,
 		issuer: {
-			id: req.body.issuer.id
+			id: req.body.credential.issuer.id
 		},
-		credentialSubject: req.body.credentialSubject,
-		proof: req.body.proof,
-		issuanceDate: req.body.issuanceDate
+		credentialSubject: req.body.credential.credentialSubject,
+		proof: req.body.credential.proof,
+		issuanceDate: req.body.credential.issuanceDate
 	};
 
 	await symfoniAgentController.addCredential(credential).then((credentialHash) => {
