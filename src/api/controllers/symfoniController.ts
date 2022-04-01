@@ -16,7 +16,7 @@ const createEmploymentCredential = async (req: Request, res: Response) => {
 
 	const validationResult = validateSchema(EMPLOYMENT_VC_SCHEMA_FILE_PATH, req.body);
 
-	if(typeof validationResult !== 'boolean'){
+	if(validationResult !== true){
 		return res.status(400).json({
 			error: 'unable to create VC',
 			errorMessage: validationResult
@@ -55,7 +55,7 @@ const createTerminationCredential = async (req: Request, res: Response) => {
 	
 	const validationResult = validateSchema(TERMINATION_VC_SCHEMA_FILE_PATH, req.body);
 
-	if(typeof validationResult !== 'boolean'){
+	if(validationResult !== true){
 		return res.status(400).json({
 			error: 'unable to create VC',
 			errorMessage: validationResult
