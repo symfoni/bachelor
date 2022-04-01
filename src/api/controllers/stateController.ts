@@ -3,11 +3,24 @@ import { Request, Response } from 'express';
 import { StateAgentController } from '../../controllers/StateAgentController';
 import { businessVerifiableCredential } from '../../types/businessVCtype';
 import { personVerifiableCredential } from '../../types/personVCType';
+import { validateSchema } from '../../utils/schemaValidation';
 
+const PERSON_VC_SCHEMA_FILE_PATH = 'schemas/tempJSON/personSchema.json';
 const stateAgentController = new StateAgentController('state');
 
 const createPersonCredential = async (req: Request, res: Response) => {
 	let issuer: string = req.body.issuer;
+	
+	
+	const validationResult = validateSchema(PERSON_VC_SCHEMA_FILE_PATH, req.body);
+
+	if(typeof validationResult !== 'boolean'){
+		return res.status(400).json({
+			error: 'unable to create VC',
+			errorMessage: validationResult
+		});
+	}
+	
 	const credentialSubject: personVerifiableCredential['credentialSubject'] = req.body.credentialSubject;
 
 	// TODO: Possibly make this if statement a utility function as it used many times.
