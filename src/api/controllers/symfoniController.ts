@@ -6,12 +6,22 @@ import { terminationVC } from '../../types/terminationVCType';
 import { validateSchema } from '../../utils/schemaValidation';
 
 const TERMINATION_VC_SCHEMA_FILE_PATH = 'schemas/terminationSchema.json';
+const EMPLOYMENT_VC_SCHEMA_FILE_PATH = 'schemas/employmentContractSchema.json';
 const symfoniAgentController = new SymfoniAgentController('symfoni');
 
 // creates employment credential
 const createEmploymentCredential = async (req: Request, res: Response) => {
 	// read json input
 	let issuer: string = req.body.issuer;
+
+	const validationResult = validateSchema(EMPLOYMENT_VC_SCHEMA_FILE_PATH, req.body);
+
+	if(typeof validationResult !== 'boolean'){
+		return res.status(400).json({
+			error: 'unable to create VC',
+			errorMessage: validationResult
+		});
+	}
 
 	const credentialClaims: employmentVC['credentialSubject'] = req.body.credentialSubject;
 
