@@ -18,19 +18,23 @@
                 "placeOfWork": "Rådhusplassen 10",
                 "hoursOfWork": 20,
                 "startDate": "2021-06-01",
+                "employerTerminationNotice": 30,
+                "employeeTerminationNotice": 30,
+
                 "endDate": "2014-01-01",
                 "employmentStatus": {
-                    "employmentType": "part time",
-                    "partTimePercentage": 80
+                    "employmentType": "full time employee",
+                    "temporaryContractEndDate": ""
                 },
                 "salary": {
-                    "frequency": "monthly",
-                    "amount": 40700,
+                    "workPercentage": 100,
+                    "monthlySalary": 40700,
                     "currency": "NOK"
                 },
                 "trialPeriod": {
                     "startDate": "2021-06-20",
-                    "endDate": "2021-12-12"
+                    "endDate": "2021-12-12",
+                    "trialPeriodTerminationNotice": 14
                 },
                 "rightForPension": true,
                 "nonCompeteClause": false,

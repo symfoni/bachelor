@@ -65,8 +65,7 @@
                                         }
                                     },
                                     "required": [
-                                        "employmentType",
-                                        "temporaryContractEndDate"
+                                        "employmentType"
                                     ]
                                 },
                                 "salary": {
@@ -107,14 +106,14 @@
                                             "format": "date"
                                         },
                                         "trialPeriodTerminationNotice": {
-                                            "type": "string",
+                                            "type": "number",
                                             "description": "If the employee is terminated during the trial period, how long notice will they receive"
                                         }
                                     },
                                     "required": [
                                         "startDate",
                                         "endDate",
-                                        "noticePeriodInDays"
+                                        "trialPeriodTerminationNotice"
                                     ]
                                 },
                                 "rightForPension": {
