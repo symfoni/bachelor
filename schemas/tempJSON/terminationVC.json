@@ -13,11 +13,12 @@
         "id": "did:ethr:rinkeby:0x026e205a3fefa81f8e51cf7c284ec234fa667280740ca8e394ec608edad3680bfe",
         "termination": {
             "employee": {
+                "terminationNoticeReceived": "2021-02-02",
+                "terminationReason": "Employee was not preforming to the expected standard",
                 "lastDayAtWork": "2021-02-02",
                 "lastPayday": "2021-02-02",
                 "terminationStatus": "resigned",
-                "terminatedDuringTrialPeriod": true,
-                "WeeklyWorkHours": 22
+                "terminatedDuringTrialPeriod": true
             },
             "contractPDF": {
                 "URL": "https://pdfs.com/pdf0.pdf",

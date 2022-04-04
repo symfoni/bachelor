@@ -1,5 +1,5 @@
 import { Picker } from '@react-native-picker/picker';
-import { TextInput, View, Text, ScrollView, Pressable, Platform} from 'react-native';
+import { TextInput, View, Text, ScrollView, Pressable, Platform } from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
+// TODO: Fix date validation
 // EmploymentSchema for validating the form inputs using the yup library.
 const EmploymentSchema = yup.object({
 	socialSecurityNumber: yup.string().required(),
@@ -14,12 +15,15 @@ const EmploymentSchema = yup.object({
 	placeOfWork: yup.string().required('Required Field'),
 	hoursOfWork: yup.number().required('Required Field').typeError('Invalid, must be a number'),
 	startDate: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
-	endDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
-	partTimePercentage: yup.number().typeError('Invalid, must be a number'),
-	amount: yup.number().required('Required Field').typeError('Invalid, must be a number'),
+	employerTerminationNotice: yup.number().required('Required Field').typeError('Invalid, must be a number'),
+	employeeTerminationNotice: yup.number().required('Required Field').typeError('Invalid, must be a number'),
+	temporaryContractEndDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
+	workPercentage: yup.number().required('Required Field').typeError('Invalid, must be a number'),
+	monthlySalary: yup.number().required('Required Field').typeError('Invalid, must be a number'),
 	currency: yup.string().required('Required Field'),
 	trialStartDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
 	trialEndDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
+	trialPeriodTerminationNotice: yup.number().required('Required Field').typeError('Invalid, must be a number')
 });
 
 // Const for determining the os the app runs on.
@@ -40,39 +44,42 @@ export default function EmploymentForm({ screenName }: any) {
 	const navigation = useNavigation();
 
 	return (
-    
+
 		/**
 		 * A form for creating an employment VC with the information about an employee.
 		 * Uses the Formik library to pass the props for each field. 
 		 */
 		<View style={styles.container}>
 			<Formik
-				initialValues={{ 
+				initialValues={{
 					socialSecurityNumber: '',
-					jobTitle: '', 
-					placeOfWork: '', 
-					hoursOfWork: '', 
-					startDate: '', 
-					endDate: '', 
-					partTimePercentage: '', 
-					amount: '',
-					currency: '', 
-					trialStartDate: '', 
-					trialEndDate: '', 
-					rightForPension: false, 
-					nonCompeteClause: false, 
+					jobTitle: '',
+					placeOfWork: '',
+					hoursOfWork: '',
+					startDate: '',
+					employerTerminationNotice: '',
+					employeeTerminationNotice: '',
+					temporaryContractEndDate: '',
+					workPercentage: '',
+					monthlySalary: '',
+					currency: '',
+					trialStartDate: '',
+					trialEndDate: '',
+					trialPeriodTerminationNotice: '',
+					rightForPension: false,
+					nonCompeteClause: false,
 					requirementToWorkOverseas: false
 				}}
 
 				validationSchema={EmploymentSchema}
 				onSubmit={(values, actions) => {
 					actions.resetForm();
-					navigation.navigate(screenName);		
+					navigation.navigate(screenName);
 				}}
 			>
 				{props => (
 					<ScrollView
-					
+
 						showsVerticalScrollIndicator={showScrollIndicator}
 					>
 
@@ -84,6 +91,8 @@ export default function EmploymentForm({ screenName }: any) {
 							value={props.values.socialSecurityNumber}
 							onBlur={props.handleBlur('socialSecurityNumber')}
 						/>
+
+						<Text>{props.touched.socialSecurityNumber && props.errors.socialSecurityNumber}</Text>
 
 						<Text style={formStyles.textLabel}>Job Title</Text>
 						<TextInput
@@ -120,7 +129,7 @@ export default function EmploymentForm({ screenName }: any) {
 						<Text>{props.touched.hoursOfWork && props.errors.hoursOfWork}</Text>
 
 						<Text style={formStyles.textLabel}>Contract start Date</Text>
-						<TextInput 
+						<TextInput
 							style={formStyles.textInput}
 							placeholder='MM-DD-YYYY'
 							onChangeText={props.handleChange('startDate')}
@@ -130,16 +139,27 @@ export default function EmploymentForm({ screenName }: any) {
 
 						<Text>{props.touched.startDate && props.errors.startDate}</Text>
 
-						<Text style={formStyles.textLabel}>Contract end Date</Text>
-						<TextInput 
+						<Text style={formStyles.textLabel}>Employer Termination notice</Text>
+						<TextInput
 							style={formStyles.textInput}
-							placeholder='MM-DD-YYYY'
-							onChangeText={props.handleChange('endDate')}
-							value={props.values.endDate}
-							onBlur={props.handleBlur('endDate')}
+							placeholder='Termination notice in days'
+							onChangeText={props.handleChange('employerTerminationNotice')}
+							value={props.values.employerTerminationNotice}
+							onBlur={props.handleBlur('employerTerminationNotice')}
 						/>
 
-						<Text>{props.touched.endDate && props.errors.endDate}</Text>
+						<Text>{props.touched.employerTerminationNotice && props.errors.employerTerminationNotice}</Text>
+
+						<Text style={formStyles.textLabel}>Employee Termination notice</Text>
+						<TextInput
+							style={formStyles.textInput}
+							placeholder='Resignation notice in days'
+							onChangeText={props.handleChange('employeeTerminationNotice')}
+							value={props.values.employeeTerminationNotice}
+							onBlur={props.handleBlur('employeeTerminationNotice')}
+						/>
+
+						<Text>{props.touched.employeeTerminationNotice && props.errors.employeeTerminationNotice}</Text>
 
 						<Text style={formStyles.textLabel}>Employment status</Text>
 						<Picker
@@ -147,34 +167,45 @@ export default function EmploymentForm({ screenName }: any) {
 							selectedValue={selectedEmploymentState}
 							onValueChange={(itemValue) => setSelectedEmploymentState(itemValue)}
 						>
-							<Picker.Item label='full time' value='full time'></Picker.Item>
-							<Picker.Item label='part time' value='part time'></Picker.Item>
-							<Picker.Item label='freelance' value='freelance'></Picker.Item>
+							<Picker.Item label='Full time employee' value='full time employee'></Picker.Item>
+							<Picker.Item label='Temporary employee' value='temporary employee'></Picker.Item>
 						</Picker>
 
-						<Text style={formStyles.textLabel}>Part time percentage</Text>
-						<TextInput 
+						<Text style={formStyles.textLabel}>Temp contract end date</Text>
+						<TextInput
 							style={formStyles.textInput}
-							placeholder='Part time percentage'
-							onChangeText={props.handleChange('partTimePercentage')}
-							value={props.values.partTimePercentage}
-							onBlur={props.handleBlur('partTimePercentage')}
+							placeholder='MM-DD-YYYY'
+							onChangeText={props.handleChange('temporaryContractEndDate')}
+							value={props.values.temporaryContractEndDate}
+							onBlur={props.handleBlur('temporaryContractEndDate')}
 						/>
 
-						<Text>{props.touched.partTimePercentage && props.errors.partTimePercentage}</Text>
+						<Text>{props.touched.temporaryContractEndDate && props.errors.temporaryContractEndDate}</Text>
 
-						<Text style={formStyles.textLabel}>Salary</Text>
-						<TextInput 
+						<Text style={formStyles.textLabel}>Work percentage</Text>
+						<TextInput
 							style={formStyles.textInput}
-							placeholder='Amount'
-							onChangeText={props.handleChange('amount')}
-							value={props.values.amount}
-							onBlur={props.handleBlur('amount')}
+							placeholder='100'
+							onChangeText={props.handleChange('workPercentage')}
+							value={props.values.workPercentage}
+							onBlur={props.handleBlur('workPercentage')}
 						/>
 
-						<Text>{props.touched.amount && props.errors.amount}</Text>
+						<Text>{props.touched.workPercentage && props.errors.workPercentage}</Text>
 
-						<TextInput 
+						<Text style={formStyles.textLabel}>Monthly salary</Text>
+						<TextInput
+							style={formStyles.textInput}
+							placeholder='Monthly salary'
+							onChangeText={props.handleChange('monthlySalary')}
+							value={props.values.monthlySalary}
+							onBlur={props.handleBlur('monthlySalary')}
+						/>
+
+						<Text>{props.touched.monthlySalary && props.errors.monthlySalary}</Text>
+
+						<Text style={formStyles.textLabel}>Currency</Text>
+						<TextInput
 							style={formStyles.textInput}
 							placeholder='Currency'
 							onChangeText={props.handleChange('currency')}
@@ -185,7 +216,7 @@ export default function EmploymentForm({ screenName }: any) {
 						<Text>{props.touched.currency && props.errors.currency}</Text>
 
 						<Text style={formStyles.textLabel}>Trial period</Text>
-						<TextInput 
+						<TextInput
 							style={formStyles.textInput}
 							placeholder='Start: MM-DD-YYYY'
 							onChangeText={props.handleChange('trialStartDate')}
@@ -195,7 +226,7 @@ export default function EmploymentForm({ screenName }: any) {
 
 						<Text>{props.touched.trialStartDate && props.errors.trialStartDate}</Text>
 
-						<TextInput 
+						<TextInput
 							style={formStyles.textInput}
 							placeholder='End: MM-DD-YYYY'
 							onChangeText={props.handleChange('trialEndDate')}
@@ -204,6 +235,17 @@ export default function EmploymentForm({ screenName }: any) {
 						/>
 
 						<Text>{props.touched.trialEndDate && props.errors.trialEndDate}</Text>
+
+						<Text style={formStyles.textLabel}>Trial period termination notice</Text>
+						<TextInput
+							style={formStyles.textInput}
+							placeholder='In days'
+							onChangeText={props.handleChange('trialPeriodTerminationNotice')}
+							value={props.values.trialPeriodTerminationNotice}
+							onBlur={props.handleBlur('trialPeriodTerminationNotice')}
+						/>
+
+						<Text>{props.touched.trialPeriodTerminationNotice && props.errors.trialPeriodTerminationNotice}</Text>
 
 						<Text style={formStyles.textLabel}>Special clauses</Text>
 
@@ -216,7 +258,7 @@ export default function EmploymentForm({ screenName }: any) {
 							checked={props.values.rightForPension}
 							onPress={() => props.setFieldValue('rightForPension', !props.values.rightForPension)}
 						/>
-						
+
 						<CheckBox
 							containerStyle={formStyles.checkBoxContainer}
 							checkedIcon="check-box"
@@ -236,15 +278,15 @@ export default function EmploymentForm({ screenName }: any) {
 							checked={props.values.requirementToWorkOverseas}
 							onPress={() => props.setFieldValue('requirementToWorkOverseas', !props.values.requirementToWorkOverseas)}
 						/>
-            
+
 						<Pressable style={buttonStyles.submitButtonFormSymfoni} onPress={props.submitForm}>
 							<Text style={buttonStyles.submitButtonText}>Submit</Text>
 						</Pressable>
-						
+
 					</ScrollView>
 				)}
 			</Formik>
 		</View>
-    
+
 	);
 }
