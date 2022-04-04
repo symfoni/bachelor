@@ -1,7 +1,7 @@
 import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 import { SymfoniAgentController } from '../../controllers/SymfoniAgentController';
-import { dbAddEmploymentContract } from '../../firestore/operations';
+import { dbAddEmploymentContract, dbGetEmploymentContract } from '../../firestore/operations';
 import { employmentVC } from '../../types/employmentVCType';
 import { terminationVC } from '../../types/terminationVCType';
 import { hashString } from '../../utils/encryption';
@@ -315,7 +315,7 @@ const addEmploymentContractToDb = async (req: Request, res: Response) => {
 	// use db function to store credential in database with SSN as key
 	const document = dbAddEmploymentContract(hashedId, employmentData);
 	if (document instanceof Error) {
-		return res.status(400).json({
+		return res.status(500).json({
 			error: 'could not add to database'
 		});
 	}
@@ -326,4 +326,34 @@ const addEmploymentContractToDb = async (req: Request, res: Response) => {
 	});
 };
 
-export default { createEmploymentCredential, createTerminationCredential, createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential, createPresentation, verifyJWT, addEmploymentContractToDb };
+// retrieves an employment document from the database
+const getEmploymentContract =async (req: Request, res: Response) => {
+	if (typeof req.params.id === 'undefined') {
+		return res.status(400).json({
+			error: 'id is missing'
+		});
+	}
+
+	const id: string = req.params.id;
+	const hashedId = hashString(id);
+
+	const employmentContractDocument = await dbGetEmploymentContract(hashedId);
+
+	if (employmentContractDocument instanceof Error) {
+		return res.status(500).json({
+			error: 'could not retrieve from database'
+		});
+	}
+
+	if (typeof employmentContractDocument === 'undefined') {
+		return res.status(400).json({
+			error: 'no document matching the id'
+		});
+	}
+
+	return res.status(200).json({
+		employmentContractDocument
+	});
+};
+
+export default { createEmploymentCredential, createTerminationCredential, createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential, createPresentation, verifyJWT, addEmploymentContractToDb, getEmploymentContract };
