@@ -17,6 +17,15 @@
             "employee": {
               "type": "object",
               "properties": {
+                "terminationNoticeReceived": {
+                  "type": "string",
+                  "description": "When the employee or employer is notifed of a resignation/termination ",
+                  "format": "date"
+                },
+                "terminationReason": {
+                  "type": "string",
+                  "description": "An optional field for more information on why the employee is leaving or beeing let go"
+                },
                 "lastDayAtWork": {
                   "type": "string",
                   "description": "The last day the employee was at work",
@@ -32,25 +41,20 @@
                   "description": "The reason behind the termination",
                   "enum": [
                     "resigned",
-                    "fired",
-                    "bankruptcy"
+                    "fired"
                   ]
                 },
                 "terminatedDuringTrialPeriod": {
                   "type": "boolean",
                   "description": "If the employee was fired during their trial period"
-                },
-                "WeeklyWorkHours": {
-                  "type": "number",
-                  "description": "How many hours a week they worked on average the last 52 weeks"
                 }
               },
               "required": [
+                "terminationNoticeReceived",
                 "lastDayAtWork",
                 "lastPayday",
                 "terminationStatus",
-                "terminatedDuringTrialPeriod",
-                "WeeklyWorkHours"
+                "terminatedDuringTrialPeriod"
               ]
             },
             "contractPDF": {
@@ -73,8 +77,7 @@
             }
           },
           "required": [
-            "employee",
-            "contractPDF"
+            "employee"
           ]
         }
       },
