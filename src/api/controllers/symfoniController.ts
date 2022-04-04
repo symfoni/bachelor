@@ -403,6 +403,36 @@ const getEmploymentContract =async (req: Request, res: Response) => {
 	});
 };
 
+// retrieves an employment document from the database
+const getTerminationContract =async (req: Request, res: Response) => {
+	if (typeof req.params.id === 'undefined') {
+		return res.status(400).json({
+			error: 'id is missing'
+		});
+	}
+
+	const id: string = req.params.id;
+	const hashedId = hashString(id);
+
+	const terminationContractDocument = await dbGetTerminationContract(hashedId);
+
+	if (terminationContractDocument instanceof Error) {
+		return res.status(500).json({
+			error: 'could not retrieve from database'
+		});
+	}
+
+	if (typeof terminationContractDocument === 'undefined') {
+		return res.status(400).json({
+			error: 'no document matching the id'
+		});
+	}
+
+	return res.status(200).json({
+		terminationContractDocument
+	});
+};
+
 export default { 
 	createEmploymentCredential,
 	createTerminationCredential, 
@@ -417,5 +447,6 @@ export default {
 	verifyJWT, 
 	addEmploymentContractToDb, 
 	getEmploymentContract,
-	addTerminationContractToDb
+	addTerminationContractToDb,
+	getTerminationContract
 };
