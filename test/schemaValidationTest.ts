@@ -36,7 +36,7 @@ const goodObject = {
 		'termination': {
 			'employee': {
 				'terminationNoticeReceived': '2021-02-02',
-				'terminationReason': 'Employee was browsing internet memes on company time',
+				'terminationReason': 'Employee was not preforming to the expected standard',
 				'lastDayAtWork': '2021-02-02',
 				'lastPayday': '2021-02-02',
 				'terminationStatus': 'resigned',
