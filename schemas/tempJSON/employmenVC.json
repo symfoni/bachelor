@@ -20,8 +20,6 @@
                 "startDate": "2021-06-01",
                 "employerTerminationNotice": 30,
                 "employeeTerminationNotice": 30,
-
-                "endDate": "2014-01-01",
                 "employmentStatus": {
                     "employmentType": "full time employee",
                     "temporaryContractEndDate": ""
