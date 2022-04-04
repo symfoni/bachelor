@@ -32,14 +32,15 @@ describe('the schema validation script', ()=>{
 
 const goodObject = {
 	'credentialSubject': {
-		'id': 'did:ethr:rinkeby:0x0206bc2d719721519fd7e0ac58224688e1c5cc9be5cf3fc67ec4f937db9585eef6',
+		'id': 'did:ethr:rinkeby:0x026e205a3fefa81f8e51cf7c284ec234fa667280740ca8e394ec608edad3680bfe',
 		'termination': {
 			'employee': {
+				'terminationNoticeReceived': '2021-02-02',
+				'terminationReason': 'Employee was browsing internet memes on company time',
 				'lastDayAtWork': '2021-02-02',
 				'lastPayday': '2021-02-02',
 				'terminationStatus': 'resigned',
-				'terminatedDuringTrialPeriod': true,
-				'WeeklyWorkHours': 22
+				'terminatedDuringTrialPeriod': true
 			},
 			'contractPDF': {
 				'URL': 'https://pdfs.com/pdf0.pdf',
