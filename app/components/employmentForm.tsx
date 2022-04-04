@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 
+// TODO: Fix date validation
 // EmploymentSchema for validating the form inputs using the yup library.
 const EmploymentSchema = yup.object({
 	socialSecurityNumber: yup.string().required(),
@@ -91,6 +92,8 @@ export default function EmploymentForm({ screenName }: any) {
 							onBlur={props.handleBlur('socialSecurityNumber')}
 						/>
 
+						<Text>{props.touched.socialSecurityNumber && props.errors.socialSecurityNumber}</Text>
+
 						<Text style={formStyles.textLabel}>Job Title</Text>
 						<TextInput
 							style={formStyles.textInput}
@@ -164,8 +167,8 @@ export default function EmploymentForm({ screenName }: any) {
 							selectedValue={selectedEmploymentState}
 							onValueChange={(itemValue) => setSelectedEmploymentState(itemValue)}
 						>
-							<Picker.Item label='full time employee' value='full time employee'></Picker.Item>
-							<Picker.Item label='temporary employee' value='temporary employee'></Picker.Item>
+							<Picker.Item label='Full time employee' value='full time employee'></Picker.Item>
+							<Picker.Item label='Temporary employee' value='temporary employee'></Picker.Item>
 						</Picker>
 
 						<Text style={formStyles.textLabel}>Temp contract end date</Text>

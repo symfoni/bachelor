@@ -7,12 +7,16 @@ import { CheckBox } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 
+
+// TODO: Fix date validation
 // Typeguards and error handling for the input in the form using the yup library.
 const TerminationSchema = yup.object({
 	socialSecurityNumber: yup.string().required('Required Field'),
+	terminationNoticeReceived: yup.date().required('Required Field'),
+	terminationReason: yup.string(),
 	lastDayAtWork: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
 	lastPayDay: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
-	weeklyWorkHours: yup.number().typeError('Invalid, must be a number')
+	
 });
 
 // Const for determining the os the app runs on.
@@ -112,17 +116,6 @@ export default function TerminationForm({ screenName }: any) {
 						/>
 
 						<Text>{props.touched.lastPayDay && props.errors.lastPayDay}</Text>
-
-						<Text style={formStyles.textLabel}>Weekly work hours</Text>
-						<TextInput
-							style={formStyles.textInput}
-							placeholder='Weekly hours'
-							onChangeText={props.handleChange('weeklyWorkHours')}
-							value={props.values.weeklyWorkHours}
-							onBlur={props.handleBlur('weeklyWorkHours')}
-						/>
-
-						<Text>{props.touched.weeklyWorkHours && props.errors.weeklyWorkHours}</Text>
 
 						<CheckBox
 							containerStyle={formStyles.checkBoxContainer}
