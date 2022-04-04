@@ -133,16 +133,27 @@ export default function EmploymentForm({ screenName }: any) {
 
 						<Text>{props.touched.startDate && props.errors.startDate}</Text>
 
-						<Text style={formStyles.textLabel}>Contract end Date</Text>
+						<Text style={formStyles.textLabel}>Employer Termination notice</Text>
 						<TextInput 
 							style={formStyles.textInput}
-							placeholder='MM-DD-YYYY'
-							onChangeText={props.handleChange('endDate')}
-							value={props.values.endDate}
-							onBlur={props.handleBlur('endDate')}
+							placeholder='Termination notice'
+							onChangeText={props.handleChange('employerTerminationNotice')}
+							value={props.values.employerTerminationNotice}
+							onBlur={props.handleBlur('employerTerminationNotice')}
 						/>
 
-						<Text>{props.touched.endDate && props.errors.endDate}</Text>
+						<Text>{props.touched.employerTerminationNotice && props.errors.employerTerminationNotice}</Text>
+
+						<Text style={formStyles.textLabel}>Employee Termination notice</Text>
+						<TextInput 
+							style={formStyles.textInput}
+							placeholder='Resignation notice'
+							onChangeText={props.handleChange('employeeTerminationNotice')}
+							value={props.values.employeeTerminationNotice}
+							onBlur={props.handleBlur('employeeTerminationNotice')}
+						/>
+
+						<Text>{props.touched.employeeTerminationNotice && props.errors.employeeTerminationNotice}</Text>
 
 						<Text style={formStyles.textLabel}>Employment status</Text>
 						<Picker
@@ -152,31 +163,42 @@ export default function EmploymentForm({ screenName }: any) {
 						>
 							<Picker.Item label='full time' value='full time'></Picker.Item>
 							<Picker.Item label='part time' value='part time'></Picker.Item>
-							<Picker.Item label='freelance' value='freelance'></Picker.Item>
 						</Picker>
 
-						<Text style={formStyles.textLabel}>Part time percentage</Text>
+						<Text style={formStyles.textLabel}>Temp contract end date</Text>
 						<TextInput 
 							style={formStyles.textInput}
-							placeholder='Part time percentage'
-							onChangeText={props.handleChange('partTimePercentage')}
-							value={props.values.partTimePercentage}
-							onBlur={props.handleBlur('partTimePercentage')}
+							placeholder='MM-DD-YYYY'
+							onChangeText={props.handleChange('temporaryContractEndDate')}
+							value={props.values.temporaryContractEndDate}
+							onBlur={props.handleBlur('temporaryContractEndDate')}
 						/>
 
-						<Text>{props.touched.partTimePercentage && props.errors.partTimePercentage}</Text>
+						<Text>{props.touched.temporaryContractEndDate && props.errors.temporaryContractEndDate}</Text>
 
-						<Text style={formStyles.textLabel}>Salary</Text>
+						<Text style={formStyles.textLabel}>Work percentage</Text>
 						<TextInput 
 							style={formStyles.textInput}
-							placeholder='Amount'
-							onChangeText={props.handleChange('amount')}
-							value={props.values.amount}
-							onBlur={props.handleBlur('amount')}
+							placeholder='100'
+							onChangeText={props.handleChange('workPercentage')}
+							value={props.values.workPercentage}
+							onBlur={props.handleBlur('workPercentage')}
 						/>
 
-						<Text>{props.touched.amount && props.errors.amount}</Text>
+						<Text>{props.touched.workPercentage && props.errors.workPercentage}</Text>
 
+						<Text style={formStyles.textLabel}>Monthly salary</Text>
+						<TextInput 
+							style={formStyles.textInput}
+							placeholder='Monthly salary'
+							onChangeText={props.handleChange('monthlySalary')}
+							value={props.values.monthlySalary}
+							onBlur={props.handleBlur('monthlySalary')}
+						/>
+
+						<Text>{props.touched.monthlySalary && props.errors.monthlySalary}</Text>
+
+						<Text style={formStyles.textLabel}>Currency</Text>
 						<TextInput 
 							style={formStyles.textInput}
 							placeholder='Currency'
@@ -207,6 +229,17 @@ export default function EmploymentForm({ screenName }: any) {
 						/>
 
 						<Text>{props.touched.trialEndDate && props.errors.trialEndDate}</Text>
+
+						<Text style={formStyles.textLabel}>Trial period termination notice</Text>
+						<TextInput 
+							style={formStyles.textInput}
+							placeholder='In days'
+							onChangeText={props.handleChange('trialPeriodTerminationNotice')}
+							value={props.values.trialPeriodTerminationNotice}
+							onBlur={props.handleBlur('trialPeriodTerminationNotice')}
+						/>
+
+						<Text>{props.touched.trialPeriodTerminationNotice && props.errors.trialPeriodTerminationNotice}</Text>
 
 						<Text style={formStyles.textLabel}>Special clauses</Text>
 
