@@ -39,10 +39,11 @@ export default function TerminationForm({ screenName }: any) {
 			<Formik
 				initialValues={{
 					socialSecurityNumber: '',
+					terminationNoticeReceived: '',
+					terminationReason: '',
 					lastDayAtWork: '',
 					lastPayDay: '',
-					terminatedDuringTrialPeriod: false,
-					weeklyWorkHours: ''
+					terminatedDuringTrialPeriod: false
 				}}
 
 				validationSchema = {TerminationSchema}
@@ -67,6 +68,28 @@ export default function TerminationForm({ screenName }: any) {
 						/>
 
 						<Text>{props.touched.socialSecurityNumber && props.errors.socialSecurityNumber}</Text>
+						
+						<Text style={formStyles.textLabel}>Termination notice received</Text>
+						<TextInput
+							style={formStyles.textInput}
+							placeholder='Received date: MM-DD-YYYY'
+							onChangeText={props.handleChange('terminationNoticeReceived')}
+							value={props.values.terminationNoticeReceived}
+							onBlur={props.handleBlur('terminationNoticeReceived')}
+						/>
+
+						<Text>{props.touched.terminationNoticeReceived && props.errors.terminationNoticeReceived}</Text>
+
+						<Text style={formStyles.textLabel}>Termination reason</Text>
+						<TextInput
+							style={formStyles.textInput}
+							placeholder='Brief description'
+							onChangeText={props.handleChange('terminationReason')}
+							value={props.values.terminationReason}
+							onBlur={props.handleBlur('terminationReason')}
+						/>
+
+						<Text>{props.touched.terminationReason && props.errors.terminationReason}</Text>
 
 						<Text style={formStyles.textLabel}>Last day at work</Text>
 						<TextInput
