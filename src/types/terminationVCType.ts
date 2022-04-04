@@ -7,11 +7,13 @@ export type terminationVC = {
         id: string,
         termination: {
             employee: {
+                terminationNoticeReceived: string,
+                terminationReason: string,
                 lastDayAtWork: string,
                 lastPayDay: string,
                 terminationStatus: terminationStatus,
-                terminatedDuringTrialPeriod: boolean,
-                weeklyWorkHours: number,
+                terminatedDuringTrialPeriod: boolean
+               
 
             },
             contractPDF: {
@@ -28,6 +30,5 @@ export type terminationVC = {
 
 export enum terminationStatus {
     RESIGNED = 'resigned',
-    FIRED = 'fired',
-    BANKRUPTCY = 'bankruptcy'
+    FIRED = 'fired'
 }

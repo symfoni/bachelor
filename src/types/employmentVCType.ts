@@ -11,19 +11,21 @@ export type employmentVC = {
                 placeofWork: string,
                 hoursOfWork: number,
                 startDate: string,
-                endDate: string,
+                employerTerminationNotice: number,
+                employeeTerminationNotice: number,
                 employmentStatus: {
                     employmentType: employmentType,
-                    partTimePercentage: number
+                    temporaryContractEndDate: string
                 }
                 salary: {
-                    frequency: salaryFrequency,
-                    amount: number,
+                    workPercentage: number,
+                    monthlySalary: number,
                     currency: string
                 }
                 trialPeriod: {
                     startDate: string,
-                    endDate: string
+                    endDate: string,
+                    trialPeriodTerminationNotice: number
                 }
                 rightForPension: boolean,
                 nonCompeteClause: boolean,
@@ -44,12 +46,5 @@ export type employmentVC = {
 
 export enum employmentType {
     FULL_TIME = 'full time',
-    PART_TIME = 'part time',
-    FREELANCE = 'freelance'
-}
-
-export enum salaryFrequency {
-    MONTHLY = 'monthly',
-    WEEKLY = 'weekly',
-    DAILY = 'daily'
+    PART_TIME = 'part time'
 }
