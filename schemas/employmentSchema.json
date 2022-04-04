@@ -18,10 +18,6 @@
                             "type": "object",
                             "description": "Describes attributes of the employee",
                             "properties": {
-                                "employeeId": {
-                                    "type": "string",
-                                    "description": "The DID of the employee"
-                                },
                                 "jobTitle": {
                                     "type": "string",
                                     "description": "The title of the employees' job"
