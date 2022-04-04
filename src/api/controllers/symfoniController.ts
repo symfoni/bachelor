@@ -1,7 +1,7 @@
 import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 import { SymfoniAgentController } from '../../controllers/SymfoniAgentController';
-import { dbAddEmploymentContract, dbGetEmploymentContract } from '../../firestore/operations';
+import { dbAddEmploymentContract, dbAddTerminationContract, dbGetEmploymentContract, dbGetTerminationContract } from '../../firestore/operations';
 import { employmentVC } from '../../types/employmentVCType';
 import { terminationVC } from '../../types/terminationVCType';
 import { hashString } from '../../utils/encryption';
@@ -326,6 +326,53 @@ const addEmploymentContractToDb = async (req: Request, res: Response) => {
 	});
 };
 
+// adds an employment contract to the database
+const addTerminationContractToDb = async (req: Request, res: Response) => {
+	// check if id is missing
+	if (typeof req.body.id === 'undefined') {
+		return res.status(400).json({
+			error: 'id is missing'
+		});
+	}
+
+	// check if credential subject data is missing
+	if (typeof req.body.credentialSubject === 'undefined') {
+		return res.status(400).json({
+			error: 'credential subject data is missing'
+		});
+	}
+	
+	const validationResult = validateSchema(TERMINATION_VC_SCHEMA_FILE_PATH, req.body);
+
+	// validate against schema
+	if(validationResult !== true){
+		return res.status(400).json({
+			error: 'object does not match the required schema',
+			errorMessage: validationResult
+		});
+	}
+
+	// recieve credential subject object with SSN
+	const id: string = req.body.id;
+	const terminationData: terminationVC['credentialSubject'] = req.body.credentialSubject;
+
+	// hash SSN
+	const hashedId = hashString(id);
+
+	// use db function to store credential in database with SSN as key
+	const document = dbAddTerminationContract(hashedId, terminationData);
+	if (document instanceof Error) {
+		return res.status(500).json({
+			error: 'could not add to database'
+		});
+	}
+
+	return res.status(201).json({
+		id: hashedId,
+		documentData: terminationData
+	});
+};
+
 // retrieves an employment document from the database
 const getEmploymentContract =async (req: Request, res: Response) => {
 	if (typeof req.params.id === 'undefined') {
@@ -356,4 +403,19 @@ const getEmploymentContract =async (req: Request, res: Response) => {
 	});
 };
 
-export default { createEmploymentCredential, createTerminationCredential, createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential, createPresentation, verifyJWT, addEmploymentContractToDb, getEmploymentContract };
+export default { 
+	createEmploymentCredential,
+	createTerminationCredential, 
+	createDID, 
+	listDIDs, 
+	resolveDID, 
+	getDID, 
+	addCredential, 
+	listCredentials, 
+	getCredential, 
+	createPresentation, 
+	verifyJWT, 
+	addEmploymentContractToDb, 
+	getEmploymentContract,
+	addTerminationContractToDb
+};
