@@ -241,3 +241,6 @@ web-build/
 
 ## macOS
 .DS_Store
+
+# service account key
+serviceAccountKey.json

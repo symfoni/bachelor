@@ -29,6 +29,10 @@ router.get('/symfoni/credentials', symfoniController.listCredentials);
 router.get('/symfoni/credential/:type', symfoniController.getCredential);
 router.post('/symfoni/presentation', symfoniController.createPresentation);
 router.post('/symfoni/verifyJWT', userController.verifyJWT);
+router.post('/symfoni/employmentContract', symfoniController.addEmploymentContractToDb);
+router.get('/symfoni/employmentContract/:id', symfoniController.getEmploymentContract);
+router.post('/symfoni/terminationContract', symfoniController.addTerminationContractToDb);
+router.get('/symfoni/terminationContract/:id', symfoniController.getTerminationContract);
 
 // NAV endpoints
 router.post('/nav/did', navController.createDID);
