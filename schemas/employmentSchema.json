@@ -39,10 +39,13 @@
                                     "description": "The first day of work",
                                     "format": "date"
                                 },
-                                "endDate": {
-                                    "type": "string",
-                                    "description": "When the contract expires",
-                                    "format": "date"
+                                "employerTerminationNotice": {
+                                    "type": "number",
+                                    "description": "Termination notice for the employee in days"
+                                },
+                                "employeeTerminationNotice": {
+                                    "type": "number",
+                                    "description": "Termination notice for the employee in days"
                                 },
                                 "employmentStatus": {
                                     "type": "object",
@@ -51,37 +54,32 @@
                                             "type": "string",
                                             "description": "Different type of employment relating to how much you work",
                                             "enum": [
-                                                "full time",
-                                                "part time",
-                                                "freelance"
+                                                "full time employee",
+                                                "temporary employee"
                                             ]
                                         },
-                                        "partTimePercentage": {
-                                            "type": "number",
-                                            "description": "How many perecent you work part time of the standard weekly work hours"
+                                        "temporaryContractEndDate": {
+                                            "type": "string",
+                                            "description": "When the contract for a temporary contract expires",
+                                            "format": "date"
                                         }
                                     },
                                     "required": [
                                         "employmentType",
-                                        "partTimePercentage"
+                                        "temporaryContractEndDate"
                                     ]
                                 },
                                 "salary": {
                                     "type": "object",
                                     "description": "How much money the employee earns",
                                     "properties": {
-                                        "frequency": {
-                                            "type": "string",
-                                            "description": "How often the employee is paid",
-                                            "enum": [
-                                                "monthly",
-                                                "weekly",
-                                                "hourly"
-                                            ]
-                                        },
-                                        "amount": {
+                                        "workPercentage": {
                                             "type": "number",
-                                            "description": "How much the employee is paid in relation to frequency"
+                                            "description": "How much the employee works compared to a normal work week"
+                                        },
+                                        "monthlySalary": {
+                                            "type": "number",
+                                            "description": "How much the employee is paid each month"
                                         },
                                         "currency": {
                                             "type": "string",
@@ -89,8 +87,8 @@
                                         }
                                     },
                                     "required": [
-                                        "frequency",
-                                        "amount",
+                                        "workPercentage",
+                                        "monthlySalary",
                                         "currency"
                                     ]
                                 },
@@ -107,11 +105,16 @@
                                             "type": "string",
                                             "description": "When the trial period ends",
                                             "format": "date"
+                                        },
+                                        "trialPeriodTerminationNotice": {
+                                            "type": "string",
+                                            "description": "If the employee is terminated during the trial period, how long notice will they receive"
                                         }
                                     },
                                     "required": [
                                         "startDate",
-                                        "endDate"
+                                        "endDate",
+                                        "noticePeriodInDays"
                                     ]
                                 },
                                 "rightForPension": {
@@ -160,8 +163,7 @@
                         ]
                     },
                     "required": [
-                        "employee",
-                        "contractPDF"
+                        "employee"
                     ]
                 }
             },
