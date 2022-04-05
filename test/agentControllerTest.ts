@@ -1,8 +1,7 @@
-import fs from 'fs';
 import assert from 'assert';
 import { before, it } from 'mocha';
 import { AgentController } from '../src/controllers/AgentController';
-import { agentTest } from '../src/veramo/setup';
+import { agentTest, dbConnectionTest } from '../src/veramo/setup';
 
 /*
 * før hver test, rens databasen og legg til 'ferske' elementer
@@ -19,14 +18,20 @@ const testAgentController = new AgentController(agentTest, 'test');
 
 before(function () {
 	// clean database file
-	fs.writeFile('./database/test-database.sqlite', '', function (err) {
-		if (err) throw err;
-		console.log('File is created successfully.');
+	dbConnectionTest.then((testDb)=>{
+		testDb.dropDatabase();
 	});
 
 	testAgentController.createDID('test0');
 	testAgentController.createDID('test1', 'did:web');
 	testAgentController.createDID('test2');
+
+	// Override console.log and console.error with empty functions to supress function logging when testing
+	// making it easier to read the test result.
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	console.log = function () {};
+	// eslint-disable-next-line @typescript-eslint/no-empty-function
+	console.error = function () {};
 });
 
 describe('AgentController', function () {
