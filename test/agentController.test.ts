@@ -4,6 +4,7 @@ import { AnyObject } from 'yup/lib/types';
 import { SCHEMA_W3_CREDENTIAL } from '../src/constants/verifiableCredentialConstants';
 import { AgentController } from '../src/controllers/AgentController';
 import { agentTest, dbConnectionTest } from '../src/veramo/setup';
+import exampleCredential from './test data/exampleCredential.json';
 
 const testAgentController = new AgentController(agentTest, 'test');
 const testJWT = 'eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9zeW1mb25pL2JhY2hlbG9yL2Rldi9zY2hlbWFzL3Rlcm1pbmF0aW9uU2NoZW1hLmpzb24iXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsIlRlcm1pbmF0aW9uVkMiXSwiY3JlZGVudGlhbFN1YmplY3QiOnsidGVybWluYXRpb24iOnsiZW1wbG95ZWUiOnsibGFzdERheUF0V29yayI6IjIwMjEtMDItMDIiLCJsYXN0UGF5ZGF5IjoiMjAyMS0wMi0wMiIsInRlcm1pbmF0aW9uU3RhdHVzIjoicmVzaWduZWQiLCJ0ZXJtaW5hdGVkRHVyaW5nVHJpYWxQZXJpb2QiOnRydWUsIldlZWtseVdvcmtIb3VycyI6MjIsInRlcm1pbmF0aW9uTm90aWNlUmVjZWl2ZWQiOiIyMDIxLTAyLTAyIn0sImNvbnRyYWN0UERGIjp7IlVSTCI6Imh0dHBzOi8vcGRmcy5jb20vcGRmMC5wZGYiLCJoYXNoIjoiODc0M2I1MjA2M2NkODQwOTdhNjVkMTYzM2Y1Yzc0ZjUifX19fSwic3ViIjoiZGlkOmV0aHI6cmlua2VieToweDAyMDZiYzJkNzE5NzIxNTE5ZmQ3ZTBhYzU4MjI0Njg4ZTFjNWNjOWJlNWNmM2ZjNjdlYzRmOTM3ZGI5NTg1ZWVmNiIsIm5iZiI6MTY0OTE4OTgwNSwiaXNzIjoiZGlkOmV0aHI6cmlua2VieToweDAzMDBjZDBkZmE5ZjBiNTc2NDc0M2YxM2YyMTg3MTI2MmYzODUwNjQ3ZThlMGYwMTNiYzEwZjFhNDAwMzYxNWU2YSJ9.YkXKncqMqFKZFaDTASdCQaz5rrW-5DkSk6ErlEEl9jKH2wRtNexSB4DO88n_24Pur5HbfgYou147d5Bo31Shrw';
@@ -234,38 +235,56 @@ describe('AgentController', async function () {
 	});
 
 	describe('addCredential', function () {
-		it('should not return an error if it successfully added a credential to the database', function () {
-			// test goes here
+		it('should not return an error if it successfully added a credential to the database', async function () {
+			await testAgentController.addCredential(exampleCredential.credential).then((credentialHash)=>{
+				if (typeof credentialHash === 'string') {
+					assert.ok;
+				}
+			});
 		});
-		it('should return an error if it was unsuccessful in adding a credential to the database', function () {
-			// test goes here
+		it('should return an error if it was unsuccessful in adding a credential to the database', async function () {
+			await testAgentController.addCredential(exampleCredential.credential).then((credentialHash)=>{
+				if (credentialHash instanceof Error) {
+					assert.ok;
+				}
+			});
 		});
 	});
 
 	describe('getAllCredentials', function () {
-		it('should list all the credentials in the database', function () {
-			// test goes here
+		it('should list all the credentials in the database', async function () {
+			await testAgentController.getAllCredentials().then((credentials)=>{
+				assert.equal(credentials.length, 1);
+			});
 		});
 	});
 
-	describe('getAllCredentials', function () {
-		it('should list the number of credentials in the database with the matching type', function () {
-			// test goes here
+	describe('getCredentialBasedOnType', function () {
+		it('should list the number of credentials in the database with the matching type', async function () {
+			await testAgentController.getCredentialBasedOnType('TerminationVC').then((credentials)=>{
+				assert.equal(credentials.length, 1);
+			});
 		});
 
-		it('should only list credentials with the matching type', function () {
-			// test goes here
+		it('should only list credentials with the matching type', async function () {
+			await testAgentController.getCredentialBasedOnType('TerminationVC').then((credentials)=>{
+				credentials.map((credential)=>{
+					assert.equal(credential.verifiableCredential.type.at(1), 'TerminationVC');
+				});
+			});
 		});
 	});
 
 	describe('createPresentation', function () {
-		it('should return a presentation with the credentials that was passed to the function', function () {
-			// test goes here
+		it('should return a presentation with the credentials that was passed to the function', async function () {
+			await testAgentController.createPresentation(testDidUrl, [exampleCredential.credential]).then((presentation)=>{
+				if (presentation instanceof Error) {
+					assert.fail();
+				}
+				assert.equal(presentation.verifiableCredential?.at(0)?.proof.jwt, exampleCredential.credential.proof.jwt);
+			});
 		});
 
-		it('should return an error if it was unsuccessful in creating a presentation', function () {
-			// test goes here
-		});
 	});
 
 });
