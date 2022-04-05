@@ -159,12 +159,14 @@ export class AgentController implements IAgentController {
 		}
 	}
 
+	// TODO: Fix the any type here. Possibly make a custom interface.
 	/**
 	 * createCredential uses the agent to create a verifiable credential.
 	 * @param credentialData the data that the credential should contain.
 	 * @returns a verifiable credential.
 	 */
-	async createCredential(credentialData: VerifiableCredential): Promise<VerifiableCredential | Error> {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	async createCredential(credentialData: any): Promise<VerifiableCredential | Error> {
 		try {
 			return this.agent.createVerifiableCredential({
 				credential: credentialData,
