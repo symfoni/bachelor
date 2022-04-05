@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { before, it } from 'mocha';
+import { after, before, it } from 'mocha';
 import { AgentController } from '../src/controllers/AgentController';
 import { agentTest, dbConnectionTest } from '../src/veramo/setup';
 
@@ -15,50 +15,62 @@ import { agentTest, dbConnectionTest } from '../src/veramo/setup';
 */
 
 const testAgentController = new AgentController(agentTest, 'test');
+let testDidUrl: string;
 
-before(function () {
-	// clean database file
-	dbConnectionTest.then((testDb)=>{
-		testDb.dropDatabase();
+before(async function () {
+
+	await testAgentController.createDID('test0').then((did)=>{
+		if (did instanceof Error) {
+			return;
+		}
+		testDidUrl = did.did;
 	});
-
-	testAgentController.createDID('test0');
-	testAgentController.createDID('test1', 'did:web');
-	testAgentController.createDID('test2');
-
+	await testAgentController.createDID('test1', 'did:web');
+	await testAgentController.createDID('test2');
+	
 	// Override console.log and console.error with empty functions to supress function logging when testing
 	// making it easier to read the test result.
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	console.log = function () {};
 	// eslint-disable-next-line @typescript-eslint/no-empty-function
 	console.error = function () {};
+	
 });
 
-describe('AgentController', function () {
+after(async function () {
+	// clean database file
+	await dbConnectionTest.then((testDb)=>{
+		testDb.dropDatabase();
+	});
+});
 
-	describe('createDID', function () {
+describe('AgentController', async function () {
 
-		it('should create a DID with the correct alias, provider, and kms', function () {
+	describe('createDID', async function () {
+
+		it('should create a DID with the correct alias, provider, and kms', async function () {
 			const alias = 'test1';
 			const provider = 'did:ethr:rinkeby';
 			const keyManagementSystem = 'local';
-			testAgentController.createDID(alias).then((did) => {
+			await testAgentController.createDID(alias, provider, keyManagementSystem).then((did) => {
 				// Works
 				if (did instanceof Error) {
 					assert.fail();
 				}
-				assert.equal(did['alias'], alias);
-				assert.equal(did['provider'], provider);
-				assert.equal(did['keys'][0]['kms'], keyManagementSystem);
+				assert.equal(did.alias, alias);
+				assert.equal(did.provider, provider);
+				assert.equal(did.keys.at(0)?.kms, keyManagementSystem);
 			});
 
 		});
 
 
-		it('should return the expected error message if the provider does not exist', function () {
+		it('should return an error if the provider does not exist', async function () {
 			const provider = 'not:a:valid:did:method';
-			testAgentController.createDID(undefined, provider).then((did) => {
-				assert.equal(did, 'unable to create did');
+			await testAgentController.createDID(undefined, provider).then((did) => {
+				if (did instanceof Error) {
+					assert.ok;
+				}
 			});
 		});
 	});
