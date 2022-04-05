@@ -77,12 +77,22 @@ describe('AgentController', async function () {
 
 	describe('getDID', function () {
 
-		it('should return a DID with the url that you searched for', function () {
-			// assert 
+		it('should return a DID with the url that you searched for', async function () {
+			await testAgentController.getDID(testDidUrl).then((did)=>{
+				if (did instanceof Error) {
+					assert.fail;
+					return;
+				}
+				assert.equal(did.did, testDidUrl);
+			});
 		});
 
-		it('should return a error message if it did not find anything', function () {
-			// assert
+		it('should return a error message if it did not find anything', async function () {
+			await testAgentController.getDID('this did does not exist').then((did)=>{
+				if (did instanceof Error) {
+					assert.ok;
+				}
+			});
 		});
 	});
 
