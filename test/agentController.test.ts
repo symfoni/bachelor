@@ -5,17 +5,6 @@ import { SCHEMA_W3_CREDENTIAL } from '../src/constants/verifiableCredentialConst
 import { AgentController } from '../src/controllers/AgentController';
 import { agentTest, dbConnectionTest } from '../src/veramo/setup';
 
-/*
-* før hver test, rens databasen og legg til 'ferske' elementer
-* test createDID, sjekk at alias, provider, og kms er tilstede i DIDden og at de har riktig verdi, se at den ble lagret i databasen
-* test getDID, sjekk at den ikke får et tomt objekt, se at DIDen i dokumentet stemmer med DIDen vi søkte etter
-* listAllDIDS, sjekk at antall DIDs i listen stemmer
-* listBasedOnProvider, sjekk at vi får riktig antall, og at provider stemmer overens
-* listBasedOnAlias, sjekk at vi får riktig antall, og at alias stemmer overens
-* resolveDID, sjekk at DID url stemmer overens med DIDen vi ønsket å resolve, og at objektet ikke er tomt
-* createCredential, sjekk at credential dataen stemmer overens med det vi fylte inn
-*/
-
 const testAgentController = new AgentController(agentTest, 'test');
 const testJWT = 'eyJhbGciOiJFUzI1NksiLCJ0eXAiOiJKV1QifQ.eyJ2YyI6eyJAY29udGV4dCI6WyJodHRwczovL3d3dy53My5vcmcvMjAxOC9jcmVkZW50aWFscy92MSIsImh0dHBzOi8vcmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbS9zeW1mb25pL2JhY2hlbG9yL2Rldi9zY2hlbWFzL3Rlcm1pbmF0aW9uU2NoZW1hLmpzb24iXSwidHlwZSI6WyJWZXJpZmlhYmxlQ3JlZGVudGlhbCIsIlRlcm1pbmF0aW9uVkMiXSwiY3JlZGVudGlhbFN1YmplY3QiOnsidGVybWluYXRpb24iOnsiZW1wbG95ZWUiOnsibGFzdERheUF0V29yayI6IjIwMjEtMDItMDIiLCJsYXN0UGF5ZGF5IjoiMjAyMS0wMi0wMiIsInRlcm1pbmF0aW9uU3RhdHVzIjoicmVzaWduZWQiLCJ0ZXJtaW5hdGVkRHVyaW5nVHJpYWxQZXJpb2QiOnRydWUsIldlZWtseVdvcmtIb3VycyI6MjIsInRlcm1pbmF0aW9uTm90aWNlUmVjZWl2ZWQiOiIyMDIxLTAyLTAyIn0sImNvbnRyYWN0UERGIjp7IlVSTCI6Imh0dHBzOi8vcGRmcy5jb20vcGRmMC5wZGYiLCJoYXNoIjoiODc0M2I1MjA2M2NkODQwOTdhNjVkMTYzM2Y1Yzc0ZjUifX19fSwic3ViIjoiZGlkOmV0aHI6cmlua2VieToweDAyMDZiYzJkNzE5NzIxNTE5ZmQ3ZTBhYzU4MjI0Njg4ZTFjNWNjOWJlNWNmM2ZjNjdlYzRmOTM3ZGI5NTg1ZWVmNiIsIm5iZiI6MTY0OTE4OTgwNSwiaXNzIjoiZGlkOmV0aHI6cmlua2VieToweDAzMDBjZDBkZmE5ZjBiNTc2NDc0M2YxM2YyMTg3MTI2MmYzODUwNjQ3ZThlMGYwMTNiYzEwZjFhNDAwMzYxNWU2YSJ9.YkXKncqMqFKZFaDTASdCQaz5rrW-5DkSk6ErlEEl9jKH2wRtNexSB4DO88n_24Pur5HbfgYou147d5Bo31Shrw';
 let testDidUrl: string;
