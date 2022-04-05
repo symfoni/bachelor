@@ -100,7 +100,7 @@ const dbConnectionState = createConnection({
 });
 
 // Test database
-const dbConnectionTest = createConnection({
+export const dbConnectionTest = createConnection({
 	type: 'sqlite',
 	database: TEST_DATABASE_FILE,
 	synchronize: false,
