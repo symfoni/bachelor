@@ -1,7 +1,14 @@
 import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 import { SymfoniAgentController } from '../../controllers/SymfoniAgentController';
-import { dbAddEmploymentContract, dbAddTerminationContract, dbDeleteEmploymentContract, dbDeleteTerminationContract, dbGetEmploymentContract, dbGetTerminationContract } from '../../firestore/symfoniOperations';
+import { 
+	dbAddEmploymentContract, 
+	dbAddTerminationContract, 
+	dbDeleteEmploymentContract, 
+	dbDeleteTerminationContract, 
+	dbGetEmploymentContract, 
+	dbGetTerminationContract 
+} from '../../firestore/symfoniOperations';
 import { employmentVC } from '../../types/employmentVCType';
 import { terminationVC } from '../../types/terminationVCType';
 import { hashString } from '../../utils/encryption';
@@ -326,7 +333,7 @@ const addEmploymentContractToDb = async (req: Request, res: Response) => {
 	});
 };
 
-// adds an employment contract to the database
+// adds an termination contract to the database
 const addTerminationContractToDb = async (req: Request, res: Response) => {
 	// check if id is missing
 	if (typeof req.body.id === 'undefined') {
@@ -403,7 +410,7 @@ const getEmploymentContract =async (req: Request, res: Response) => {
 	});
 };
 
-// retrieves an employment document from the database
+// retrieves a termination document from the database
 const getTerminationContract =async (req: Request, res: Response) => {
 	if (typeof req.params.id === 'undefined') {
 		return res.status(400).json({
@@ -433,7 +440,7 @@ const getTerminationContract =async (req: Request, res: Response) => {
 	});
 };
 
-// deletes person data from the database
+// deletes employment contract from the database
 const deleteEmploymentContractFromDb = async (req: Request, res: Response) => {
 	if (typeof req.params.id === 'undefined') {
 		return res.status(400).json({
@@ -464,7 +471,7 @@ const deleteEmploymentContractFromDb = async (req: Request, res: Response) => {
 	});
 };
 
-// deletes person data from the database
+// deletes termination contract from the database
 const deleteTerminationContractFromDb = async (req: Request, res: Response) => {
 	if (typeof req.params.id === 'undefined') {
 		return res.status(400).json({
