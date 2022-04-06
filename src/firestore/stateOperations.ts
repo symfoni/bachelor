@@ -42,12 +42,13 @@ export async function dbGetPersonData(id: string): Promise<FirebaseFirestore.Doc
 /**
  * dbDeletePersonData deletes person data from the database.
  * @param id the id of the document that you want to delete.
- * @returns an error if it was unsuccessful in deleting the document from the database.
+ * @returns the document that was deleted.
  */
-export async function dbDeletePersonData(id:string): Promise<void | Error> {
+export async function dbDeletePersonData(id:string): Promise<void | Error | FirebaseFirestore.DocumentData> {
 	try {
 		const docRef = db.collection(PERSON_DATA_COLLECTION).doc(id);
 		docRef.delete();
+		return (await docRef.get()).data();
 	} catch (error) {
 		console.error('unable to retrieve document from database', error);
 		return new Error('unable to retrieve document from database');
