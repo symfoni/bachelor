@@ -66,7 +66,7 @@ export async function dbGetEmploymentContract(id:string): Promise<FirebaseFirest
  * @param id the id of the document you want to retrieve.
  * @returns the document data.
  */
-export async function dbGetTerminationContract(id:string) {
+export async function dbGetTerminationContract(id:string): Promise<FirebaseFirestore.DocumentData | Error | undefined> {
 	try {
 		const terminationContractRef = db.collection(TERMINATION_COLLECTION).doc(id);
 		const doc = await terminationContractRef.get();
