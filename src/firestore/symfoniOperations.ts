@@ -79,3 +79,35 @@ export async function dbGetTerminationContract(id:string): Promise<FirebaseFires
 		return new Error('unable to retrieve document from database');
 	}
 }
+
+/**
+ * dbDeleteEmploymentContract deletes an employment contract from the database.
+ * @param id the id of the document that you want to delete.
+ * @returns the document that was deleted.
+ */
+export async function dbDeleteEmploymentContract(id:string): Promise<void | Error | FirebaseFirestore.DocumentData> {
+	try {
+		const docRef = db.collection(EMPLOYMENT_COLLECTION).doc(id);
+		docRef.delete();
+		return (await docRef.get()).data();
+	} catch (error) {
+		console.error('unable to retrieve document from database', error);
+		return new Error('unable to retrieve document from database');
+	}
+}
+
+/**
+ * dbDeleteTerminationContract deletes a termination contract from the database.
+ * @param id the id of the document that you want to delete.
+ * @returns the document that was deleted.
+ */
+export async function dbDeleteTerminationContract(id:string): Promise<void | Error | FirebaseFirestore.DocumentData> {
+	try {
+		const docRef = db.collection(TERMINATION_COLLECTION).doc(id);
+		docRef.delete();
+		return (await docRef.get()).data();
+	} catch (error) {
+		console.error('unable to retrieve document from database', error);
+		return new Error('unable to retrieve document from database');
+	}
+}
