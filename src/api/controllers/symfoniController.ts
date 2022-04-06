@@ -1,7 +1,7 @@
 import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 import { SymfoniAgentController } from '../../controllers/SymfoniAgentController';
-import { dbAddEmploymentContract, dbAddTerminationContract, dbGetEmploymentContract, dbGetTerminationContract } from '../../firestore/operations';
+import { dbAddEmploymentContract, dbAddTerminationContract, dbGetEmploymentContract, dbGetTerminationContract } from '../../firestore/symfoniOperations';
 import { employmentVC } from '../../types/employmentVCType';
 import { terminationVC } from '../../types/terminationVCType';
 import { hashString } from '../../utils/encryption';
