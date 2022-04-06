@@ -1,7 +1,7 @@
 import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 import { SymfoniAgentController } from '../../controllers/SymfoniAgentController';
-import { dbAddEmploymentContract, dbAddTerminationContract, dbGetEmploymentContract, dbGetTerminationContract } from '../../firestore/symfoniOperations';
+import { dbAddEmploymentContract, dbAddTerminationContract, dbDeleteEmploymentContract, dbDeleteTerminationContract, dbGetEmploymentContract, dbGetTerminationContract } from '../../firestore/symfoniOperations';
 import { employmentVC } from '../../types/employmentVCType';
 import { terminationVC } from '../../types/terminationVCType';
 import { hashString } from '../../utils/encryption';
@@ -433,6 +433,68 @@ const getTerminationContract =async (req: Request, res: Response) => {
 	});
 };
 
+// deletes person data from the database
+const deleteEmploymentContractFromDb = async (req: Request, res: Response) => {
+	if (typeof req.params.id === 'undefined') {
+		return res.status(400).json({
+			error: 'id is missing'
+		});
+	}
+
+	const id: string = req.params.id;
+	const hashedId = hashString(id);
+
+	const personData = await dbDeleteEmploymentContract(hashedId);
+
+	if (personData instanceof Error) {
+		return res.status(500).json({
+			error: 'could not delete from database'
+		});
+	}
+
+	if (typeof personData === 'undefined') {
+		return res.status(400).json({
+			error: 'no document matching the id'
+		});
+	}
+
+	return res.status(200).json({
+		success: 'successfully deleted from the database',
+		personData
+	});
+};
+
+// deletes person data from the database
+const deleteTerminationContractFromDb = async (req: Request, res: Response) => {
+	if (typeof req.params.id === 'undefined') {
+		return res.status(400).json({
+			error: 'id is missing'
+		});
+	}
+
+	const id: string = req.params.id;
+	const hashedId = hashString(id);
+
+	const personData = await dbDeleteTerminationContract(hashedId);
+
+	if (personData instanceof Error) {
+		return res.status(500).json({
+			error: 'could not delete from database'
+		});
+	}
+
+	if (typeof personData === 'undefined') {
+		return res.status(400).json({
+			error: 'no document matching the id'
+		});
+	}
+
+	return res.status(200).json({
+		success: 'successfully deleted from the database',
+		personData
+	});
+};
+
 export default { 
 	createEmploymentCredential,
 	createTerminationCredential, 
@@ -448,5 +510,7 @@ export default {
 	addEmploymentContractToDb, 
 	getEmploymentContract,
 	addTerminationContractToDb,
-	getTerminationContract
+	getTerminationContract,
+	deleteEmploymentContractFromDb,
+	deleteTerminationContractFromDb
 };
