@@ -14,7 +14,7 @@ const TERMINATION_COLLECTION = 'termination-contracts';
  * @param employmentData this will be the data inside the document.
  * @returns an error if the database insertion failed.
  */
-export async function dbAddEmploymentContract(id: string, employmentData: employmentVC['credentialSubject']): Promise<void | Error> {
+export async function dbAddEmploymentContract(id: string, employmentData: object): Promise<void | Error> {
 	try {
 		const docRef = db.collection(EMPLOYMENT_COLLECTION).doc(id);
 		await docRef.set(employmentData);
@@ -30,7 +30,7 @@ export async function dbAddEmploymentContract(id: string, employmentData: employ
  * @param terminationData this will be the data inside the document.
  * @returns an error if the database insertion failed.
  */
-export async function dbAddTerminationContract(id: string, terminationData: terminationVC['credentialSubject']): Promise<void | Error> {
+export async function dbAddTerminationContract(id: string, terminationData: object): Promise<void | Error> {
 	try {
 		const docRef = db.collection(TERMINATION_COLLECTION).doc(id);
 		await docRef.set(terminationData);
