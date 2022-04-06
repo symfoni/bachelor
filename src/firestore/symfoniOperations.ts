@@ -1,5 +1,3 @@
-import { employmentVC } from '../types/employmentVCType';
-import { terminationVC } from '../types/terminationVCType';
 import { db } from './setup';
 
 // the name of the employment contract collection in the database
