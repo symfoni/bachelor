@@ -1,5 +1,3 @@
-import { employmentVC } from '../types/employmentVCType';
-import { terminationVC } from '../types/terminationVCType';
 import { db } from './setup';
 
 // the name of the employment contract collection in the database
@@ -14,7 +12,7 @@ const TERMINATION_COLLECTION = 'termination-contracts';
  * @param employmentData this will be the data inside the document.
  * @returns an error if the database insertion failed.
  */
-export async function dbAddEmploymentContract(id: string, employmentData: employmentVC['credentialSubject']): Promise<void | Error> {
+export async function dbAddEmploymentContract(id: string, employmentData: object): Promise<void | Error> {
 	try {
 		const docRef = db.collection(EMPLOYMENT_COLLECTION).doc(id);
 		await docRef.set(employmentData);
@@ -30,7 +28,7 @@ export async function dbAddEmploymentContract(id: string, employmentData: employ
  * @param terminationData this will be the data inside the document.
  * @returns an error if the database insertion failed.
  */
-export async function dbAddTerminationContract(id: string, terminationData: terminationVC['credentialSubject']): Promise<void | Error> {
+export async function dbAddTerminationContract(id: string, terminationData: object): Promise<void | Error> {
 	try {
 		const docRef = db.collection(TERMINATION_COLLECTION).doc(id);
 		await docRef.set(terminationData);
@@ -66,7 +64,7 @@ export async function dbGetEmploymentContract(id:string): Promise<FirebaseFirest
  * @param id the id of the document you want to retrieve.
  * @returns the document data.
  */
-export async function dbGetTerminationContract(id:string) {
+export async function dbGetTerminationContract(id:string): Promise<FirebaseFirestore.DocumentData | Error | undefined> {
 	try {
 		const terminationContractRef = db.collection(TERMINATION_COLLECTION).doc(id);
 		const doc = await terminationContractRef.get();
@@ -78,6 +76,38 @@ export async function dbGetTerminationContract(id:string) {
 		}
 	} catch (error) {
 		console.error();
+		return new Error('unable to retrieve document from database');
+	}
+}
+
+/**
+ * dbDeleteEmploymentContract deletes an employment contract from the database.
+ * @param id the id of the document that you want to delete.
+ * @returns the document that was deleted.
+ */
+export async function dbDeleteEmploymentContract(id:string): Promise<void | Error | FirebaseFirestore.DocumentData> {
+	try {
+		const docRef = db.collection(EMPLOYMENT_COLLECTION).doc(id);
+		docRef.delete();
+		return (await docRef.get()).data();
+	} catch (error) {
+		console.error('unable to retrieve document from database', error);
+		return new Error('unable to retrieve document from database');
+	}
+}
+
+/**
+ * dbDeleteTerminationContract deletes a termination contract from the database.
+ * @param id the id of the document that you want to delete.
+ * @returns the document that was deleted.
+ */
+export async function dbDeleteTerminationContract(id:string): Promise<void | Error | FirebaseFirestore.DocumentData> {
+	try {
+		const docRef = db.collection(TERMINATION_COLLECTION).doc(id);
+		docRef.delete();
+		return (await docRef.get()).data();
+	} catch (error) {
+		console.error('unable to retrieve document from database', error);
 		return new Error('unable to retrieve document from database');
 	}
 }

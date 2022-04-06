@@ -1,8 +1,10 @@
 import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 import { StateAgentController } from '../../controllers/StateAgentController';
+import { dbAddPersonData, dbDeletePersonData, dbGetPersonData } from '../../firestore/stateOperations';
 import { businessVerifiableCredential } from '../../types/businessVCtype';
 import { personVerifiableCredential } from '../../types/personVCType';
+import { hashString } from '../../utils/encryption';
 import { validateSchema } from '../../utils/schemaValidation';
 
 const PERSON_VC_SCHEMA_FILE_PATH = 'schemas/tempJSON/personSchema.json';
@@ -278,4 +280,125 @@ const createPresentation = async (req: Request, res: Response) => {
 
 };
 
-export default { createPersonCredential, createBusinessCredential, createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential, createPresentation, verifyJWT };
+// adds person data to the database
+const addPersonDataToDb = async (req: Request, res: Response) => {
+	// check if id is missing
+	if (typeof req.body.id === 'undefined') {
+		return res.status(400).json({
+			error: 'id is missing'
+		});
+	}
+
+	// check if credential subject data is missing
+	if (typeof req.body.credentialSubject === 'undefined') {
+		return res.status(400).json({
+			error: 'credential subject data is missing'
+		});
+	}
+	
+	const validationResult = validateSchema(PERSON_VC_SCHEMA_FILE_PATH, req.body);
+
+	// validate against schema
+	if(validationResult !== true){
+		return res.status(400).json({
+			error: 'object does not match the required schema',
+			errorMessage: validationResult
+		});
+	}
+
+	const id: string = req.body.id;
+	const personData: object = req.body.credentialSubject;
+
+	// hash SSN
+	const hashedId = hashString(id);
+
+	const document = dbAddPersonData(hashedId, personData);
+	if (document instanceof Error) {
+		return res.status(500).json({
+			error: 'could not add to database'
+		});
+	}
+
+	return res.status(201).json({
+		id: hashedId,
+		documentData: personData
+	});
+};
+
+// retrieves person data from the database
+const getPersonDataFromDb = async (req: Request, res: Response) => {
+	if (typeof req.params.id === 'undefined') {
+		return res.status(400).json({
+			error: 'id is missing'
+		});
+	}
+
+	const id: string = req.params.id;
+	const hashedId = hashString(id);
+
+	const personData = await dbGetPersonData(hashedId);
+
+	if (personData instanceof Error) {
+		return res.status(500).json({
+			error: 'could not retrieve from database'
+		});
+	}
+
+	if (typeof personData === 'undefined') {
+		return res.status(400).json({
+			error: 'no document matching the id'
+		});
+	}
+
+	return res.status(200).json({
+		personData
+	});
+};
+
+// deletes person data from the database
+const deletePersonDataFromDb = async (req: Request, res: Response) => {
+	if (typeof req.params.id === 'undefined') {
+		return res.status(400).json({
+			error: 'id is missing'
+		});
+	}
+
+	const id: string = req.params.id;
+	const hashedId = hashString(id);
+
+	const personData = await dbDeletePersonData(hashedId);
+
+	if (personData instanceof Error) {
+		return res.status(500).json({
+			error: 'could not delete from database'
+		});
+	}
+
+	if (typeof personData === 'undefined') {
+		return res.status(400).json({
+			error: 'no document matching the id'
+		});
+	}
+
+	return res.status(200).json({
+		success: 'successfully deleted from the database',
+		personData
+	});
+};
+
+export default { 
+	createPersonCredential,
+	createBusinessCredential, 
+	createDID, 
+	listDIDs, 
+	resolveDID, 
+	getDID, 
+	addCredential, 
+	listCredentials, 
+	getCredential, 
+	createPresentation, 
+	verifyJWT,
+	addPersonDataToDb,
+	getPersonDataFromDb,
+	deletePersonDataFromDb
+};

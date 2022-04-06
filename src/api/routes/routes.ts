@@ -33,6 +33,8 @@ router.post('/symfoni/employmentContract', symfoniController.addEmploymentContra
 router.get('/symfoni/employmentContract/:id', symfoniController.getEmploymentContract);
 router.post('/symfoni/terminationContract', symfoniController.addTerminationContractToDb);
 router.get('/symfoni/terminationContract/:id', symfoniController.getTerminationContract);
+router.delete('/symfoni/terminationContract/:id', symfoniController.deleteTerminationContractFromDb);
+router.delete('/symfoni/employmentContract/:id', symfoniController.deleteEmploymentContractFromDb);
 
 // NAV endpoints
 router.post('/nav/did', navController.createDID);
@@ -56,6 +58,9 @@ router.post('/state/credential', stateController.addCredential);
 router.get('/state/credentials', stateController.listCredentials);
 router.get('/state/credential/:type', stateController.getCredential);
 router.post('/state/presentation', stateController.createPresentation);
-router.post('/state/verifyJWT', userController.verifyJWT);
+router.post('/state/verifyJWT', stateController.verifyJWT);
+router.post('/state/person', stateController.addPersonDataToDb);
+router.get('/state/person/:id', stateController.getPersonDataFromDb);
+router.delete('/state/person/:id', stateController.deletePersonDataFromDb);
 
 export default router;
