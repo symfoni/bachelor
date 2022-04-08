@@ -201,4 +201,33 @@ const createPresentation = async (req: Request, res: Response) => {
 
 };
 
-export default { createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential, createPresentation, verifyJWT };
+const handleMessage = async (req: Request, res: Response) => {
+	console.log(req.body);
+
+	const message = await agentUser.handleMessage({
+		raw: req.body as string,
+		metaData: [{type: 'message'}],
+		save: false
+	});
+
+	//console.log(message);
+
+	if (message) {
+		return res.json({ id: message.id });
+	}
+    
+	return res.status(400).json({ Error: 'Failed' });
+};
+
+export default { 
+	createDID, 
+	listDIDs, 
+	resolveDID, 
+	getDID, 
+	addCredential, 
+	listCredentials, 
+	getCredential, 
+	createPresentation, 
+	verifyJWT, 
+	handleMessage 
+};

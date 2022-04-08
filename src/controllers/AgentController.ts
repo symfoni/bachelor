@@ -2,7 +2,6 @@ import {
 	DIDResolutionResult,
 	IDataStore,
 	IDIDManager,
-	IMessage,
 	IKeyManager,
 	IIdentifier,
 	IResolver,
@@ -243,14 +242,18 @@ export class AgentController implements IAgentController {
 	}
 
 	/**
-	 * addServiceKeyToDid adds a skid to make it possible to use DIDComm.
+	 * addServiceKeyToDid adds a skid to main did to make it possible to use DIDComm.
 	 * Must add ethereum for gas (transaction fee) to update a DID document that resides on the 
 	 * ethereum blockchain.
-	 * @param did the did that you want to add the key to.
 	 * @returns void or an error if an error is encountered.
 	 */
-	async addServiceKeyToDid(did: string): Promise<void | Error> {
+	async addServiceKeyToDid(): Promise<void | Error> {
 		try {
+			// get main identifier did
+			const did = await this.agent.didManagerGetOrCreate({
+				alias: this.mainIdentifierAlias
+			});
+			
 			// generate a new key
 			const generatedKey = await this.agent.keyManagerCreate({
 				kms: 'local',
@@ -259,7 +262,7 @@ export class AgentController implements IAgentController {
 	
 			// add the newly generated key to your did of choice
 			await this.agent.didManagerAddKey({
-				did: did,
+				did: did.did,
 				key: generatedKey
 			});
 		} catch (error) {
@@ -270,11 +273,11 @@ export class AgentController implements IAgentController {
 
 	/**
 	 * addPostServiceToDid adds a service to the DID document that makes it possible to
-	 * send and receive messages using DIDComm.
+	 * send messages using DIDComm.
 	 * @param messagingServiceEndpoint the endpoint where you wish to handle incoming messages.
 	 * @returns void or an error if an error is encountered.
 	 */
-	async addPostServiceToDid(messagingServiceEndpoint: string): Promise<void | Error> {
+	async addPostMessagingServiceToDid(messagingServiceEndpoint: string): Promise<void | Error> {
 		try {
 			// Gets main identifier
 			const serviceEndpointDid = await this.agent.didManagerGetOrCreate({
@@ -296,6 +299,36 @@ export class AgentController implements IAgentController {
 			return new Error('unable to add service point to did, check if did is loaded with ethereum for gas (transaction fee)');
 		}
 	}
+
+	/**
+	 * addDIDCommMessagingServiceToDid adds a endpoint for receiving DIDComm messages to the did document of the main identifier.
+	 * @param messagingServiceEndpoint the endpoint where you wish to handle incoming messages.
+	 * @returns void or an error if an error is encountered.
+	 */
+	async addDIDCommMessagingServiceToDid(messagingServiceEndpoint: string): Promise<void | Error> {
+		try {
+			// Gets main identifier
+			const serviceEndpointDid = await this.agent.didManagerGetOrCreate({
+				alias: this.mainIdentifierAlias
+			});
+			
+			// Adds service key to main identifier
+			await this.agent.didManagerAddService({
+				did: serviceEndpointDid.did,
+				service: {
+					id: serviceEndpointDid + '#msg-didcomm',
+					type: 'DIDCommMessaging',
+					description: 'Handles incoming DIDComm messages',
+					serviceEndpoint: messagingServiceEndpoint,
+				},
+			});
+		} catch (error) {
+			console.error('unable to add service point to did, check if did is loaded with ethereum for gas (transaction fee)', error);
+			return new Error('unable to add service point to did, check if did is loaded with ethereum for gas (transaction fee)');
+		}
+	}
+
+	
 
 	/**
 	 * sendMessage creates a message that is being sent between agents using DIDComm.
