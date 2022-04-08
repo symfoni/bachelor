@@ -226,6 +226,7 @@ database/test-database.sqlite
 
 # Playground.ts for playing/interacting with the veramo client
 src/playground.ts
+playground.ts
 
 # react-native gitignores
 .expo/

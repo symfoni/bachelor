@@ -15,6 +15,7 @@ router.get('/user/credentials', userController.listCredentials);
 router.get('/user/credential/:type', userController.getCredential);
 router.post('/user/presentation', userController.createPresentation);
 router.post('/user/verifyJWT', userController.verifyJWT);
+router.post('/user/messaging', express.text({type:'*/*'}) , userController.handleMessage);
 
 // symfoni endpoints
 router.post('/symfoni/did', symfoniController.createDID);
@@ -35,6 +36,7 @@ router.post('/symfoni/terminationContract', symfoniController.addTerminationCont
 router.get('/symfoni/terminationContract/:id', symfoniController.getTerminationContract);
 router.delete('/symfoni/terminationContract/:id', symfoniController.deleteTerminationContractFromDb);
 router.delete('/symfoni/employmentContract/:id', symfoniController.deleteEmploymentContractFromDb);
+router.post('/symfoni/messaging', express.text({type:'*/*'}) , );
 
 // NAV endpoints
 router.post('/nav/did', navController.createDID);
@@ -46,6 +48,7 @@ router.get('/nav/credentials', navController.listCredentials);
 router.get('/nav/credential/:type', navController.getCredential);
 router.post('/nav/presentation', navController.createPresentation);
 router.post('/nav/verifyJWT', userController.verifyJWT);
+router.post('/nav/messaging', express.text({type:'*/*'}) , );
 
 // state endpoints
 router.post('/state/personCredential', stateController.createPersonCredential);
@@ -62,5 +65,7 @@ router.post('/state/verifyJWT', stateController.verifyJWT);
 router.post('/state/person', stateController.addPersonDataToDb);
 router.get('/state/person/:id', stateController.getPersonDataFromDb);
 router.delete('/state/person/:id', stateController.deletePersonDataFromDb);
+
+router.post('/state/messaging', express.text({type:'*/*'}) , );
 
 export default router;

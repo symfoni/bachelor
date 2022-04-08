@@ -1,6 +1,6 @@
 /** source/server.ts */
 import http from 'http';
-import express, { Express } from 'express';
+import express, { Express, text } from 'express';
 import morgan from 'morgan';
 import routes from './routes/routes';
 
@@ -29,6 +29,16 @@ router.use((req, res) => {
 		message: error.message
 	});
 });
+
+
+
+/* Listen for message
+const requestWithAgent = RequestWithAgentRouter
+router.use(
+	'/messaging',
+	requestWithAgent
+)
+*/
 
 const httpServer = http.createServer(router);
 const PORT: string | number = process.env.PORT ?? 6060;
