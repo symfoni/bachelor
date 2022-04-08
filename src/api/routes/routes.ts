@@ -2,7 +2,6 @@ import express from 'express';
 import navController from '../controllers/navController';
 import stateController from '../controllers/stateController';
 import symfoniController from '../controllers/symfoniController';
-import testController from '../controllers/testController';
 import userController from '../controllers/userController';
 const router = express.Router();
 
