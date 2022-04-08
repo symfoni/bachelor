@@ -113,6 +113,7 @@ export const dbConnectionTest = createConnection({
 
 export const agentNAV = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
+		new DIDComm(),
 		new KeyManager({
 			store: new KeyStore(dbConnectionNAV),
 			kms: {
@@ -150,6 +151,7 @@ export const agentNAV = createAgent<IDIDManager & IKeyManager & IDataStore & IDa
 
 export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
+		new DIDComm(),
 		new KeyManager({
 			store: new KeyStore(dbConnectionSymfoni),
 			kms: {
@@ -187,6 +189,7 @@ export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore &
 
 export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
+		new DIDComm(),
 		new KeyManager({
 			store: new KeyStore(dbConnectionUser),
 			kms: {
@@ -224,6 +227,7 @@ export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & ID
 
 export const agentState = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
+		new DIDComm(),
 		new KeyManager({
 			store: new KeyStore(dbConnectionState),
 			kms: {
