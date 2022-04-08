@@ -2,6 +2,7 @@ import express from 'express';
 import navController from '../controllers/navController';
 import stateController from '../controllers/stateController';
 import symfoniController from '../controllers/symfoniController';
+import testController from '../controllers/testController';
 import userController from '../controllers/userController';
 const router = express.Router();
 
@@ -62,5 +63,8 @@ router.post('/state/verifyJWT', stateController.verifyJWT);
 router.post('/state/person', stateController.addPersonDataToDb);
 router.get('/state/person/:id', stateController.getPersonDataFromDb);
 router.delete('/state/person/:id', stateController.deletePersonDataFromDb);
+
+// Test endpoints
+router.post('/messaging', express.text({type:'*/*'}) , testController.logMessage);
 
 export default router;
