@@ -1,4 +1,4 @@
-import { TextInput, View, Text, ScrollView, Pressable, Platform} from 'react-native';
+import { TextInput, View, Text, ScrollView, Pressable, Platform, Alert} from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
@@ -6,30 +6,68 @@ import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
+import { parse, isDate } from 'date-fns';
 
 
-// TODO: Fix date validation
+
+function parseDateString(value: string, originalValue: string) {
+	const parsedDate = isDate(originalValue)
+		? originalValue
+		: parse(originalValue, 'yyyy-MM-dd', new Date());
+  
+	return parsedDate;
+}
+
 // Typeguards and error handling for the input in the form using the yup library.
 const TerminationSchema = yup.object({
 	socialSecurityNumber: yup.string().required('Required Field'),
-	terminationNoticeReceived: yup.date().required('Required Field'),
+	terminationNoticeReceived: yup.date().transform(parseDateString).required('Required Field'),
 	terminationReason: yup.string(),
-	lastDayAtWork: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
-	lastPayDay: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
+	lastDayAtWork: yup.date().transform(parseDateString).required('Required Field').typeError('Valid date required YYYY-MM-DD'),
+	lastPayDay: yup.date().transform(parseDateString).required('Required Field').typeError('Valid date required YYYY-MM-DD'),
 	
 });
 
 // Const for determining the os the app runs on.
 // Hides the scrollbar if on android
 const showScrollIndicator = Platform.OS === 'android' ? false : true;
+// TODO: find a way to run the local HTTP from the phone itself. It should not be dependent on a computer to work.
+// You have to replace the 'localhost' part in the first string with your IPV4 address.
+// You can find it by typing 'ipconfig' in your command line.
+const symfoniDatabaseEndpoint = Platform.OS === 'android' ? 'http://localhost:6060/symfoni/terminationContract' : 'http://localhost:6060/symfoni/terminationContract';
 
+function terminationFormDataToJSON(
+	socialSecurityNumber: string, 
+	terminationNoticeReceived: string, 
+	terminationReason: string,
+	lastDayAtWork: string, 
+	lastPayday: string, 
+	terminationStatus: string, 
+	terminatedDuringTrialPeriod: boolean
+) {
+	const jsonData = {
+		'id': socialSecurityNumber,
+		'credentialSubject': {
+			'id': 'Not set yet',
+			'termination': {
+				'employee': {
+					'terminationNoticeReceived': terminationNoticeReceived,
+					'terminationReason': terminationReason,
+					'lastDayAtWork': lastDayAtWork,
+					'lastPayday': lastPayday,
+					'terminationStatus': terminationStatus,
+					'terminatedDuringTrialPeriod': terminatedDuringTrialPeriod
+				}
+			}}};
+	return jsonData;
+}
 
 // TerminationForm is a form component for providing the information for a termination VC.
 // On successful submit takes you back to the homepage.
 export default function TerminationForm({ screenName }: any) {
 
 	// Const used for determining the state of the picker.
-	const [selectedTerminationState, setSelectedTerminationState] = useState('fullTime');
+	const [selectedTerminationState, setSelectedTerminationState] = useState('resigned');
 
 	// Need to use useNavigation for handling components not in the screen stack.
 	const navigation = useNavigation();
@@ -52,8 +90,69 @@ export default function TerminationForm({ screenName }: any) {
 
 				validationSchema = {TerminationSchema}
 
-				onSubmit={() => {
-					navigation.navigate(screenName);
+				onSubmit={(values) => {
+					const requestOptions = {
+						method: 'POST',
+						headers: { 
+							Accept: 'application/json',
+							'Content-Type': 'application/json'
+						},
+                                
+						body: JSON.stringify( terminationFormDataToJSON(
+							values.socialSecurityNumber, 
+							values.terminationNoticeReceived, 
+							values.terminationReason, 
+							values.lastDayAtWork, 
+							values.lastPayDay, 
+							selectedTerminationState, 
+							values.terminatedDuringTrialPeriod
+						) )
+					};
+
+					const storeDataInDatabase = async () => {
+						await fetch(symfoniDatabaseEndpoint, requestOptions).then((res)=> {
+							if(res.ok) {
+								if(Platform.OS === 'android') {
+									const createSuccessAlert = () =>
+										Alert.alert(
+											'Alert',
+											'Termination data was successfully added.',
+											[
+												{
+													text: 'Cancel',
+													onPress: () => console.log('Cancel Pressed'),
+													style: 'cancel'
+												},
+												{ text: 'OK', onPress: () => console.log('OK Pressed') }
+											]
+										);
+									createSuccessAlert();
+								} else {
+									alert('Termination data was successfully added.');
+								}
+							} else {
+								if(Platform.OS === 'android') {
+									const createFailAlert = () =>
+										Alert.alert(
+											'Alert',
+											'Was not able to add termination data to database. Status code: ' + res.status,
+											[
+												{ text: 'OK', onPress: () => console.log('OK Pressed') }
+											]
+										);
+									createFailAlert();
+								} else {
+									alert('Was not able to add termination data to database. Status code: ' + res.status);
+								}
+								
+								
+								
+							}
+							navigation.navigate(screenName);
+						});
+					};
+
+					storeDataInDatabase();
 				}}
 			>
 
@@ -76,7 +175,7 @@ export default function TerminationForm({ screenName }: any) {
 						<Text style={formStyles.textLabel}>Termination notice received</Text>
 						<TextInput
 							style={formStyles.textInput}
-							placeholder='Received date: MM-DD-YYYY'
+							placeholder='Received date: YYYY-MM-DD'
 							onChangeText={props.handleChange('terminationNoticeReceived')}
 							value={props.values.terminationNoticeReceived}
 							onBlur={props.handleBlur('terminationNoticeReceived')}
@@ -98,7 +197,7 @@ export default function TerminationForm({ screenName }: any) {
 						<Text style={formStyles.textLabel}>Last day at work</Text>
 						<TextInput
 							style={formStyles.textInput}
-							placeholder='MM-DD-YYYY'
+							placeholder='YYYY-MM-DD'
 							onChangeText={props.handleChange('lastDayAtWork')}
 							value={props.values.lastDayAtWork}
 							onBlur={props.handleBlur('lastDayAtWork')}
@@ -109,7 +208,7 @@ export default function TerminationForm({ screenName }: any) {
 						<Text style={formStyles.textLabel}>Last day at work</Text>
 						<TextInput
 							style={formStyles.textInput}
-							placeholder='MM-DD-YYYY'
+							placeholder='YYYY-MM-DD'
 							onChangeText={props.handleChange('lastPayDay')}
 							value={props.values.lastPayDay}
 							onBlur={props.handleBlur('lastPayDay')}
