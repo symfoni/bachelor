@@ -2,12 +2,14 @@ import {
 	DIDResolutionResult,
 	IDataStore,
 	IDIDManager,
+	IKeyManager,
 	IIdentifier,
 	IResolver,
 	TAgent,
 	VerifiableCredential,
 	VerifiablePresentation
 } from '@veramo/core';
+import {IDIDComm, IDIDCommMessage} from '@veramo/did-comm';
 import { ICredentialIssuer } from '@veramo/credential-w3c';
 import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/data-store';
 import { PROOF_FORMAT_JWT, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
@@ -20,7 +22,7 @@ export class AgentController implements IAgentController {
 
 	mainIdentifierAlias: string;
 
-	agent: TAgent<IDataStore & IDataStoreORM & ICredentialIssuer & IResolver & IDIDManager>;
+	agent: TAgent<IDataStore & IDataStoreORM & ICredentialIssuer & IResolver & IDIDManager & IDIDComm & IKeyManager>;
 
 	// TODO: Find a better type than 'any'
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,6 +68,7 @@ export class AgentController implements IAgentController {
 			console.error('unable to create did', error);
 			return new Error('unable to create did');
 		}
+		
 	}
 
 
@@ -238,6 +241,144 @@ export class AgentController implements IAgentController {
 		}
 	}
 
+	/**
+	 * addServiceKeyToDid adds a skid to main did to make it possible to use DIDComm.
+	 * Must add ethereum for gas (transaction fee) to update a DID document that resides on the 
+	 * ethereum blockchain.
+	 * @returns void or an error if an error is encountered.
+	 */
+	async addServiceKeyToDid(): Promise<void | Error> {
+		try {
+			// get main identifier did
+			const did = await this.agent.didManagerGetOrCreate({
+				alias: this.mainIdentifierAlias
+			});
+			
+			// generate a new key
+			const generatedKey = await this.agent.keyManagerCreate({
+				kms: 'local',
+				type: 'X25519'
+			});
+	
+			// add the newly generated key to your did of choice
+			await this.agent.didManagerAddKey({
+				did: did.did,
+				key: generatedKey
+			});
+		} catch (error) {
+			console.error('unable to add key to did, check if did is correct', error);
+			return new Error('unable to add key to did, check if did is correct');
+		}
+	}
+
+	/**
+	 * addPostServiceToDid adds a service to the DID document that makes it possible to
+	 * send messages using DIDComm.
+	 * @param messagingServiceEndpoint the endpoint where you wish to handle incoming messages.
+	 * @returns void or an error if an error is encountered.
+	 */
+	async addPostMessagingServiceToDid(messagingServiceEndpoint: string): Promise<void | Error> {
+		try {
+			// Gets main identifier
+			const serviceEndpointDid = await this.agent.didManagerGetOrCreate({
+				alias: this.mainIdentifierAlias
+			});
+			
+			// Adds service key to main identifier
+			await this.agent.didManagerAddService({
+				did: serviceEndpointDid.did,
+				service: {
+					id: serviceEndpointDid + '#msg',
+					type: 'Messaging',
+					description: 'Handles incoming POST messages',
+					serviceEndpoint: messagingServiceEndpoint,
+				},
+			});
+		} catch (error) {
+			console.error('unable to add service point to did, check if did is loaded with ethereum for gas (transaction fee)', error);
+			return new Error('unable to add service point to did, check if did is loaded with ethereum for gas (transaction fee)');
+		}
+	}
+
+	/**
+	 * addDIDCommMessagingServiceToDid adds a endpoint for receiving DIDComm messages to the did document of the main identifier.
+	 * @param messagingServiceEndpoint the endpoint where you wish to handle incoming messages.
+	 * @returns void or an error if an error is encountered.
+	 */
+	async addDIDCommMessagingServiceToDid(messagingServiceEndpoint: string): Promise<void | Error> {
+		try {
+			// Gets main identifier
+			const serviceEndpointDid = await this.agent.didManagerGetOrCreate({
+				alias: this.mainIdentifierAlias
+			});
+			
+			// Adds service key to main identifier
+			await this.agent.didManagerAddService({
+				did: serviceEndpointDid.did,
+				service: {
+					id: serviceEndpointDid + '#msg-didcomm',
+					type: 'DIDCommMessaging',
+					description: 'Handles incoming DIDComm messages',
+					serviceEndpoint: messagingServiceEndpoint,
+				},
+			});
+		} catch (error) {
+			console.error('unable to add service point to did, check if did is loaded with ethereum for gas (transaction fee)', error);
+			return new Error('unable to add service point to did, check if did is loaded with ethereum for gas (transaction fee)');
+		}
+	}
+
+	
+
+	/**
+	 * sendMessage creates a message that is being sent between agents using DIDComm.
+	 * First you get the specify a DID or get the main identifier for your agent, then you create a message object, 
+	 * pack your message using DIDComm, and finally send it to another agent via DIDComm.
+	 * @param toDid the recipient did.
+	 * @param type the message type.
+	 * @param messageData the data that you want to send.
+	 * @param messageId the id of the message.
+	 * @param fromDid the did that sends the message, defaults to the agents main identifier.
+	 * @returns void or an error if an error is encountered.
+	 */
+	async sendMessage(toDid: string, type: string, messageData: object, messageId: string, fromDid?: string): Promise<void | Error> {
+		try {
+			// get main identifier did if from did is not specified
+			if (typeof fromDid === 'undefined') {
+				await this.getMainIdentifier().then((did)=>{
+					if (did instanceof Error) {
+						return new Error('Could not retrieve the main identifier');
+					}
+					fromDid = did.did;
+				});
+			}
+		
+			// construct message object
+			const message: IDIDCommMessage = {
+				type: type,
+				to: toDid,
+				from: fromDid,
+				id: messageId,
+				body: {messageData}
+			};
+
+			// pack message
+			const packedMessage = await this.agent.packDIDCommMessage({
+				packing: 'authcrypt',
+				message
+			});
+
+			// send message
+			await this.agent.sendDIDCommMessage({
+				messageId: messageId,
+				packedMessage: packedMessage,
+				recipientDidUrl: toDid
+			});
+		} catch (error) {
+			console.error('unable to send message', error);
+			return new Error('unable to send message');
+		}
+	}	
+	
 	// TODO: Make a function that can verify a credential
-	// TODO: Make a function that can send a credential
 }
