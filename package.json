@@ -68,6 +68,7 @@
     "react-native-qrcode-svg": "^6.1.2",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "~3.10.1",
+    "react-native-svg": "^12.3.0",
     "react-native-web": "0.17.1",
     "sqlite3": "^5.0.2",
     "ts-node": "^10.5.0",
