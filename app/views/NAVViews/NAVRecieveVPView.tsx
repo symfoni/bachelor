@@ -1,5 +1,5 @@
 import QRCode from 'react-native-qrcode-svg';
-import { Platform, Text, View } from 'react-native';
+import { ActivityIndicator, Platform, Text, View } from 'react-native';
 import { styles } from '../../styles';
 import { useEffect, useState } from 'react';
 import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL } from '../../../src/constants/verifiableCredentialConstants';
@@ -7,6 +7,7 @@ import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CR
 const GET_MAIN_IDENTIFIER_URL = Platform.OS === 'android' ? 'http://localhost:6060/nav/mainIdentifier' : 'http://localhost:6060/nav/mainIdentifier';
 
 export function NAVRecieveVPView() {
+	const [isLoading, setLoading] = useState(true);
 	const [mainIdentifier, setMainIdentifier] = useState([]);
 	// TODO: Could make the credentials array dynamic, by pushing each one to an array based on input into a form.
 	const QRCodeData = {
@@ -22,6 +23,8 @@ export function NAVRecieveVPView() {
 			setMainIdentifier(json.mainIdentifier.did);
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setLoading(false);
 		}
 	};
 
@@ -32,7 +35,9 @@ export function NAVRecieveVPView() {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>Send your VP by scanning this QR-code!</Text>
-			<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
-		</View>
+			{ isLoading ? <ActivityIndicator></ActivityIndicator> : (
+				<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
+			)}
+		</View> 
 	);
 }
