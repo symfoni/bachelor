@@ -1,10 +1,10 @@
 import QRCode from 'react-native-qrcode-svg';
-import { Text, View } from 'react-native';
+import { Platform, Text, View } from 'react-native';
 import { styles } from '../../styles';
 import { useEffect, useState } from 'react';
 import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL } from '../../../src/constants/verifiableCredentialConstants';
 
-const GET_MAIN_IDENTIFIER_URL = 'http://localhost:6060/nav/mainIdentifier';
+const GET_MAIN_IDENTIFIER_URL = Platform.OS === 'android' ? 'http://localhost:6060/nav/mainIdentifier' : 'http://localhost:6060/nav/mainIdentifier';
 
 export function NAVRecieveVPView() {
 	const [mainIdentifier, setMainIdentifier] = useState([]);
