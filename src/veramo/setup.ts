@@ -54,7 +54,9 @@ const NAV_KEY: string = process.env.NAV_KMS_SECRET_KEY ?? 'no valid key';
 const SYMFONI_KEY: string = process.env.SYMFONI_KMS_SECRET_KEY ?? 'no valid key';
 const USER_KEY: string = process.env.USER_KMS_SECRET_KEY ?? 'no valid key';
 const STATE_KEY: string = process.env.STATE_KMS_SECRET_KEY ?? 'no valid key';
-const TEST_KEY: string = process.env.TEST_KMS_SECRET_KEY ?? 'no valid key';
+
+// This key is not hidden because it is used to run the CI script on github.
+const TEST_KEY = '1e7015968f9bb24d7bace3b393ee3da36e5835eada83d64cabaf781a8c5cd832';
 
 // Nav database
 const dbConnectionNAV = createConnection({
