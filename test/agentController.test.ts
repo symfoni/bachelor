@@ -171,7 +171,7 @@ describe('AgentController', async function () {
 	});
 
 	describe('resolveDID', function () {
-
+		this.timeout(15000);
 		it('should retrieve a DID document with the same DID url that you searched for', async function () {
 			await testAgentController.resolveDID(testDidUrl).then((did)=>{
 				if (did instanceof Error) {
@@ -219,7 +219,7 @@ describe('AgentController', async function () {
 	});
 
 	describe('verifyJWT', async function () {
-		
+		this.timeout(15000);
 		it('should return true if the token is valid', async function () {
 			await testAgentController.verifyJWT(testJWT).then((isValid)=>{
 				assert.equal(isValid, true);
