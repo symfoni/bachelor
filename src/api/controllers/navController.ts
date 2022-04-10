@@ -4,7 +4,7 @@ import { Request, Response } from 'express';
 import { AgentController } from '../../controllers/AgentController';
 import { agentNAV } from '../../veramo/setup';
 
-const navAgentController = new AgentController(agentNAV, 'user');
+const navAgentController = new AgentController(agentNAV, 'nav');
 
 // creates a DID
 const createDID = async (req: Request, res: Response) => {
@@ -202,4 +202,29 @@ const createPresentation = async (req: Request, res: Response) => {
 
 };
 
-export default { createDID, listDIDs, resolveDID, getDID, addCredential, listCredentials, getCredential, createPresentation, verifyJWT };
+// Returns the main identifier of the did
+const getMainIdentifier = async (req: Request, res: Response) => {
+	const mainIdentifier = await navAgentController.getMainIdentifier();
+	if (mainIdentifier instanceof Error) {
+		return res.status(500).json({
+			error: mainIdentifier.message
+		});
+	}
+
+	return res.status(200).json({
+		mainIdentifier
+	});
+};
+
+export default { 
+	createDID, 
+	listDIDs, 
+	resolveDID, 
+	getDID, 
+	addCredential, 
+	listCredentials, 
+	getCredential, 
+	createPresentation, 
+	verifyJWT,
+	getMainIdentifier
+};
