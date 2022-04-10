@@ -30,5 +30,4 @@ jobs:
     - run: npm install -g expo-cli
     - run: npm install -g eas-cli
     - run: npm run build-web
-    - run: npm run build-android
     - run: npm test
