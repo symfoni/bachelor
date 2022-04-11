@@ -219,6 +219,50 @@ const handleMessage = async (req: Request, res: Response) => {
 	return res.status(400).json({ Error: 'Failed' });
 };
 
+// Returns the main identifier of the did
+const getMainIdentifier = async (req: Request, res: Response) => {
+	const mainIdentifier = await userAgentController.getMainIdentifier();
+	if (mainIdentifier instanceof Error) {
+		return res.status(500).json({
+			error: mainIdentifier.message
+		});
+	}
+
+	return res.status(200).json({
+		mainIdentifier
+	});
+};
+
+// sends a message from the user agent
+const sendMessage = async (req: Request, res: Response) => {
+	try {
+		// get params from body
+		const toDid: string = req.body.toDid;
+		const mainIdentifier = await userAgentController.getMainIdentifier();
+
+		if (mainIdentifier instanceof Error) {
+			return res.status(500).json({
+				error: mainIdentifier.message
+			});
+		}
+
+		const fromDid: string = mainIdentifier.did;
+		const type = req.body.type;
+		const message = req.body.message;
+
+		// use params to send message
+		await userAgentController.sendMessage(toDid,type, message, '1234', fromDid);
+		return res.status(200).json({
+			success: 'message sent'
+		});
+	// return positive / negative feedback
+	} catch (error) {
+		return res.status(400).json({
+			error: 'could not send message'
+		});
+	}
+};
+
 export default { 
 	createDID, 
 	listDIDs, 
@@ -229,5 +273,7 @@ export default {
 	getCredential, 
 	createPresentation, 
 	verifyJWT, 
-	handleMessage 
+	handleMessage,
+	getMainIdentifier,
+	sendMessage
 };
