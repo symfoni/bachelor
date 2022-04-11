@@ -49,7 +49,7 @@ export default function UserSendVPView({route, navigation}: any) {
 				}
 			});
 
-			return Alert.alert('Success', 'Successfully sent the VP' + presentationToken);	
+			return Alert.alert('Success', 'Successfully sent the VP');	
 		} catch (error) {
 			console.error(error);
 			alert('something went wrong, try again later');
