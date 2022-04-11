@@ -8,10 +8,10 @@
 import { Platform } from 'react-native';
 
 // platform dependent host
-const host = Platform.OS === 'android' ? 'lcalhost' : 'localhost';
+const host = Platform.OS === 'android' ? 'localhost' : 'localhost';
 
 // optional port
-const PORT: string | number = process.env.PORT ?? 6060;
+const PORT: string | number = 6060;
 
 // user
 export const USER_GET_CREDENTIAL_ON_TYPE_URL =  `http://${host}:${PORT}/user/credential/`;
