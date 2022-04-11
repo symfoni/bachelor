@@ -1,12 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, ActivityIndicator, FlatList, Alert, Pressable, Platform } from 'react-native';
+import { View, Text, ActivityIndicator, FlatList, Alert, Pressable } from 'react-native';
+import { USER_CREATE_PRESENTATION_URL, USER_GET_CREDENTIAL_ON_TYPE_URL, USER_SEND_MESSAGE_URL } from '../../apiConstants';
 import { CredentialCard } from '../../components/credentialCard';
 import { buttonStyles, styles } from '../../styles';
-
-// TODO: Find a better way to change localhost to IPV4
-const GET_CREDENTIAL_ON_TYPE_URL = Platform.OS === 'android' ? 'http://localhost:6060/user/credential/' : 'http://localhost:6060/user/credential/';
-const CREATE_PRESENTATION_URL = Platform.OS === 'android' ? 'http://localhost:6060/user/presentation' : 'http://localhost:6060/user/presentation';
-const USER_SEND_MESSAGE_URL = Platform.OS === 'android' ? 'http://localhost:6060/user/sendMessage' : 'http://localhost:6060/user/sendMessage';
 
 export default function UserSendVPView({route, navigation}: any) {
 	const [isLoading, setLoading] = useState<boolean>(true);
@@ -22,7 +18,7 @@ export default function UserSendVPView({route, navigation}: any) {
 	const sendPresentation = async () => {
 		try {
 			// create presentation
-			const presentationResult = await fetch(CREATE_PRESENTATION_URL, {
+			const presentationResult = await fetch(USER_CREATE_PRESENTATION_URL, {
 				method: 'POST',
 				body: JSON.stringify({listOfCredentials: listOfCredentials}),
 				headers: {
@@ -63,7 +59,7 @@ export default function UserSendVPView({route, navigation}: any) {
 			// loop through each credential in the credentials array and fetch each from the wallet.
 			for (let index = 0; index < credentials.length; index++) {
 				// get credential
-				const result = await fetch(GET_CREDENTIAL_ON_TYPE_URL + credentials[index]);
+				const result = await fetch(USER_GET_CREDENTIAL_ON_TYPE_URL + credentials[index]);
 				const json = await result.json();
                 
 				const credentialData = await json.listOfCredentials[0];
