@@ -15,7 +15,7 @@ import { hashString } from '../../utils/encryption';
 import { validateSchema } from '../../utils/schemaValidation';
 
 const TERMINATION_VC_SCHEMA_FILE_PATH = 'schemas/terminationSchema.json';
-const EMPLOYMENT_VC_SCHEMA_FILE_PATH = 'schemas/employmentContractSchema.json';
+const EMPLOYMENT_VC_SCHEMA_FILE_PATH = 'schemas/employmentSchema.json';
 const symfoniAgentController = new SymfoniAgentController('symfoni');
 
 // creates employment credential

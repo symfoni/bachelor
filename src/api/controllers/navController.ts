@@ -216,6 +216,25 @@ const getMainIdentifier = async (req: Request, res: Response) => {
 	});
 };
 
+// how nav handles incoming messages (to verify or deny a request for unemployment benefits)
+const handleMessage = async (req: Request, res: Response) => {
+	console.log(req.body);
+
+	const message = await agentNAV.handleMessage({
+		raw: req.body as string,
+		metaData: [{type: 'message'}],
+		save: false
+	});
+
+	//console.log(message);
+
+	if (message) {
+		return res.json({ id: message.id });
+	}
+    
+	return res.status(400).json({ Error: 'Failed' });
+};
+
 export default { 
 	createDID, 
 	listDIDs, 
@@ -226,5 +245,6 @@ export default {
 	getCredential, 
 	createPresentation, 
 	verifyJWT,
-	getMainIdentifier
+	getMainIdentifier,
+	handleMessage
 };
