@@ -6,11 +6,6 @@ import { styles } from '../../styles';
 // QR codes have type 256.
 const QR_TYPE = 256;
 
-interface IPresentationRequest {
-	did: string,
-	credentials: string[]
-}
-
 /**
  * UserCreateVPView is the view where the user makes their VP upon scanning a QR code.
  * @returns a view where the user uses their phone to scan a QR code for sending their presentation.
@@ -41,6 +36,7 @@ export function UserCreateVPView({navigation}: any) {
 				);
 				
 			} catch (error) {
+				// TODO: Fix error on timeout.
 				setScanned(true);
 				alert('Not a valid request');
 			}
