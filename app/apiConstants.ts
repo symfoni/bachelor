@@ -2,16 +2,16 @@
  * This file contains all the API URLs used for the application.
  */
 
+// TODO: Find a way to get environment variables in react-native.
+
 // Secret environmental variables
-import dotenv from 'dotenv';
-dotenv.config({ path: '../../dotenv.env' });
 import { Platform } from 'react-native';
 
 // platform dependent host
-const host = Platform.OS === 'android' ? process.env.IPV4 : 'localhost';
+const host = Platform.OS === 'android' ? '192.168.10.166' : 'localhost';
 
 // optional port
-const PORT: string | number = process.env.PORT ?? 6060;
+const PORT: string | number = 6060;
 
 // user
 export const USER_GET_CREDENTIAL_ON_TYPE_URL =  `http://${host}:${PORT}/user/credential/`;
