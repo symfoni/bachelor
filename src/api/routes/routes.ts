@@ -50,7 +50,7 @@ router.get('/nav/credentials', navController.listCredentials);
 router.get('/nav/credential/:type', navController.getCredential);
 router.post('/nav/presentation', navController.createPresentation);
 router.post('/nav/verifyJWT', userController.verifyJWT);
-router.post('/nav/messaging', express.text({type:'*/*'}), );
+router.post('/nav/messaging', express.text({type:'*/*'}), navController.handleMessage);
 router.get('/nav/mainIdentifier', navController.getMainIdentifier);
 
 // state endpoints
