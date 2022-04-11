@@ -1,18 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, Alert } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { styles } from '../styles';
 
 // QR codes have type 256.
 const QR_TYPE = 256;
 
+interface IPresentationRequest {
+	did: string,
+	credentials: string[]
+}
+
 /**
  * QRScanner is a component for scanning QR codes.
  * @returns a QR code scanner.
  */
-export function QRScanner() {
-	const [hasPermission, setHasPermission] = useState(null);
-	const [scanned, setScanned] = useState(false);
+export function QRScanner({props}: any) {
+	const [hasPermission, setHasPermission] = useState<boolean>(false);
+	const [scanned, setScanned] = useState<boolean>(false);
 
 	useEffect(() => {
 		(async () => {
@@ -24,8 +29,10 @@ export function QRScanner() {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	const handleBarCodeScanned = ({ type, data }: any) => {
 		if (type === QR_TYPE) {
+			const dataJSON = JSON.parse(data);
+
 			setScanned(true);
-			alert(`Scanned type: ${type}, with data: ${data}, successfully!`);
+			Alert.alert('Presentation request', `${data.did} is requesting these credentials: \n ${data.credentials}`);
 		}
 	};
 
