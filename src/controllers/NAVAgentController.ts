@@ -30,6 +30,8 @@ export class NAVAgentController extends AgentController {
 			});
 	
 			const credentials = handledMessage.credentials;
+
+			// TODO: Make a function that checks if all neccessary credentials are present.
 	
 			// for each credential in the handled message...
 			// check if issuer in verifiable data rgistry
