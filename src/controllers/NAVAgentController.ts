@@ -3,6 +3,7 @@ import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CR
 import { agentNAV } from '../veramo/setup';
 import { AgentController } from './AgentController';
 import verifiableRegistry from '../../verifiableRegistry.json';
+import { validateSchemaWithURL } from '../utils/schemaValidation';
 
 // expected interface of a message containing a VC
 interface IVCMessageData {
@@ -22,23 +23,10 @@ export class NAVAgentController extends AgentController {
 	}
 
 	async qualifiesForUnemploymentBenefits(presentationToken: string): Promise<boolean> {
-		const validIssuers = false;
-		const validSchema = false;
-		const validData = false;
-
 		// handle message with token
+		
 
-		// for each credential in the handled message...
-
-		// check if issuer in verifiable data rgistry
-
-		// check if schema is valid
-
-		// check if data matches requirements
-
-		// if all above is true, return true, else, false
-
-		return true;
+		return false;
 	}
 
 	/**
@@ -52,6 +40,7 @@ export class NAVAgentController extends AgentController {
 			// loop through each credential
 			for (let index = 0; index < credentials.length; index++) {
 			
+				// TODO: Possibly refactor the message handling part into its own function as it is used many times.
 				// handle message with credential token
 				const handledMessage: any = await this.agent.handleMessage({
 					raw: credentials[index].proof.jwt
@@ -87,5 +76,31 @@ export class NAVAgentController extends AgentController {
 		} catch (error) {
 			return new Error('something went wrong');
 		}
+	}
+
+	async verifySchemas(credentials: VerifiableCredential[]): Promise<boolean | Error> {
+		for (let index = 0; index < credentials.length; index++) {
+			
+			// TODO: Possibly refactor the message handling part into its own function as it is used many times.
+			const handledMessage: any = await this.agent.handleMessage({
+				raw: credentials[index].proof.jwt
+			});
+
+			if (handledMessage.data == null) {
+				break;
+			}
+
+			const messageData: IVCMessageData = handledMessage.data;
+
+			const schemaURL = messageData.vc['@context'][1];
+			const credentialObject = messageData.vc.credentialSubject;
+			
+			// if one of the credentials does not validate against their own schema, return false
+			if (!validateSchemaWithURL(schemaURL, credentialObject)) {
+				return false;
+			}
+			
+		}
+		return true;
 	}
 }
