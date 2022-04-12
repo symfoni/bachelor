@@ -7,7 +7,8 @@ import {
 	IResolver,
 	TAgent,
 	VerifiableCredential,
-	VerifiablePresentation
+	VerifiablePresentation,
+	IMessageHandler
 } from '@veramo/core';
 import {IDIDComm, IDIDCommMessage} from '@veramo/did-comm';
 import { ICredentialIssuer } from '@veramo/credential-w3c';
@@ -22,7 +23,7 @@ export class AgentController implements IAgentController {
 
 	mainIdentifierAlias: string;
 
-	agent: TAgent<IDataStore & IDataStoreORM & ICredentialIssuer & IResolver & IDIDManager & IDIDComm & IKeyManager>;
+	agent: TAgent<IDataStore & IDataStoreORM & ICredentialIssuer & IResolver & IDIDManager & IDIDComm & IKeyManager & IMessageHandler>;
 
 	// TODO: Find a better type than 'any'
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
