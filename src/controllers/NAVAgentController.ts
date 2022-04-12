@@ -22,11 +22,38 @@ export class NAVAgentController extends AgentController {
 		super(agentNAV, mainIdentifierAlias);
 	}
 
-	async qualifiesForUnemploymentBenefits(presentationToken: string): Promise<boolean> {
-		// handle message with token
-		
-
-		return false;
+	async qualifiesForUnemploymentBenefits(presentationToken: string): Promise<boolean | Error> {
+		try {
+			// handle message with token
+			const handledMessage: any = await this.agent.handleMessage({
+				raw: presentationToken
+			});
+	
+			const credentials = handledMessage.credentials;
+	
+			// for each credential in the handled message...
+			// check if issuer in verifiable data rgistry
+			const isValidIssuers = await this.verifyIssuers(credentials);
+	
+			// check if schema is valid
+			const isValidSchemas = await this.verifySchemas(credentials);
+	
+			// check if data matches requirements
+			// TODO: Make functions that verify requirements in each VC
+			// eg. check within the personVC that the preson is not over 67
+			// in the employmentVC check how much money they made
+			// check how long ago they were terminated etc etc.
+	
+			// if all above is true, return true, else, false
+			if (isValidIssuers && isValidSchemas) {
+				return true;
+			}
+	
+			return false;
+		} catch (error) {
+			console.error(error);
+			return new Error('unable to qualify');
+		}
 	}
 
 	/**
@@ -39,7 +66,7 @@ export class NAVAgentController extends AgentController {
 		try {
 			// loop through each credential
 			for (let index = 0; index < credentials.length; index++) {
-			
+								
 				// TODO: Possibly refactor the message handling part into its own function as it is used many times.
 				// handle message with credential token
 				const handledMessage: any = await this.agent.handleMessage({
@@ -78,9 +105,15 @@ export class NAVAgentController extends AgentController {
 		}
 	}
 
-	async verifySchemas(credentials: VerifiableCredential[]): Promise<boolean | Error> {
+	/**
+	 * verifySchemas takes each credential in a list of credentials and verifies their credentialSubject against
+	 * their context.
+	 * @param credentials a list of verifiable credentials.
+	 * @returns true or false dependet if all the credentials have valid credential subject data.
+	 */
+	private async verifySchemas(credentials: VerifiableCredential[]): Promise<boolean | Error> {
 		for (let index = 0; index < credentials.length; index++) {
-			
+			console.log(`loop: ${index}`);
 			// TODO: Possibly refactor the message handling part into its own function as it is used many times.
 			const handledMessage: any = await this.agent.handleMessage({
 				raw: credentials[index].proof.jwt
@@ -101,6 +134,7 @@ export class NAVAgentController extends AgentController {
 			}
 			
 		}
+
 		return true;
 	}
 }
