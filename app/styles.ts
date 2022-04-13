@@ -43,6 +43,13 @@ export const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		justifyContent: 'center',
 		marginVertical: 8,
+	},
+	credentialDetailTextDivider: {
+		margin: 10
+	},
+	credentialDetailHeadingText: {
+		fontSize: 16,
+		marginBottom: 4,
 	}
 });
 
