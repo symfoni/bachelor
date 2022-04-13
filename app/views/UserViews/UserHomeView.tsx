@@ -15,6 +15,12 @@ export default function UserHomeView({navigation}: any){
 			<Text style={styles.headingTextBlack}>Welcome User!</Text>
 
 			<NavigationButton
+				title='Show DID'
+				customStyle={buttonStyles.navigationButtonUser}
+				onPress={()=> navigation.navigate('UserMainIdentifier')}
+			></NavigationButton>
+
+			<NavigationButton
 				title='Recieve VC'
 				customStyle={buttonStyles.navigationButtonUser}
 				onPress={()=> navigation.navigate('UserRecieveVC')}
