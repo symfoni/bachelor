@@ -29,7 +29,7 @@ export function UserCreateVPView({navigation}: any) {
 				setScanned(true);
 				return Alert.alert(
 					'Presentation request', 
-					`${dataJSON.did} is requesting these credentials: \n ${dataJSON.credentials}`,
+					'A presentation request has been detected',
 					[
 						{text: 'OK', onPress: () => navigation.navigate('UserSendVP', {dataJSON})}
 					]
