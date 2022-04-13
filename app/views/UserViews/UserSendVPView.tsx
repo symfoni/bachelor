@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, FlatList, Alert, Pressable } from 'react-native';
 import { USER_CREATE_PRESENTATION_URL, USER_GET_CREDENTIAL_ON_TYPE_URL, USER_SEND_MESSAGE_URL } from '../../apiConstants';
 import { CredentialCard } from '../../components/credentialCard';
+import { IVerifiableCredentialDataStore } from '../../interfaces/IListCredentials.interface';
 import { buttonStyles, styles } from '../../styles';
 
 export default function UserSendVPView({route, navigation}: any) {
 	const [isLoading, setLoading] = useState<boolean>(true);
-	const [listOfCredentials, setListOfCredentials] = useState<any[]>([]);
+	const [listOfCredentials, setListOfCredentials] = useState<IVerifiableCredentialDataStore[]>([]);
 
 	// the data recieved from scanning the QR code
 	const {dataJSON} = route.params;
@@ -88,7 +89,7 @@ export default function UserSendVPView({route, navigation}: any) {
 					<Text style={styles.headingTextBlack}>These VCs are requested</Text>
 					<FlatList
 						data={listOfCredentials}
-						keyExtractor={({ id }) => id}
+						keyExtractor={({ hash }) => hash}
 						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						renderItem={({ item }: any) => (
 						// TODO: Fix 'each child in list should have a unique key' on mobile build.
