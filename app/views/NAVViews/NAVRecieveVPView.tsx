@@ -1,9 +1,11 @@
+import React from 'react';
 import QRCode from 'react-native-qrcode-svg';
 import { ActivityIndicator, Text, View } from 'react-native';
 import { styles } from '../../styles';
 import { useEffect, useState } from 'react';
 import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL } from '../../../src/constants/verifiableCredentialConstants';
 import { NAV_GET_MAIN_IDENTIFIER_URL } from '../../apiConstants';
+import { IMainIdentifier } from '../../interfaces/IMainIdentifier.interface';
 
 /**
  * NAVRecieveVPView is responsible for presenting a QR-code with the neccessary information needed
@@ -11,8 +13,8 @@ import { NAV_GET_MAIN_IDENTIFIER_URL } from '../../apiConstants';
  * @returns a view containing a QR-code with navs address and the required VCs for unemployment benefits.
  */
 export function NAVRecieveVPView() {
-	const [isLoading, setLoading] = useState(true);
-	const [mainIdentifier, setMainIdentifier] = useState([]);
+	const [isLoading, setLoading] = useState<boolean>(true);
+	const [mainIdentifier, setMainIdentifier] = useState<IMainIdentifier>();
 	
 	// TODO: Could make the credentials array dynamic, by pushing each one to an array based on input into a form.
 	const QRCodeData = {
