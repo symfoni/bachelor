@@ -107,7 +107,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 200,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},
@@ -117,7 +117,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 250,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},
@@ -127,7 +127,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 200,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},
@@ -137,7 +137,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 200,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},
@@ -147,7 +147,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 200,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},
