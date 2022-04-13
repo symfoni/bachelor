@@ -1,10 +1,10 @@
 /** source/controllers/posts.ts */
 import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
-import { AgentController } from '../../controllers/AgentController';
+import { NAVAgentController } from '../../controllers/NAVAgentController';
 import { agentNAV } from '../../veramo/setup';
 
-const navAgentController = new AgentController(agentNAV, 'nav');
+const navAgentController = new NAVAgentController('nav');
 
 // creates a DID
 const createDID = async (req: Request, res: Response) => {
@@ -218,18 +218,24 @@ const getMainIdentifier = async (req: Request, res: Response) => {
 
 // how nav handles incoming messages (to verify or deny a request for unemployment benefits)
 const handleMessage = async (req: Request, res: Response) => {
-	console.log(req.body);
-
+	// handle incoming message to retrieve the token from the encrypted message body
 	const message = await agentNAV.handleMessage({
 		raw: req.body as string,
 		metaData: [{type: 'message'}],
 		save: false
 	});
 
-	//console.log(message);
+	const messagePresentationToken = message.data.messageData;
+	const senderDid = message.from;
+
+	// check if the presentation token qualifies for unemployment benefits
+	const isQualified = await navAgentController.isQualifiedForUnemploymentBenefits(messagePresentationToken);
+
+	console.log(isQualified);
+	console.log(senderDid);
 
 	if (message) {
-		return res.json({ id: message.id });
+		return res.json({ id: message });
 	}
     
 	return res.status(400).json({ Error: 'Failed' });

@@ -4,7 +4,7 @@
   "description": "Bachelor project with NTNU and Symfoni, spring 2022.",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "test": "mocha --require ts-node/register -t 5000 'test/**/*.ts'",
+    "test": "mocha --require ts-node/register -t 15000 'test/**/*.ts'",
     "lint": "npx eslint src/**",
     "prepare": "husky install",
     "dev": "nodemon src/api/server.ts",
@@ -60,6 +60,7 @@
     "formik": "^2.2.9",
     "http": "^0.0.1-security",
     "jsonschema": "^1.4.0",
+    "moment": "^2.29.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15",
     "react": "17.0.1",

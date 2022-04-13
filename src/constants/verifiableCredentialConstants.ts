@@ -2,7 +2,7 @@
 export const PROOF_FORMAT_JWT = 'jwt';
 
 // Schema links
-export const SCHEMA_EMPLOYMENT_CONTRACT = 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/employmentContractSchema.json';
+export const SCHEMA_EMPLOYMENT_CONTRACT = 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/employmentSchema.json';
 
 export const SCHEMA_BUSINESS_CREDENTIAL = 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/tempJSON/businessSchema.json';
 

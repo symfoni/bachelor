@@ -1,9 +1,12 @@
 import { describe } from 'mocha';
 import assert from 'assert';
-import { validateSchema } from '../src/utils/schemaValidation';
+import { validateSchema, validateSchemaWithURL } from '../src/utils/schemaValidation';
 
 const TERMINATION_VC_SCHEMA_FILE_PATH = 'schemas/terminationSchema.json';
 const BAD_TERMINATION_VC_SCHEMA_FILE_PATH = 'schemas/terminatioSchema.json';
+const TERMINATION_VC_SCHEMA_URL = 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/terminationSchema.json';
+const BAD_TERMINATION_VC_SCHEMA_URL = 'https://NOT_AN_ACTUAL_URL';
+
 
 describe('the schema validation script', ()=>{
 	describe('the validateSchema function', ()=>{
@@ -28,6 +31,32 @@ describe('the schema validation script', ()=>{
 		});
 
 	});
+
+	describe('the validateSchemaWithURL function', async ()=>{
+		it('should return true if the object matches the schema', async ()=>{
+			const result = await validateSchemaWithURL(TERMINATION_VC_SCHEMA_URL, goodObject);
+			assert.equal(result, true);
+		});
+		
+		it('should not return true if a value does not fit its format', async ()=>{
+			const result = await validateSchemaWithURL(TERMINATION_VC_SCHEMA_URL, badFormObject);
+			assert.notEqual(result, true);
+		});
+	
+		it('should not return true if one of the keys are misspelled', async ()=>{
+			const result = await  validateSchemaWithURL(TERMINATION_VC_SCHEMA_URL, badKeyObject);
+			assert.notEqual(result, true);
+		});
+
+		it('should throw an error if the file path does not exist', async ()=>{
+			const result = await validateSchemaWithURL(BAD_TERMINATION_VC_SCHEMA_URL, goodObject);
+			if (result instanceof Error) {
+				assert.ok;
+			}
+		});
+
+	});
+
 });
 
 const goodObject = {
