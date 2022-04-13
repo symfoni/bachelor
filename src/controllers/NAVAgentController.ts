@@ -1,11 +1,12 @@
-import { VerifiableCredential } from '@veramo/core';
 import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL } from '../constants/verifiableCredentialConstants';
 import { agentNAV } from '../veramo/setup';
 import { AgentController } from './AgentController';
 import verifiableRegistry from '../../verifiableRegistry.json';
 import { validateSchemaWithURL } from '../utils/schemaValidation';
 
-// expected interface of a message containing a VC
+/**
+ * expected interface of a message containing a VC
+ */
 interface IVCMessageData {
 	vc: {
 		'@context': [string, string]
@@ -17,41 +18,88 @@ interface IVCMessageData {
 	iss: string
 }
 
+/**
+ * all possible issuers in the verifiable data registry
+ */
+enum issuers {
+	nav = 'nav',
+	symfoni = 'symfoni',
+	state = 'state'
+}
+
 export class NAVAgentController extends AgentController {
 	constructor(mainIdentifierAlias: string) {
 		super(agentNAV, mainIdentifierAlias);
 	}
 
-	async qualifiesForUnemploymentBenefits(presentationToken: string): Promise<boolean | Error> {
+	async isQualifiedForUnemploymentBenefits(presentationToken: string): Promise<boolean | Error> {
 		try {
+			let isVerifiedPersonVC = false;
+			let isVerifiedEmploymentVC = false;
+			let isVerifiedTerminationVC = false;
+
 			// handle message with token
 			const handledMessage: any = await this.agent.handleMessage({
 				raw: presentationToken
 			});
 	
+			// get array of credential tokens
 			const credentials = handledMessage.credentials;
 
-			// TODO: Make a function that checks if all neccessary credentials are present.
-	
-			// for each credential in the handled message...
-			// check if issuer in verifiable data rgistry
-			const isValidIssuers = await this.verifyIssuers(credentials);
-	
-			// check if schema is valid
-			const isValidSchemas = await this.verifySchemas(credentials);
-	
-			// check if data matches requirements
-			// TODO: Make functions that verify requirements in each VC
-			// eg. check within the personVC that the preson is not over 67
-			// in the employmentVC check how much money they made
-			// check how long ago they were terminated etc etc.
-	
-			// if all above is true, return true, else, false
-			if (isValidIssuers && isValidSchemas) {
+			// handle each credential token
+			for (let index = 0; index < credentials.length; index++) {
+				
+				// get credential message by handling credential token
+				const credentialMessage: any = await this.agent.handleMessage({
+					raw: credentials[index].proof.jwt
+				});
+				
+				// get credential message data
+				const credentialMessageData: IVCMessageData = credentialMessage.data;
+
+				switch (credentialMessageData.vc.type.at(1)) {
+				case TYPE_EMPLOYMENT_CREDENTIAL:
+					if (
+						! await this.verifySchema(credentialMessageData) || 
+						! await this.verifyIssuer(credentialMessageData, issuers.symfoni)
+					) {
+						return false;
+					}
+					isVerifiedEmploymentVC = true;
+					break;
+					
+				case TYPE_TERMINATION_CREDENTIAL:
+					if (
+						! await this.verifySchema(credentialMessageData) || 
+						! await this.verifyIssuer(credentialMessageData, issuers.symfoni)
+					) {
+						return false;
+					}
+					isVerifiedTerminationVC = true;
+					break;
+				
+				case TYPE_PERSON_CREDENTIAL:
+					if (
+						! await this.verifySchema(credentialMessageData) || 
+						! await this.verifyIssuer(credentialMessageData, issuers.state)
+					) {
+						return false;
+					}
+					isVerifiedPersonVC = true;
+					break; 
+				
+				default:
+					break;
+				}
+			}
+			
+			// if all necessary credential are verified, return true.
+			if (isVerifiedEmploymentVC && isVerifiedTerminationVC && isVerifiedPersonVC) {
 				return true;
 			}
-	
+
 			return false;
+		
 		} catch (error) {
 			console.error(error);
 			return new Error('unable to qualify');
@@ -59,48 +107,17 @@ export class NAVAgentController extends AgentController {
 	}
 
 	/**
-	 * verifyIssuers takes a list of verifiable credentials and verifies their issuers against a verifiable registry.
-	 * * the registry is just a json-file in the git.
-	 * @param credentials a list of verifiable credentials.
-	 * @returns true if all the credentials have the right issuer as listed in the verifiable data registry.
+	 * verifyIssuer verifies if a credential is signed by a verified issuer.
+	 * @param credentialMessage the credential message with the issuer.
+	 * @param issuer which issuer you expect.
+	 * @returns true if the issuer you expect matches with the signer of the credential.
 	 */
-	private async verifyIssuers(credentials: VerifiableCredential[]): Promise<boolean | Error>{
+	private async verifyIssuer(credentialMessage: IVCMessageData, issuer: issuers): Promise<boolean | Error>{
 		try {
-			// loop through each credential
-			for (let index = 0; index < credentials.length; index++) {
-								
-				// TODO: Possibly refactor the message handling part into its own function as it is used many times.
-				// handle message with credential token
-				const handledMessage: any = await this.agent.handleMessage({
-					raw: credentials[index].proof.jwt
-				});
-
-				if (handledMessage.data == null) {
-					break;
-				}
-
-				const messageData: IVCMessageData = handledMessage.data;
-
-				if (messageData.vc.type.at(1) === TYPE_EMPLOYMENT_CREDENTIAL) {
-					if (!(messageData.iss === verifiableRegistry.symfoni)) {
-						return false;
-					}	
-				}
-
-				if (messageData.vc.type.at(1) === TYPE_TERMINATION_CREDENTIAL) {
-					if (!(messageData.iss === verifiableRegistry.symfoni)) {
-						return false;
-					}
-				}
-
-				if (messageData.vc.type.at(1) === TYPE_PERSON_CREDENTIAL) {
-					if (!(messageData.iss === verifiableRegistry.state)) {
-						return false;
-					}
-				}
-			}
-
-			// return true if all issuers are valid
+			// check if the credential issuer is who they say they are by looking at the verifiable data registry.
+			if (!(credentialMessage.iss === verifiableRegistry[issuer])) {
+				return false;
+			}	
 			return true;
 		} catch (error) {
 			return new Error('something went wrong');
@@ -108,35 +125,28 @@ export class NAVAgentController extends AgentController {
 	}
 
 	/**
-	 * verifySchemas takes each credential in a list of credentials and verifies their credentialSubject against
-	 * their context.
-	 * @param credentials a list of verifiable credentials.
-	 * @returns true or false dependet if all the credentials have valid credential subject data.
+	 * verifySchema verifies a credentials subject data against its schema.
+	 * @param credentialMessage the credential message containing a schema and subject data.
+	 * @returns true if the data matches the credential schema.
 	 */
-	private async verifySchemas(credentials: VerifiableCredential[]): Promise<boolean | Error> {
-		for (let index = 0; index < credentials.length; index++) {
-			console.log(`loop: ${index}`);
-			// TODO: Possibly refactor the message handling part into its own function as it is used many times.
-			const handledMessage: any = await this.agent.handleMessage({
-				raw: credentials[index].proof.jwt
-			});
+	private async verifySchema(credentialMessage: IVCMessageData): Promise<boolean | Error> {
 
-			if (handledMessage.data == null) {
-				break;
-			}
-
-			const messageData: IVCMessageData = handledMessage.data;
-
-			const schemaURL = messageData.vc['@context'][1];
-			const credentialObject = messageData.vc.credentialSubject;
+		try {
+		// get schema url from message
+			const schemaURL = credentialMessage.vc['@context'][1];
+		
+			// get the credential subject object
+			const credentialObject = credentialMessage.vc.credentialSubject;
 			
-			// if one of the credentials does not validate against their own schema, return false
+			// return false if the schema does not match the object
 			if (!validateSchemaWithURL(schemaURL, credentialObject)) {
 				return false;
 			}
 			
+			return true;	
+		} catch (error) {
+			console.error(error);
+			return new Error('unable to verify against schema');
 		}
-
-		return true;
 	}
 }
