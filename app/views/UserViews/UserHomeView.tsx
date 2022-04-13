@@ -12,7 +12,7 @@ import { buttonStyles, styles } from '../../styles';
 export default function UserHomeView({navigation}: any){
 	return (
 		<View style={styles.container}>
-			<Text style={styles.headingTextBlack}>This is the user home page.</Text>
+			<Text style={styles.headingTextBlack}>Welcome User!</Text>
 
 			<NavigationButton
 				title='Recieve VC'
@@ -27,7 +27,7 @@ export default function UserHomeView({navigation}: any){
 			></NavigationButton>
 
 			<NavigationButton
-				title='Create VP'
+				title='Send VP'
 				customStyle={buttonStyles.navigationButtonUser}
 				onPress={()=> navigation.navigate('UserCreateVP')}
 			></NavigationButton>

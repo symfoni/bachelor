@@ -39,7 +39,7 @@ export function NAVRecieveVPView() {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.headingTextBlack}>Send your VP by scanning this QR-code!</Text>
+			<Text style={styles.headingTextBlack}>Scan the QRCode to send a VP!</Text>
 			{ isLoading ? <ActivityIndicator></ActivityIndicator> : (
 				<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
 			)}

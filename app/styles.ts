@@ -43,6 +43,13 @@ export const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		justifyContent: 'center',
 		marginVertical: 8,
+	},
+	credentialDetailTextDivider: {
+		margin: 10
+	},
+	credentialDetailHeadingText: {
+		fontSize: 16,
+		marginBottom: 4,
 	}
 });
 
@@ -107,7 +114,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 200,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},
@@ -117,7 +124,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 250,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},
@@ -127,7 +134,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 200,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},
@@ -137,7 +144,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 200,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},
@@ -147,7 +154,7 @@ export const buttonStyles = StyleSheet.create({
 		justifyContent: 'center',
 		paddingVertical: 24,
 		width: 200,
-		borderRadius: 4,
+		borderRadius: 40,
 		elevation: 3,
 		margin: 5
 	},

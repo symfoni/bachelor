@@ -29,4 +29,3 @@ jobs:
     - run: npm ci
     - run: npm install -g expo-cli
     - run: npm run build-web
-    - run: npm test

@@ -17,22 +17,22 @@ export default function LoginView( { navigation }: any ) {
 			<StatusBar style="auto" />
 			
 			<NavigationButton
-				title='User agent'
+				title='User'
 				onPress={()=> navigation.navigate('UserHome')}
 			></NavigationButton>
 			
 			<NavigationButton
-				title='Symfoni agent'
+				title='Symfoni'
 				onPress={()=>navigation.navigate('SymfoniHome')}
 			></NavigationButton>
 
 			<NavigationButton
-				title='NAV agent'
+				title='NAV'
 				onPress={()=>navigation.navigate('NAVHome')}
 			></NavigationButton>
 
 			<NavigationButton
-				title='State agent'
+				title='State'
 				onPress={()=>navigation.navigate('StateHome')}
 			></NavigationButton>
 
