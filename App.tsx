@@ -16,6 +16,7 @@ import UserRecieveVCView from './app/views/UserViews/UserRecieveVCView';
 import { UserVCDetailView } from './app/views/UserViews/UserVCDetailView';
 import RequestCredentialView from './app/views/StateViews/RequestCredentialView';
 import UserSendVPView from './app/views/UserViews/UserSendVPView';
+import UserMainIdentifierView from './app/views/UserViews/UserMainIdentifierView';
 
 const Stack = createNativeStackNavigator();
 
@@ -26,6 +27,7 @@ export default function App() {
 				<Stack.Screen name='Login' component={LoginView} options={{title: 'Choose your agent!'}}></Stack.Screen>
 				
 				<Stack.Screen name='UserHome' component={UserHomeView} options={{title: 'User Agent'}}></Stack.Screen>
+				<Stack.Screen name='UserMainIdentifier' component={UserMainIdentifierView} options={{title: 'Recieve your VC'}}></Stack.Screen>
 				<Stack.Screen name='UserRecieveVC' component={UserRecieveVCView} options={{title: 'Recieve your VC'}}></Stack.Screen>
 				<Stack.Screen name='UserListVCs' component={UserListVCView} options={{title: 'All your VCs'}}></Stack.Screen>
 				<Stack.Screen name='UserCreateVP' component={UserCreateVPView} options={{title: 'Create your verifiable presentation'}}></Stack.Screen>
