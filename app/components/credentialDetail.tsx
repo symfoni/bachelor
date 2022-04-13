@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import { View, Text, ScrollView, SafeAreaView } from 'react-native';
 import { Divider } from 'react-native-elements';
 import QRCode from 'react-native-qrcode-svg';
 import { 
@@ -50,7 +50,7 @@ export function CredentialDetail({item}: any){
 					<Text>Required to work overseas: {item.verifiableCredential.credentialSubject.employment.employee.requirementToWorkOverseas.toString()}</Text>
 				</View>
 				
-				<View style={styles.container}>
+				<View>
 					<Text>Credential QRCode</Text>
 					<QRCode value={item.verifiableCredential.proof.jwt} size={300}></QRCode>
 				</View>
@@ -73,7 +73,7 @@ export function CredentialDetail({item}: any){
 				
 				</View>
 
-				<View style={styles.container}>
+				<View>
 					<Text>Credential QRCode</Text>
 					<QRCode value={item.verifiableCredential.proof.jwt} size={300}></QRCode>
 				</View>
@@ -117,7 +117,7 @@ export function CredentialDetail({item}: any){
 				
 				</View>
 
-				<View style={styles.container}>
+				<View>
 					<Text>Credential QRCode</Text>
 					<QRCode value={item.verifiableCredential.proof.jwt} size={300}></QRCode>
 				</View>
@@ -144,7 +144,7 @@ export function CredentialDetail({item}: any){
 					<Text>Street: {item.verifiableCredential.credentialSubject.business.address.streetName}</Text>
 					<Text>Street number: {item.verifiableCredential.credentialSubject.business.address.streetNumber}</Text>
 				</View>
-				<View style={styles.container}>
+				<View>
 					<Text>Credential QRCode</Text>
 					<QRCode value={item.verifiableCredential.proof.jwt} size={300}></QRCode>
 				</View>
