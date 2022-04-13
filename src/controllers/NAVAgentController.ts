@@ -3,6 +3,7 @@ import { agentNAV } from '../veramo/setup';
 import { AgentController } from './AgentController';
 import verifiableRegistry from '../../verifiableRegistry.json';
 import { validateSchemaWithURL } from '../utils/schemaValidation';
+import { computeYearsBetweenDates } from '../utils/dateUtils';
 
 /**
  * expected interface of a message containing a VC
@@ -11,7 +12,11 @@ interface IVCMessageData {
 	vc: {
 		'@context': [string, string]
 		type: [string, string]
-		credentialSubject: object
+		credentialSubject: {
+			person: {
+				dateOfBirth: string
+			}
+		}
 	}
 	sub: string
 	nbf: number
@@ -81,7 +86,8 @@ export class NAVAgentController extends AgentController {
 				case TYPE_PERSON_CREDENTIAL:
 					if (
 						! await this.verifySchema(credentialMessageData) || 
-						! await this.verifyIssuer(credentialMessageData, issuers.state)
+						! await this.verifyIssuer(credentialMessageData, issuers.state) ||
+						! this.verifyPersonVCData(credentialMessageData)
 					) {
 						return false;
 					}
@@ -108,14 +114,14 @@ export class NAVAgentController extends AgentController {
 
 	/**
 	 * verifyIssuer verifies if a credential is signed by a verified issuer.
-	 * @param credentialMessage the credential message with the issuer.
+	 * @param credentialMessageData the credential message with the issuer.
 	 * @param issuer which issuer you expect.
 	 * @returns true if the issuer you expect matches with the signer of the credential.
 	 */
-	private async verifyIssuer(credentialMessage: IVCMessageData, issuer: issuers): Promise<boolean | Error>{
+	private async verifyIssuer(credentialMessageData: IVCMessageData, issuer: issuers): Promise<boolean | Error>{
 		try {
 			// check if the credential issuer is who they say they are by looking at the verifiable data registry.
-			if (!(credentialMessage.iss === verifiableRegistry[issuer])) {
+			if (!(credentialMessageData.iss === verifiableRegistry[issuer])) {
 				return false;
 			}	
 			return true;
@@ -126,17 +132,17 @@ export class NAVAgentController extends AgentController {
 
 	/**
 	 * verifySchema verifies a credentials subject data against its schema.
-	 * @param credentialMessage the credential message containing a schema and subject data.
+	 * @param credentialMessageData the credential message containing a schema and subject data.
 	 * @returns true if the data matches the credential schema.
 	 */
-	private async verifySchema(credentialMessage: IVCMessageData): Promise<boolean | Error> {
+	private async verifySchema(credentialMessageData: IVCMessageData): Promise<boolean | Error> {
 
 		try {
 		// get schema url from message
-			const schemaURL = credentialMessage.vc['@context'][1];
+			const schemaURL = credentialMessageData.vc['@context'][1];
 		
 			// get the credential subject object
-			const credentialObject = credentialMessage.vc.credentialSubject;
+			const credentialObject = credentialMessageData.vc.credentialSubject;
 			
 			// return false if the schema does not match the object
 			if (!validateSchemaWithURL(schemaURL, credentialObject)) {
@@ -147,6 +153,25 @@ export class NAVAgentController extends AgentController {
 		} catch (error) {
 			console.error(error);
 			return new Error('unable to verify against schema');
+		}
+	}
+
+	/**
+	 * verifyPersonVCData checks if the data in the VC meets NAVs requirements for recieving unemployment benefits.
+	 * @param credentialMessageData the credential message.
+	 * @returns true if all requirements are met.
+	 */
+	private verifyPersonVCData(credentialMessageData: IVCMessageData): boolean | Error {
+		try {
+			// compute age of person
+			const age = computeYearsBetweenDates(credentialMessageData.vc.credentialSubject.person.dateOfBirth, new Date().toISOString());
+			if (age >= 67) {
+				return false;
+			}
+			return true;
+		} catch (error) {
+			console.error(error);
+			return new Error('unable to verify person data');
 		}
 	}
 }
