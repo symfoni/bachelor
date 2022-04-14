@@ -19,6 +19,7 @@ router.post('/user/messaging', express.text({type:'*/*'}) , userController.handl
 router.get('/user/mainIdentifier', userController.getMainIdentifier);
 router.post('/user/sendMessage', userController.sendMessage);
 router.get('/user/messages', userController.getMessages);
+router.get('/user/message/:id', userController.getMessage);
 
 // symfoni endpoints
 router.post('/symfoni/did', symfoniController.createDID);
