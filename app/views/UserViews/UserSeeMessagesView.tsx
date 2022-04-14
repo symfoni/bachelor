@@ -4,7 +4,7 @@ import { USER_GET_ALL_MESSAGES } from '../../api.constants.';
 import { MessageCard } from '../../components/messageCard';
 import { styles } from '../../styles';
 
-export default function UserSeeMessagesView(){
+export default function UserSeeMessagesView({navigation}: any){
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [data, setData] = useState([]);
 
@@ -35,7 +35,7 @@ export default function UserSeeMessagesView(){
 							keyExtractor={({ id }) => id}
 							// eslint-disable-next-line @typescript-eslint/no-explicit-any
 							renderItem={({ item }: any) => (
-								<MessageCard item={item}></MessageCard>
+								<MessageCard item={item} navigation={navigation}></MessageCard>
 							)}
 						/>
 					)}
