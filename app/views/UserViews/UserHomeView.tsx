@@ -38,6 +38,12 @@ export default function UserHomeView({navigation}: any){
 				onPress={()=> navigation.navigate('UserCreateVP')}
 			></NavigationButton>
 
+			<NavigationButton
+				title='Messages'
+				customStyle={buttonStyles.navigationButtonUser}
+				onPress={()=> navigation.navigate('UserSeeMessages')}
+			></NavigationButton>
+
 		</View>
 	);
 }
