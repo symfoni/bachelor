@@ -7,10 +7,6 @@
     "credentialSubject": {
       "type": "object",
       "properties": {
-        "id": {
-          "type": "string",
-          "description": "The employees' DID"
-        },
         "termination": {
           "type": "object",
           "properties": {
@@ -82,7 +78,6 @@
         }
       },
       "required": [
-        "id",
         "termination"
       ]
     }
