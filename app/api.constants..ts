@@ -8,7 +8,7 @@
 import { Platform } from 'react-native';
 
 // platform dependent host
-const host = Platform.OS === 'android' ? 'localhost' : 'localhost';
+const host = Platform.OS === 'android' ? '192.168.10.166' : 'localhost';
 
 // optional port
 const PORT: string | number = 6060;

@@ -4,7 +4,7 @@ import { ActivityIndicator, Text, View } from 'react-native';
 import { styles } from '../../styles';
 import { useEffect, useState } from 'react';
 import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL } from '../../../src/constants/verifiableCredentialConstants';
-import { NAV_GET_MAIN_IDENTIFIER_URL } from '../../apiConstants';
+import { NAV_GET_MAIN_IDENTIFIER_URL } from '../../api.constants.';
 import { IMainIdentifier } from '../../interfaces/IMainIdentifier.interface';
 
 /**
