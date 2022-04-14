@@ -27,6 +27,7 @@ export default function UserSeeMessagesView({navigation}: any){
 	return (
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>Messages</Text>
+			<Text>Total: {data.length}</Text>
 			{isLoading ? <ActivityIndicator /> : (
 				<>
 					{data.length === 0 ? <Text>No messages found</Text> : (
