@@ -41,7 +41,7 @@ export default function UserHomeView({navigation}: any){
 			<NavigationButton
 				title='Messages'
 				customStyle={buttonStyles.navigationButtonUser}
-				onPress={()=> navigation.navigate('UserSeeMessages')}
+				onPress={()=> navigation.navigate('UserMessages')}
 			></NavigationButton>
 
 		</View>
