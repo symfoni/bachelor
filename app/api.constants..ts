@@ -19,6 +19,8 @@ export const USER_CREATE_PRESENTATION_URL = `http://${host}:${PORT}/user/present
 export const USER_SEND_MESSAGE_URL = `http://${host}:${PORT}/user/sendMessage`;
 export const USER_GET_ALL_CREDENTIALS_URL = `http://${host}:${PORT}/user/credentials`;
 export const USER_GET_MAIN_IDENTIFIER = `http://${host}:${PORT}/user/mainIdentifier`;
+export const USER_GET_ALL_MESSAGES = `http://${host}:${PORT}/user/messages`;
+export const USER_ADD_CREDENTIAL_TO_DB = `http://${host}:${PORT}/user/credential`;
 
 // nav
 export const NAV_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/nav/mainIdentifier`;

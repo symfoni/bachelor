@@ -202,21 +202,37 @@ const createPresentation = async (req: Request, res: Response) => {
 };
 
 const handleMessage = async (req: Request, res: Response) => {
-	console.log(req.body);
 
+	// handle message
 	const message = await agentUser.handleMessage({
 		raw: req.body as string,
 		metaData: [{type: 'message'}],
 		save: false
 	});
 
-	//console.log(message);
-
-	if (message) {
-		return res.json({ id: message.id });
+	if (message === null) {
+		return res.status(400).json({
+			error: 'bad message object'
+		});
 	}
+
+	await userAgentController.agent.dataStoreSaveMessage({message: message});
     
-	return res.status(400).json({ Error: 'Failed' });
+	return res.status(200).json({ success: 'message recieved and stored in the database' });
+};
+
+// Retrieves messages from the database
+const getMessages = async (req: Request, res: Response) => {
+	const messages = await userAgentController.agent.dataStoreORMGetMessages();
+	if (messages.length === 0) {
+		return res.status(400).json({
+			error: 'no messages found'
+		});
+	}
+
+	return res.status(200).json({
+		messages
+	});
 };
 
 // Returns the main identifier of the did
@@ -251,7 +267,7 @@ const sendMessage = async (req: Request, res: Response) => {
 		const message = req.body.message;
 
 		// use params to send message
-		await userAgentController.sendMessage(toDid,type, message, '1234', fromDid);
+		await userAgentController.sendMessage(toDid, type, message, fromDid);
 		return res.status(200).json({
 			success: 'message sent'
 		});
@@ -259,6 +275,24 @@ const sendMessage = async (req: Request, res: Response) => {
 	} catch (error) {
 		return res.status(400).json({
 			error: 'could not send message'
+		});
+	}
+};
+
+// gets a specific message from the database
+const getMessage = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.id;
+		const message = await userAgentController.agent.dataStoreGetMessage({
+			'id': id
+		});
+
+		if (message) {
+			return res.status(200).json(message);
+		}
+	} catch (error) {
+		return res.status(400).json({
+			error: 'no message found for this id'
 		});
 	}
 };
@@ -275,5 +309,7 @@ export default {
 	verifyJWT, 
 	handleMessage,
 	getMainIdentifier,
-	sendMessage
+	sendMessage,
+	getMessages,
+	getMessage
 };

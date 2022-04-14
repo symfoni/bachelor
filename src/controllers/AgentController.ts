@@ -15,6 +15,7 @@ import { ICredentialIssuer } from '@veramo/credential-w3c';
 import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/data-store';
 import { PROOF_FORMAT_JWT, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
 import { IAgentController } from '../interfaces/agentControllerInterface';
+import crypto from 'crypto';
 
 /**
  * AgentController is a class that handles fundemental operations provided by the veramo agent.
@@ -342,8 +343,10 @@ export class AgentController implements IAgentController {
 	 * @param fromDid the did that sends the message, defaults to the agents main identifier.
 	 * @returns void or an error if an error is encountered.
 	 */
-	async sendMessage(toDid: string, type: string, messageData: object, messageId: string, fromDid?: string): Promise<void | Error> {
+	async sendMessage(toDid: string, type: string, messageData: object, fromDid?: string): Promise<void | Error> {
 		try {
+			const messageId = crypto.randomUUID();
+
 			// get main identifier did if from did is not specified
 			if (typeof fromDid === 'undefined') {
 				await this.getMainIdentifier().then((did)=>{
@@ -353,7 +356,7 @@ export class AgentController implements IAgentController {
 					fromDid = did.did;
 				});
 			}
-		
+	
 			// construct message object
 			const message: IDIDCommMessage = {
 				type: type,

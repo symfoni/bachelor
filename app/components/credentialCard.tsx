@@ -1,4 +1,5 @@
 import { VerifiableCredential } from '@veramo/core';
+import React from 'react';
 import { Text, Pressable } from 'react-native';
 import { TYPE_BUSINESS_CREDENTIAL, TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL } from '../../src/constants/verifiableCredentialConstants';
 import { styles } from '../styles';

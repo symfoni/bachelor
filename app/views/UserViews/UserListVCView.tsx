@@ -31,7 +31,8 @@ export default function UserListVCView({ navigation }: any) {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.headingTextBlack}>Here are all of your credentials!</Text>
+			<Text style={styles.headingTextBlack}>Your credentials are listed below!</Text>
+			<Text>Total: {data.length}</Text>
 			{isLoading ? <ActivityIndicator /> : (
 				<>
 					{data.length === 0 ? <Text>No credentials found</Text> : (
