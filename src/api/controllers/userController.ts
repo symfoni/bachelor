@@ -279,6 +279,24 @@ const sendMessage = async (req: Request, res: Response) => {
 	}
 };
 
+// gets a specific message from the database
+const getMessage = async (req: Request, res: Response) => {
+	try {
+		const id = req.params.id;
+		const message = await userAgentController.agent.dataStoreGetMessage({
+			'id': id
+		});
+
+		if (message) {
+			return res.status(200).json(message);
+		}
+	} catch (error) {
+		return res.status(400).json({
+			error: 'no message found for this id'
+		});
+	}
+};
+
 export default { 
 	createDID, 
 	listDIDs, 
@@ -292,5 +310,6 @@ export default {
 	handleMessage,
 	getMainIdentifier,
 	sendMessage,
-	getMessages
+	getMessages,
+	getMessage
 };
