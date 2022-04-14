@@ -13,6 +13,7 @@ import { employmentVC } from '../../types/employmentVCType';
 import { terminationVC } from '../../types/terminationVCType';
 import { hashString } from '../../utils/encryption';
 import { validateSchema } from '../../utils/schemaValidation';
+import { agentSymfoni } from '../../veramo/setup';
 
 const TERMINATION_VC_SCHEMA_FILE_PATH = 'schemas/terminationSchema.json';
 const EMPLOYMENT_VC_SCHEMA_FILE_PATH = 'schemas/employmentSchema.json';
@@ -516,6 +517,49 @@ const getMainIdentifier = async (req: Request, res: Response) => {
 	});
 };
 
+// handles symfonis incoming messages
+const handleMessaging = async (req: Request, res: Response) => {
+	// handle incoming message to retrieve the token from the encrypted message body
+	const message = await agentSymfoni.handleMessage({
+		raw: req.body as string,
+		metaData: [{type: 'message'}],
+		save: false
+	});
+
+	const messagePresentationToken = message.data.messageData;
+	const senderDid = message.from;
+
+	// check if the presentation token qualifies for unemployment benefits
+	const isQualified = await symfoniAgentController.isQualifiedForContractVCs(messagePresentationToken);
+
+	console.log(isQualified);
+	console.log(senderDid);
+
+	if (isQualified) {
+		// find ssn in message
+
+		// query for ssn in database (1 for termination and 1 for employment) -- database query
+
+		// construct object that can be passed into the symfoni create employment vc and termination vc
+
+		// pack VCs in a message and send it back to the user.
+
+
+		await symfoniAgentController.sendMessage(senderDid, 'You get all the contracts', {result: 'take the contracts'});
+		return res.status(200).json({
+			success: 'donediddlie did it '
+		});
+	}
+	
+	await symfoniAgentController.sendMessage(senderDid, 'no contract for you', {result: 'no contracts'});
+
+	if (message) {
+		return res.json({ id: message });
+	}
+    
+	return res.status(400).json({ Error: 'Failed' });
+};
+
 export default { 
 	createEmploymentCredential,
 	createTerminationCredential, 
@@ -534,5 +578,6 @@ export default {
 	getTerminationContract,
 	deleteEmploymentContractFromDb,
 	deleteTerminationContractFromDb,
-	getMainIdentifier
+	getMainIdentifier,
+	handleMessaging
 };
