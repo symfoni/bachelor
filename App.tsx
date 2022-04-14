@@ -37,7 +37,7 @@ export default function App() {
 				<Stack.Screen name='UserCreateVP' component={UserCreateVPView} options={{title: 'Create your verifiable presentation'}}></Stack.Screen>
 				<Stack.Screen name='UserVCDetail' component={UserVCDetailView}></Stack.Screen>
 				<Stack.Screen name='UserSendVP' component={UserSendVPView}></Stack.Screen>
-				<Stack.Screen name='UserSeeMessages' component={UserSeeMessagesView}></Stack.Screen>
+				<Stack.Screen name='UserMessages' component={UserSeeMessagesView}></Stack.Screen>
 				<Stack.Screen name='UserMessageDetail' component={UserMessageDetailView}></Stack.Screen>
 
 				<Stack.Screen name='SymfoniHome' component={SymfoniHomeView} options={{title: 'Symfoni Agent'}}></Stack.Screen>
