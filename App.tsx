@@ -18,6 +18,7 @@ import { UserVCDetailView } from './app/views/UserViews/UserVCDetailView';
 import RequestCredentialView from './app/views/StateViews/RequestCredentialView';
 import UserSendVPView from './app/views/UserViews/UserSendVPView';
 import UserMainIdentifierView from './app/views/UserViews/UserMainIdentifierView';
+import SymfoniRecieveVPView from './app/views/SymfoniViews/SymfoniRecieveVPView';
 
 const Stack = createNativeStackNavigator();
 
@@ -39,6 +40,7 @@ export default function App() {
 				<Stack.Screen name='SymfoniCreateEmploymentVC' component={SymfoniCreateEmploymentVCView} options={{title: 'Create employment VC'}}></Stack.Screen>
 				<Stack.Screen name='SymfoniCreateTerminationVC' component={SymfoniCreateTerminationVCView} options={{title: 'Create termination VC'}}></Stack.Screen>
 				<Stack.Screen name='SymfoniQrCodeView' component={SymfoniQrCodeView} options={{title: 'Symfoni QR code'}}></Stack.Screen>
+				<Stack.Screen name='SymfoniRecieveVP' component={SymfoniRecieveVPView} options={{title: 'Send a VP here'}}></Stack.Screen>
 				
 				
 				<Stack.Screen name='StateHome' component={StateHomeView} options={{title: 'State Agent'}}></Stack.Screen>
