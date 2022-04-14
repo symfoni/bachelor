@@ -202,21 +202,37 @@ const createPresentation = async (req: Request, res: Response) => {
 };
 
 const handleMessage = async (req: Request, res: Response) => {
-	console.log(req.body);
 
+	// handle message
 	const message = await agentUser.handleMessage({
 		raw: req.body as string,
 		metaData: [{type: 'message'}],
 		save: false
 	});
 
-	//console.log(message);
-
-	if (message) {
-		return res.json({ id: message.id });
+	if (message === null) {
+		return res.status(400).json({
+			error: 'bad message object'
+		});
 	}
+
+	await userAgentController.agent.dataStoreSaveMessage({message: message});
     
-	return res.status(400).json({ Error: 'Failed' });
+	return res.status(200).json({ success: 'message recieved and stored in the database' });
+};
+
+// Retrieves messages from the database
+const getMessages = async (req: Request, res: Response) => {
+	const messages = await userAgentController.agent.dataStoreORMGetMessages();
+	if (messages.length === 0) {
+		return res.status(400).json({
+			error: 'no messages found'
+		});
+	}
+
+	return res.status(200).json({
+		messages
+	});
 };
 
 // Returns the main identifier of the did
@@ -275,5 +291,6 @@ export default {
 	verifyJWT, 
 	handleMessage,
 	getMainIdentifier,
-	sendMessage
+	sendMessage,
+	getMessages
 };
