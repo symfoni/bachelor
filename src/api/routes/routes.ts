@@ -40,7 +40,7 @@ router.post('/symfoni/terminationContract', symfoniController.addTerminationCont
 router.get('/symfoni/terminationContract/:id', symfoniController.getTerminationContract);
 router.delete('/symfoni/terminationContract/:id', symfoniController.deleteTerminationContractFromDb);
 router.delete('/symfoni/employmentContract/:id', symfoniController.deleteEmploymentContractFromDb);
-router.post('/symfoni/messaging', express.text({type:'*/*'}) , );
+router.post('/symfoni/messaging', express.text({type:'*/*'}) , symfoniController.handleMessaging);
 router.get('/symfoni/mainIdentifier', symfoniController.getMainIdentifier);
 
 // NAV endpoints
