@@ -1,4 +1,5 @@
 {
+    "id": "https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/tempJSON/personSchema.json",
     "$schema": "http://json-schema.org/draft-04/schema#",
     "type": "object",
     "properties": {
