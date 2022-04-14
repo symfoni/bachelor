@@ -5,9 +5,6 @@
         "credentialSubject": {
             "type": "object",
             "properties": {
-                "id": {
-                    "type": "string"
-                },
                 "person": {
                     "type": "object",
                     "properties": {
@@ -132,7 +129,6 @@
                 }
             },
             "required": [
-                "id",
                 "person"
             ]
         }
