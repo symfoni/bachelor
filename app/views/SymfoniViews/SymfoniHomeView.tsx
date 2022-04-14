@@ -13,7 +13,7 @@ export default function SymfoniHomeView({navigation}: any){
 	return (
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>This is the symfoni home page.</Text>
-
+			<Text>Employer actions</Text>
 			<NavigationButton
 				title='Add employee'
 				customStyle={buttonStyles.navigationButtonSymfoni}
@@ -24,6 +24,14 @@ export default function SymfoniHomeView({navigation}: any){
 				title='Terminate employee'
 				customStyle={buttonStyles.navigationButtonSymfoni}
 				onPress={()=> navigation.navigate('SymfoniCreateTerminationVC')}
+			></NavigationButton>
+
+			<Text>Employee action</Text>
+
+			<NavigationButton
+				title='Request VCs'
+				customStyle={buttonStyles.navigationButtonSymfoni}
+				onPress={()=> navigation.navigate('SymfoniRecieveVP')}
 			></NavigationButton>
 
 		</View>

@@ -8,7 +8,7 @@
 import { Platform } from 'react-native';
 
 // platform dependent host
-const host = Platform.OS === 'android' ? 'localhost' : 'localhost';
+const host = Platform.OS === 'android' ? '192.168.10.166' : 'localhost';
 
 // optional port
 const PORT: string | number = 6060;
@@ -22,3 +22,6 @@ export const USER_GET_MAIN_IDENTIFIER = `http://${host}:${PORT}/user/mainIdentif
 
 // nav
 export const NAV_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/nav/mainIdentifier`;
+
+// symfoni
+export const SYMFONI_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/symfoni/mainIdentifier`;

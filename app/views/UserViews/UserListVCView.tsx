@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList, View, ActivityIndicator, Text } from 'react-native';
-import { USER_GET_ALL_CREDENTIALS_URL } from '../../apiConstants';
+import { USER_GET_ALL_CREDENTIALS_URL } from '../../api.constants.';
 import { CredentialCard } from '../../components/credentialCard';
 import { IVerifiableCredentialDataStore } from '../../interfaces/IListCredentials.interface';
 import { styles } from '../../styles';

@@ -502,6 +502,20 @@ const deleteTerminationContractFromDb = async (req: Request, res: Response) => {
 	});
 };
 
+// Returns the main identifier of the did
+const getMainIdentifier = async (req: Request, res: Response) => {
+	const mainIdentifier = await symfoniAgentController.getMainIdentifier();
+	if (mainIdentifier instanceof Error) {
+		return res.status(500).json({
+			error: mainIdentifier.message
+		});
+	}
+
+	return res.status(200).json({
+		mainIdentifier
+	});
+};
+
 export default { 
 	createEmploymentCredential,
 	createTerminationCredential, 
@@ -519,5 +533,6 @@ export default {
 	addTerminationContractToDb,
 	getTerminationContract,
 	deleteEmploymentContractFromDb,
-	deleteTerminationContractFromDb
+	deleteTerminationContractFromDb,
+	getMainIdentifier
 };
