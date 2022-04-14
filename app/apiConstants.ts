@@ -22,3 +22,6 @@ export const USER_GET_MAIN_IDENTIFIER = `http://${host}:${PORT}/user/mainIdentif
 
 // nav
 export const NAV_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/nav/mainIdentifier`;
+
+// symfoni
+export const SYMFONI_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/symfoni/mainIdentifier`;
