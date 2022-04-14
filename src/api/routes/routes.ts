@@ -18,6 +18,7 @@ router.post('/user/verifyJWT', userController.verifyJWT);
 router.post('/user/messaging', express.text({type:'*/*'}) , userController.handleMessage);
 router.get('/user/mainIdentifier', userController.getMainIdentifier);
 router.post('/user/sendMessage', userController.sendMessage);
+router.get('/user/messages', userController.getMessages);
 
 // symfoni endpoints
 router.post('/symfoni/did', symfoniController.createDID);
