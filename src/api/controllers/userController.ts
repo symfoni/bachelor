@@ -267,7 +267,7 @@ const sendMessage = async (req: Request, res: Response) => {
 		const message = req.body.message;
 
 		// use params to send message
-		await userAgentController.sendMessage(toDid,type, message, '1234', fromDid);
+		await userAgentController.sendMessage(toDid, type, message, fromDid);
 		return res.status(200).json({
 			success: 'message sent'
 		});
