@@ -234,6 +234,8 @@ const handleMessage = async (req: Request, res: Response) => {
 	console.log(isQualified);
 	console.log(senderDid);
 
+	await navAgentController.sendMessage(senderDid, 'Unemployment Benefit Qualification', {result: 'you qualify for unemployment benefits'}, 'test_message_id');
+
 	if (message) {
 		return res.json({ id: message });
 	}
