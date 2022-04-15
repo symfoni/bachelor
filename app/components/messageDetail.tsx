@@ -1,7 +1,7 @@
 import { IMessage } from '@veramo/core';
 import React from 'react';
 import { Alert, Button, Text, View } from 'react-native';
-import { USER_ADD_CREDENTIAL_TO_DB } from '../api.constants.';
+import { USER_CREDENTIAL_URL } from '../api.constants.';
 
 export function MessageDetail({item, navigation}: {item: IMessage, navigation: any}){
 
@@ -15,7 +15,7 @@ export function MessageDetail({item, navigation}: {item: IMessage, navigation: a
 			}
 
 			for (let index = 0; index < credentials.length; index++) {
-				await fetch(USER_ADD_CREDENTIAL_TO_DB, {
+				await fetch(USER_CREDENTIAL_URL, {
 					method: 'POST',
 					body: JSON.stringify({credential: credentials[index]}),
 					headers: {
