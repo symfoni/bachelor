@@ -519,45 +519,84 @@ const getMainIdentifier = async (req: Request, res: Response) => {
 
 // handles symfonis incoming messages
 const handleMessaging = async (req: Request, res: Response) => {
+	const generatedCredentials = [];
 	// handle incoming message to retrieve the token from the encrypted message body
 	const message = await agentSymfoni.handleMessage({
 		raw: req.body as string,
 		metaData: [{type: 'message'}],
 		save: false
 	});
-
 	const messagePresentationToken = message.data.messageData;
 	const senderDid = message.from;
+	const toDid = message.to;
 
-	// check if the presentation token qualifies for unemployment benefits
 	const isQualified = await symfoniAgentController.isQualifiedForContractVCs(messagePresentationToken);
 
-	console.log(isQualified);
-	console.log(senderDid);
-
-	if (isQualified) {
-		// find ssn in message
-
-		// query for ssn in database (1 for termination and 1 for employment) -- database query
-
-		// construct object that can be passed into the symfoni create employment vc and termination vc
-
-		// pack VCs in a message and send it back to the user.
-
-
-		await symfoniAgentController.sendMessage(senderDid, 'You get all the contracts', {result: 'take the contracts'});
-		return res.status(200).json({
-			success: 'donediddlie did it '
+	if (!isQualified) {
+		return res.status(400).json({
+			error: 'person does not have the right credentials'
 		});
 	}
-	
-	await symfoniAgentController.sendMessage(senderDid, 'no contract for you', {result: 'no contracts'});
 
-	if (message) {
-		return res.json({ id: message });
+	const handledMessage = await symfoniAgentController.agent.handleMessage({
+		raw: messagePresentationToken
+	});
+
+	const ssn: string = handledMessage.credentials?.at(0)?.credentialSubject.person.SSN;
+
+	// TODO: Consider hashing in the dbGetTerminationContract and dbGetEmploymentContract themselves.
+	const ssnHash = hashString(ssn);
+
+	const terminationContractData = await dbGetTerminationContract(ssnHash);
+	const employmentContractData = await dbGetEmploymentContract(ssnHash);
+
+	// if any contract fetch from db throws an error, just end the transaction completly
+	if (terminationContractData instanceof Error || employmentContractData instanceof Error) {
+		return res.status(400).json({
+			error: 'something went wrong when trying to fetch from the database.'
+		});
 	}
-    
-	return res.status(400).json({ Error: 'Failed' });
+
+	// only make termination vc if symfoni has the termination data
+	if (typeof terminationContractData !== 'undefined') {
+		const terminationVCObject: any = {
+			id: senderDid,
+			termination: terminationContractData['termination']
+		};
+		// make credential
+		const terminationVC = await symfoniAgentController.createTerminationCredential(toDid, terminationVCObject);
+		if (!(terminationVC instanceof Error)) {
+			generatedCredentials.push(terminationVC.proof.jwt);
+		}
+	}
+
+	// only make the employment vc if symfoni has the employment data
+	if (typeof employmentContractData !== 'undefined') {
+		const employmentVCObject: any = {
+			id: senderDid,
+			employment: employmentContractData['employment']
+			
+		};
+		// make credential
+		const employmentVC = await symfoniAgentController.createEmploymentCredential(toDid, employmentVCObject);
+		
+		// as long as it is not an error, push it to the credentials array.
+		if (!(employmentVC instanceof Error)) {
+			generatedCredentials.push(employmentVC.proof.jwt);	
+		}
+		// push credential to array
+	}
+	
+	console.log(generatedCredentials);
+	
+	// as long as the list of generated credentials are not empty, send the credentials
+	if (generatedCredentials.length !== 0) {
+		for (let index = 0; index < generatedCredentials.length; index++) {
+			await symfoniAgentController.sendMessage(senderDid, 'SymfoniCredential', generatedCredentials[index]);
+		}
+	}
+
+	return res.status(200).json({ Error: 'Failed' });
 };
 
 export default { 
