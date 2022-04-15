@@ -1,3 +1,4 @@
+import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, View, ActivityIndicator, Text } from 'react-native';
 import { USER_GET_ALL_CREDENTIALS_URL } from '../../api.constants.';
@@ -10,6 +11,7 @@ import { styles } from '../../styles';
  * @returns a view with a list of credentials owned by the user.
  */
 export default function UserListVCView({ navigation }: any) {
+	const isFocused = useIsFocused();
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [data, setData] = useState<IVerifiableCredentialDataStore[]>([]);
 
@@ -26,8 +28,8 @@ export default function UserListVCView({ navigation }: any) {
 	};
 
 	useEffect(() => {
-		getCredentials();
-	}, []);
+		isFocused && getCredentials();
+	}, [isFocused]);
 
 	return (
 		<View style={styles.container}>
