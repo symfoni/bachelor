@@ -20,6 +20,7 @@ router.get('/user/mainIdentifier', userController.getMainIdentifier);
 router.post('/user/sendMessage', userController.sendMessage);
 router.get('/user/messages', userController.getMessages);
 router.get('/user/message/:id', userController.getMessage);
+router.delete('/user/credential/:hash', userController.deleteCredential);
 
 // symfoni endpoints
 router.post('/symfoni/did', symfoniController.createDID);
