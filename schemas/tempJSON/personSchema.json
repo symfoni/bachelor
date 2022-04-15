@@ -10,7 +10,7 @@
                     "type": "object",
                     "properties": {
                         "SSN": {
-                            "type": "number"
+                            "type": "string"
                         },
                         "dateOfDeath": {
                             "type": "string",
