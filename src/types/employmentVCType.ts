@@ -4,6 +4,7 @@ export type employmentVC = {
     ];
     type: ['VerifiableCredential', 'EmploymentVC'];
     credentialSubject: {
+        id: string,
         employment: {
             employee: {
                 employeeId: string,
