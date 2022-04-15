@@ -4,7 +4,6 @@ export type terminationVC = {
     ];
     type: ['VerifiableCredential', 'TerminationVC'];
     credentialSubject: {
-        id: string,
         termination: {
             employee: {
                 terminationNoticeReceived: string,
