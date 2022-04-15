@@ -297,6 +297,27 @@ const getMessage = async (req: Request, res: Response) => {
 	}
 };
 
+// deletes a credential
+const deleteCredential = async (req: Request, res: Response) => {
+	try {
+		const credentialHah = req.params.hash;
+
+		await agentUser.dataStoreDeleteVerifiableCredential({
+			hash: credentialHah
+		});
+
+		return res.status(200).json({
+			success: 'deleted the credential'
+		});
+
+	} catch (error) {
+		console.error(error);
+		return res.status(400).json({
+			error: 'unable to delete the credential'
+		});
+	}
+};
+
 export default { 
 	createDID, 
 	listDIDs, 
@@ -311,5 +332,6 @@ export default {
 	getMainIdentifier,
 	sendMessage,
 	getMessages,
-	getMessage
+	getMessage,
+	deleteCredential
 };
