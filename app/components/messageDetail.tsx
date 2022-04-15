@@ -75,7 +75,7 @@ export function MessageDetail({item, navigation}: {item: IMessage, navigation: a
 			</View>
 			<View style={{margin: 10}}>
 				{
-					typeof item.credentials !== 'undefined' ? 
+					item.credentials?.length === 0 ? 
 						<></> 
 						: 
 						<Button title='Save credential(s)' color={'orange'} onPress={saveCredentials} />

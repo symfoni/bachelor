@@ -1,7 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
+import { ScrollView } from 'react-native';
 import { MessageDetail } from '../../components/messageDetail';
-import { styles } from '../../styles';
 
 /**
  * UserMessageDetailView is the view where the user can view details within a message.
@@ -13,8 +12,8 @@ export function UserMessageDetailView({navigation, route}: any){
 	const {item} = route.params;
 
 	return (
-		<View style={styles.container}>
+		<ScrollView>
 			<MessageDetail navigation={navigation} item={item}></MessageDetail>
-		</View>
+		</ScrollView>
 	);
 }

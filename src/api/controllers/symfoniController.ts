@@ -13,6 +13,7 @@ import { employmentVC } from '../../types/employmentVCType';
 import { terminationVC } from '../../types/terminationVCType';
 import { hashString } from '../../utils/encryption';
 import { validateSchema } from '../../utils/schemaValidation';
+import { agentSymfoni } from '../../veramo/setup';
 
 const TERMINATION_VC_SCHEMA_FILE_PATH = 'schemas/terminationSchema.json';
 const EMPLOYMENT_VC_SCHEMA_FILE_PATH = 'schemas/employmentSchema.json';
@@ -516,6 +517,88 @@ const getMainIdentifier = async (req: Request, res: Response) => {
 	});
 };
 
+// handles symfonis incoming messages
+const handleMessaging = async (req: Request, res: Response) => {
+	const generatedCredentials = [];
+	// handle incoming message to retrieve the token from the encrypted message body
+	const message = await agentSymfoni.handleMessage({
+		raw: req.body as string,
+		metaData: [{type: 'message'}],
+		save: false
+	});
+	const messagePresentationToken = message.data.messageData;
+	const senderDid = message.from;
+	const toDid = message.to;
+
+	const isQualified = await symfoniAgentController.isQualifiedForContractVCs(messagePresentationToken);
+
+	if (!isQualified) {
+		return res.status(400).json({
+			error: 'person does not have the right credentials'
+		});
+	}
+
+	const handledMessage = await symfoniAgentController.agent.handleMessage({
+		raw: messagePresentationToken
+	});
+
+	const ssn: string = handledMessage.credentials?.at(0)?.credentialSubject.person.SSN;
+
+	// TODO: Consider hashing in the dbGetTerminationContract and dbGetEmploymentContract themselves.
+	const ssnHash = hashString(ssn);
+
+	const terminationContractData = await dbGetTerminationContract(ssnHash);
+	const employmentContractData = await dbGetEmploymentContract(ssnHash);
+
+	// if any contract fetch from db throws an error, just end the transaction completly
+	if (terminationContractData instanceof Error || employmentContractData instanceof Error) {
+		return res.status(400).json({
+			error: 'something went wrong when trying to fetch from the database.'
+		});
+	}
+
+	// only make termination vc if symfoni has the termination data
+	if (typeof terminationContractData !== 'undefined') {
+		const terminationVCObject: any = {
+			id: senderDid,
+			termination: terminationContractData['termination']
+		};
+		// make credential
+		const terminationVC = await symfoniAgentController.createTerminationCredential(toDid, terminationVCObject);
+		if (!(terminationVC instanceof Error)) {
+			generatedCredentials.push(terminationVC.proof.jwt);
+		}
+	}
+
+	// only make the employment vc if symfoni has the employment data
+	if (typeof employmentContractData !== 'undefined') {
+		const employmentVCObject: any = {
+			id: senderDid,
+			employment: employmentContractData['employment']
+			
+		};
+		// make credential
+		const employmentVC = await symfoniAgentController.createEmploymentCredential(toDid, employmentVCObject);
+		
+		// as long as it is not an error, push it to the credentials array.
+		if (!(employmentVC instanceof Error)) {
+			generatedCredentials.push(employmentVC.proof.jwt);	
+		}
+		// push credential to array
+	}
+	
+	console.log(generatedCredentials);
+	
+	// as long as the list of generated credentials are not empty, send the credentials
+	if (generatedCredentials.length !== 0) {
+		for (let index = 0; index < generatedCredentials.length; index++) {
+			await symfoniAgentController.sendMessage(senderDid, 'SymfoniCredential', generatedCredentials[index]);
+		}
+	}
+
+	return res.status(200).json({ Error: 'Failed' });
+};
+
 export default { 
 	createEmploymentCredential,
 	createTerminationCredential, 
@@ -534,5 +617,6 @@ export default {
 	getTerminationContract,
 	deleteEmploymentContractFromDb,
 	deleteTerminationContractFromDb,
-	getMainIdentifier
+	getMainIdentifier,
+	handleMessaging
 };
