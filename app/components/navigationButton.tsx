@@ -1,4 +1,5 @@
-import { GestureResponderEvent, Pressable, StyleProp, Text, ViewStyle } from 'react-native';
+import React from 'react';
+import { GestureResponderEvent, Pressable, StyleProp, Text, TouchableOpacity, ViewStyle } from 'react-native';
 import { buttonStyles } from '../styles';
 
 /**
@@ -18,8 +19,8 @@ interface INavigationButtonProps {
 export default function NavigationButton(props: INavigationButtonProps): JSX.Element{
 	const {onPress, title, customStyle = buttonStyles.navigationButtonDefault} = props;
 	return (
-		<Pressable style={customStyle} onPress={onPress}>
+		<TouchableOpacity style={customStyle} onPress={onPress}>
 			<Text style={buttonStyles.navigationButtonText}>{title}</Text>
-		</Pressable>
+		</TouchableOpacity>
 	);
 }
