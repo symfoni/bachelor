@@ -27,3 +27,6 @@ export const NAV_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/nav/mainIdent
 
 // symfoni
 export const SYMFONI_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/symfoni/mainIdentifier`;
+
+// state
+export const STATE_PERSON_URL = `http://${host}:${PORT}/state/person/`;
