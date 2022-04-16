@@ -2,6 +2,8 @@ import React from 'react';
 import { Text, View, Pressable } from 'react-native';
 import { buttonStyles, styles } from '../../styles';
 
+// ! THIS VIEW IS NO LONGER IN USE
+
 export default function RequestCredentialView(){
 
 	// Pre-defined data for creating a person VC
