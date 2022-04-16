@@ -21,7 +21,7 @@ import SymfoniRecieveVPView from './app/views/SymfoniViews/SymfoniRecieveVPView'
 import UserSeeMessagesView from './app/views/UserViews/UserSeeMessagesView';
 import { UserMessageDetailView } from './app/views/UserViews/UserMessageDetailView';
 import StateUserPageView from './app/views/StateViews/StateUserPageView';
-import { StateUserLoginView } from './app/views/StateViews/StateCreatePersonVCView';
+import { StateUserLoginView } from './app/views/StateViews/StateUserLoginView';
 
 const Stack = createNativeStackNavigator();
 
