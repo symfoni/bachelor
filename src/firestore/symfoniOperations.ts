@@ -50,7 +50,6 @@ export async function dbGetEmploymentContract(id:string): Promise<FirebaseFirest
 		if (!doc.exists) {
 			console.log('No such document!');
 		} else {
-			console.log('Document data:', doc.data());
 			return doc.data();
 		}
 	} catch (error) {
@@ -71,7 +70,6 @@ export async function dbGetTerminationContract(id:string): Promise<FirebaseFires
 		if (!doc.exists) {
 			console.log('No such document!');
 		} else {
-			console.log('Document data:', doc.data());
 			return doc.data();
 		}
 	} catch (error) {
