@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginView from './app/views/LoginView';
 import NAVHomeView from './app/views/NAVViews/NavHomeView';
 import { NAVRecieveVPView } from './app/views/NAVViews/NAVRecieveVPView';
-import { StateCreatePersonVCView } from './app/views/StateViews/StateCreatePersonVCView';
 import StateHomeView from './app/views/StateViews/StateHomeView';
 import { SymfoniCreateEmploymentVCView } from './app/views/SymfoniViews/SymfoniCreateEmploymentVCView';
 import { SymfoniCreateTerminationVCView } from './app/views/SymfoniViews/SymfoniCreateTerminationVCView';
@@ -21,6 +20,8 @@ import UserMainIdentifierView from './app/views/UserViews/UserMainIdentifierView
 import SymfoniRecieveVPView from './app/views/SymfoniViews/SymfoniRecieveVPView';
 import UserSeeMessagesView from './app/views/UserViews/UserSeeMessagesView';
 import { UserMessageDetailView } from './app/views/UserViews/UserMessageDetailView';
+import StateUserPageView from './app/views/StateViews/StateUserPageView';
+import { StateUserLoginView } from './app/views/StateViews/StateUserLoginView';
 
 const Stack = createNativeStackNavigator();
 
@@ -48,9 +49,9 @@ export default function App() {
 				
 				
 				<Stack.Screen name='StateHome' component={StateHomeView} options={{title: 'State Agent'}}></Stack.Screen>
-				<Stack.Screen name='StateCreatePersonVC' component={StateCreatePersonVCView} options={{title: 'Create personVC'}}></Stack.Screen>
+				<Stack.Screen name='StateUserLogin' component={StateUserLoginView} options={{title: 'Create personVC'}}></Stack.Screen>
 				<Stack.Screen name='RequestCredential' component={RequestCredentialView} options={{title: 'State Agent'}}></Stack.Screen>
-
+				<Stack.Screen name='StateUserPage' component={StateUserPageView}></Stack.Screen>
 				
 				<Stack.Screen name='NAVHome' component={NAVHomeView} options={{title: 'NAV Agent'}}></Stack.Screen>
 				<Stack.Screen name='NAVRecieveVP' component={NAVRecieveVPView} options={{title: 'Send your VP here and get it verified, or not'}}></Stack.Screen>

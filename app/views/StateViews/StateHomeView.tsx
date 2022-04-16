@@ -17,7 +17,7 @@ export default function StateHomeView({navigation}: any){
 			<NavigationButton
 				title='Login'
 				customStyle={buttonStyles.navigationButtonState}
-				onPress={()=> navigation.navigate('StateCreatePersonVC')}
+				onPress={()=> navigation.navigate('StateUserLogin')}
 			></NavigationButton>
 
 		</View>

@@ -50,6 +50,13 @@ export const styles = StyleSheet.create({
 	credentialDetailHeadingText: {
 		fontSize: 16,
 		marginBottom: 4,
+	},
+	textInputField: {
+		borderColor: '#000', 
+		borderWidth: 1, 
+		borderRadius: 1, 
+		padding: 10, 
+		margin: 10
 	}
 });
 
@@ -169,6 +176,9 @@ export const buttonStyles = StyleSheet.create({
 		paddingHorizontal: 32,
 		borderRadius: 4,
 		elevation: 3,
-		
+	},
+	stateLoginButton: {
+		width: 100, 
+		backgroundColor: stateColor
 	}
 });
