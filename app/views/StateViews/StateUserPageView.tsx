@@ -1,5 +1,7 @@
-import React from 'react';
-import { Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Text, TextInput, View } from 'react-native';
+import { Button } from 'react-native-elements';
+import { STATE_PERSON_CREDENTIAL_URL } from '../../api.constants.';
 import { styles } from '../../styles';
 
 /**
@@ -8,11 +10,44 @@ import { styles } from '../../styles';
  * @returns a view with a custom user page at the state site.
  */
 export default function StateUserPageView({route}: any) {
+	const [text, setText] = useState('');
 	const {item} = route.params;
+
+	// issues a person credential
+	const issuePersonCredential = async () => {
+		try {
+			// combine did (text), and person data from db, to create person credential subject object
+			const credentialSubject = {
+				credentialSubject: {
+					...item.personData,
+					id: text
+				}
+			};
+			
+			// create person VC
+			const rawdata = await fetch(STATE_PERSON_CREDENTIAL_URL, {
+				method: 'POST',
+				body: JSON.stringify(credentialSubject),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
+
+			const credential = await rawdata.json();
+			
+		} catch (error) {
+			console.error(error);
+			
+		}
+	};
 
 	return (
 		<View style={styles.container}>
-			<Text>Hello, {item.personData.person.name.firstName}</Text>
+			<Text style={styles.headingTextBlack}>Hello, {item.personData.person.name.firstName}.</Text>
+			<Text style={{marginTop: 10}}>Enter you did address to connect to your wallet:</Text>
+			<TextInput onChangeText={(text)=>{setText(text);}} style={styles.textInputFieldWide} placeholder='did:ethr:rinkeby:0x...'></TextInput>
+			<Button onPress={issuePersonCredential} title={'Recieve person VC'}></Button>
+			<Text>{text}</Text>
 		</View>
 	);
 }
