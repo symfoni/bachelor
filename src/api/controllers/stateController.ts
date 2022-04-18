@@ -404,7 +404,14 @@ const sendMessage = async (req: Request, res: Response) => {
 		const message = req.body.message;
 
 		// use params to send message
-		await stateAgentController.sendMessage(toDid, type, message, fromDid);
+		const sentMessage = await stateAgentController.sendMessage(toDid, type, message, fromDid);
+
+		if (sentMessage instanceof Error) {
+			return res.status(500).json({
+				error: 'unable to send message'
+			});
+		}
+
 		return res.status(200).json({
 			success: 'message sent'
 		});
