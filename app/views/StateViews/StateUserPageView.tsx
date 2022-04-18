@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import { STATE_PERSON_CREDENTIAL_URL } from '../../api.constants.';
+import { STATE_PERSON_CREDENTIAL_URL, STATE_SEND_MESSAGE_URL } from '../../api.constants.';
 import { styles } from '../../styles';
 
 /**
@@ -16,6 +16,7 @@ export default function StateUserPageView({route}: any) {
 	// issues a person credential
 	const issuePersonCredential = async () => {
 		try {
+			const messageType = 'PersonVC';
 			// combine did (text), and person data from db, to create person credential subject object
 			const credentialSubject = {
 				credentialSubject: {
@@ -32,22 +33,37 @@ export default function StateUserPageView({route}: any) {
 					'Content-Type': 'application/json'
 				}
 			});
-
 			const credential = await rawdata.json();
-			
+			const credentialToken = credential.credential.proof.jwt;
+
+			// construct a message body.
+			const messageBody = {
+				toDid: text,
+				type: messageType,
+				message: credentialToken
+			};
+
+			// send message
+			await fetch(STATE_SEND_MESSAGE_URL, {
+				method: 'POST',
+				body: JSON.stringify(messageBody),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			});
 		} catch (error) {
 			console.error(error);
-			
 		}
 	};
 
 	return (
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>Hello, {item.personData.person.name.firstName}.</Text>
+			
 			<Text style={{marginTop: 10}}>Enter you did address to connect to your wallet:</Text>
 			<TextInput onChangeText={(text)=>{setText(text);}} style={styles.textInputFieldWide} placeholder='did:ethr:rinkeby:0x...'></TextInput>
+			
 			<Button onPress={issuePersonCredential} title={'Recieve person VC'}></Button>
-			<Text>{text}</Text>
 		</View>
 	);
 }
