@@ -108,5 +108,6 @@ router.delete('/state/person/:id', stateController.deletePersonDataFromDb);
 
 // messaging related
 router.post('/state/messaging', express.text({type:'*/*'}) , );
+router.post('/state/sendMessage', stateController.sendMessage);
 
 export default router;
