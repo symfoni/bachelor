@@ -57,6 +57,14 @@ export const styles = StyleSheet.create({
 		borderRadius: 1, 
 		padding: 10, 
 		margin: 10
+	},
+	textInputFieldWide: {
+		borderColor: '#000', 
+		borderWidth: 1, 
+		borderRadius: 1, 
+		padding: 10, 
+		margin: 10,
+		width: '50%'
 	}
 });
 

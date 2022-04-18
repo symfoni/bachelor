@@ -30,3 +30,5 @@ export const SYMFONI_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/symfoni/m
 
 // state
 export const STATE_PERSON_URL = `http://${host}:${PORT}/state/person/`;
+export const STATE_PERSON_CREDENTIAL_URL = `http://${host}:${PORT}/state/personCredential/`;
+export const STATE_SEND_MESSAGE_URL = `http://${host}:${PORT}/state/sendMessage`;

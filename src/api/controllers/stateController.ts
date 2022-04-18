@@ -386,6 +386,43 @@ const deletePersonDataFromDb = async (req: Request, res: Response) => {
 	});
 };
 
+// sends a message from the state agent
+const sendMessage = async (req: Request, res: Response) => {
+	try {
+		// get params from body
+		const toDid: string = req.body.toDid;
+		const mainIdentifier = await stateAgentController.getMainIdentifier();
+
+		if (mainIdentifier instanceof Error) {
+			return res.status(500).json({
+				error: mainIdentifier.message
+			});
+		}
+
+		const fromDid: string = mainIdentifier.did;
+		const type = req.body.type;
+		const message = req.body.message;
+
+		// use params to send message
+		const sentMessage = await stateAgentController.sendMessage(toDid, type, message, fromDid);
+
+		if (sentMessage instanceof Error) {
+			return res.status(500).json({
+				error: 'unable to send message'
+			});
+		}
+
+		return res.status(200).json({
+			success: 'message sent'
+		});
+	// return positive / negative feedback
+	} catch (error) {
+		return res.status(400).json({
+			error: 'could not send message'
+		});
+	}
+};
+
 export default { 
 	createPersonCredential,
 	createBusinessCredential, 
@@ -400,5 +437,6 @@ export default {
 	verifyJWT,
 	addPersonDataToDb,
 	getPersonDataFromDb,
-	deletePersonDataFromDb
+	deletePersonDataFromDb,
+	sendMessage
 };
