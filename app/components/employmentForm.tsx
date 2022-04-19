@@ -1,34 +1,105 @@
 import { Picker } from '@react-native-picker/picker';
-import { TextInput, View, Text, ScrollView, Pressable, Platform } from 'react-native';
+import { TextInput, View, Text, ScrollView, Pressable, Platform, Alert } from 'react-native';
 import { buttonStyles, formStyles, styles } from '../styles';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
+import { parse, isDate } from 'date-fns';
 
-// TODO: Fix date validation
+
+function parseDateString(value: string, originalValue: string) {
+	const parsedDate = isDate(originalValue)
+		? originalValue
+		: parse(originalValue, 'yyyy-MM-dd', new Date());
+  
+	return parsedDate;
+}
+
 // EmploymentSchema for validating the form inputs using the yup library.
 const EmploymentSchema = yup.object({
 	socialSecurityNumber: yup.string().required(),
 	jobTitle: yup.string().required('Required Field'),
 	placeOfWork: yup.string().required('Required Field'),
 	hoursOfWork: yup.number().required('Required Field').typeError('Invalid, must be a number'),
-	startDate: yup.date().required('Required Field').typeError('Valid date required MM-DD-YYYY'),
+	startDate: yup.date().transform(parseDateString).required('Required Field').typeError('Valid date required YYYY-MM-DD'),
 	employerTerminationNotice: yup.number().required('Required Field').typeError('Invalid, must be a number'),
 	employeeTerminationNotice: yup.number().required('Required Field').typeError('Invalid, must be a number'),
-	temporaryContractEndDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
+	temporaryContractEndDate: yup.date().transform(parseDateString).typeError('Valid date required YYYY-MM-DD'),
 	workPercentage: yup.number().required('Required Field').typeError('Invalid, must be a number'),
 	monthlySalary: yup.number().required('Required Field').typeError('Invalid, must be a number'),
 	currency: yup.string().required('Required Field'),
-	trialStartDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
-	trialEndDate: yup.date().typeError('Valid date required MM-DD-YYYY'),
+	trialStartDate: yup.date().transform(parseDateString).typeError('Valid date required YYYY-MM-DD'),
+	trialEndDate: yup.date().transform(parseDateString).typeError('Valid date required YYYY-MM-DD'),
 	trialPeriodTerminationNotice: yup.number().required('Required Field').typeError('Invalid, must be a number')
 });
 
 // Const for determining the os the app runs on.
 // Hides the scrollbar if on android
 const showScrollIndicator = Platform.OS === 'android' ? false : true;
+// TODO: find a way to run the local HTTP from the phone itself. It should not be dependent on a computer to work.
+// You have to replace the 'localhost' part in the first string with your IPV4 address.
+// You can find it by typing 'ipconfig' in your command line.
+const symfoniDatabaseEndpoint = Platform.OS === 'android' ? 'http://192.168.68.201:6060/symfoni/employmentContract' : 'http://localhost:6060/symfoni/employmentContract';
+
+
+
+function employmentFormDataToJson(
+	socialSecurityNumber: string,
+	jobTitle: string,
+	placeOfWork: string,
+	hoursOfWork: number, 
+	startDate: string,
+	employerTerminationNotice: number, 
+	employeeTerminationNotice: number, 
+	temporaryContractEndDate: string, 
+	workPercentage: number,
+	monthlySalary: number, 
+	currency: string, 
+	trialStartDate: string, 
+	trialEndDate: string,
+	trialPeriodTerminationNotice: number, 
+	rightForPension: boolean, 
+	nonCompeteClause: boolean, 
+	requirementToWorkOverseas: boolean, 
+	employmentType: string
+) {
+	const jsonData = {
+		'id': socialSecurityNumber,
+		'credentialSubject': {
+			'id': 'Not set yet',
+			'employment': {
+				'employee': {
+					'jobTitle': jobTitle,
+					'placeOfWork': placeOfWork,
+					'hoursOfWork': hoursOfWork,
+					'startDate': startDate,
+					'employerTerminationNotice': employerTerminationNotice,
+					'employeeTerminationNotice': employeeTerminationNotice,
+					'employmentStatus': {
+						'employmentType': employmentType,
+						'temporaryContractEndDate': temporaryContractEndDate
+					},
+					'salary': {
+						'workPercentage': workPercentage,
+						'monthlySalary': monthlySalary,
+						'currency': currency
+					},
+					'trialPeriod': {
+						'startDate': trialStartDate,
+						'endDate': trialEndDate,
+						'trialPeriodTerminationNotice': trialPeriodTerminationNotice
+					},
+					'rightForPension': rightForPension,
+					'nonCompeteClause': nonCompeteClause,
+					'requirementToWorkOverseas': requirementToWorkOverseas
+				}
+			}
+		}
+	};
+	return jsonData;
+}
 
 
 // TODO: Implement a way to pass the props to the proper endpoint
@@ -38,7 +109,7 @@ const showScrollIndicator = Platform.OS === 'android' ? false : true;
 export default function EmploymentForm({ screenName }: any) {
 
 	// Const used for determining the state of the picker.
-	const [selectedEmploymentState, setSelectedEmploymentState] = useState('fullTime');
+	const [selectedEmploymentState, setSelectedEmploymentState] = useState('full time employee');
 
 	// Need to use useNavigation for handling components not in the screen stack.
 	const navigation = useNavigation();
@@ -47,7 +118,7 @@ export default function EmploymentForm({ screenName }: any) {
 
 		/**
 		 * A form for creating an employment VC with the information about an employee.
-		 * Uses the Formik library to pass the props for each field. 
+		 * Uses the Formik library to pass the props for each field.
 		 */
 		<View style={styles.container}>
 			<Formik
@@ -72,9 +143,63 @@ export default function EmploymentForm({ screenName }: any) {
 				}}
 
 				validationSchema={EmploymentSchema}
-				onSubmit={(values, actions) => {
-					actions.resetForm();
-					navigation.navigate(screenName);
+				onSubmit={(values) => {
+					
+					const requestOptions = {
+						method: 'POST',
+						headers: { 
+							Accept: 'application/json',
+							'Content-Type': 'application/json'
+						},
+                                
+						body: JSON.stringify( employmentFormDataToJson(values.socialSecurityNumber, values.jobTitle, values.placeOfWork, parseInt(values.hoursOfWork), values.startDate, parseInt(values.employerTerminationNotice),
+							parseInt(values.employeeTerminationNotice), values.temporaryContractEndDate, parseInt(values.workPercentage), parseInt(values.monthlySalary), values.currency, values.trialStartDate,
+							values.trialEndDate, parseInt(values.trialPeriodTerminationNotice), values.rightForPension, values.nonCompeteClause, values.requirementToWorkOverseas, selectedEmploymentState) )
+					};
+                    
+
+					const storeDataInDatabase = async () => {
+						await fetch(symfoniDatabaseEndpoint, requestOptions).then((res)=> {
+							if(res.ok) {
+								if(Platform.OS === 'android') {
+									const createSuccessAlert = () =>
+										Alert.alert(
+											'Alert',
+											'Employee was successfully added.',
+											[
+												{
+													text: 'Cancel',
+													onPress: () => console.log('Cancel Pressed'),
+													style: 'cancel'
+												},
+												{ text: 'OK', onPress: () => console.log('OK Pressed') }
+											]
+										);
+									createSuccessAlert();
+								} else {
+									alert('Employee was successfully added.');
+								}
+							} else {
+								if(Platform.OS === 'android') {
+									const createFailAlert = () =>
+										Alert.alert(
+											'Alert',
+											'Was not able to add employee to database. Status code: ' + res.status,
+											[
+												{ text: 'OK', onPress: () => console.log('OK Pressed') }
+											]
+										);
+									createFailAlert();
+								} else {
+									alert('Was not able to add employee to database. Status code: ' + res.status);
+								}
+							}
+							navigation.navigate(screenName);
+						});
+					};
+
+					storeDataInDatabase();
+
 				}}
 			>
 				{props => (
@@ -121,7 +246,7 @@ export default function EmploymentForm({ screenName }: any) {
 							style={formStyles.textInput}
 							placeholder='Hours per week'
 							onChangeText={props.handleChange('hoursOfWork')}
-							value={props.values.hoursOfWork}
+							value = {props.values.hoursOfWork}
 							keyboardType='numeric'
 							onBlur={props.handleBlur('hoursOfWork')}
 						/>
@@ -131,7 +256,7 @@ export default function EmploymentForm({ screenName }: any) {
 						<Text style={formStyles.textLabel}>Contract start Date</Text>
 						<TextInput
 							style={formStyles.textInput}
-							placeholder='MM-DD-YYYY'
+							placeholder='YYYY-MM-DD'
 							onChangeText={props.handleChange('startDate')}
 							value={props.values.startDate}
 							onBlur={props.handleBlur('startDate')}
@@ -174,7 +299,7 @@ export default function EmploymentForm({ screenName }: any) {
 						<Text style={formStyles.textLabel}>Temp contract end date</Text>
 						<TextInput
 							style={formStyles.textInput}
-							placeholder='MM-DD-YYYY'
+							placeholder='YYYY-MM-DD'
 							onChangeText={props.handleChange('temporaryContractEndDate')}
 							value={props.values.temporaryContractEndDate}
 							onBlur={props.handleBlur('temporaryContractEndDate')}
@@ -218,7 +343,7 @@ export default function EmploymentForm({ screenName }: any) {
 						<Text style={formStyles.textLabel}>Trial period</Text>
 						<TextInput
 							style={formStyles.textInput}
-							placeholder='Start: MM-DD-YYYY'
+							placeholder='Start: YYYY-MM-DD'
 							onChangeText={props.handleChange('trialStartDate')}
 							value={props.values.trialStartDate}
 							onBlur={props.handleBlur('trialStartDate')}
@@ -228,7 +353,7 @@ export default function EmploymentForm({ screenName }: any) {
 
 						<TextInput
 							style={formStyles.textInput}
-							placeholder='End: MM-DD-YYYY'
+							placeholder='End: YYYY-MM-DD'
 							onChangeText={props.handleChange('trialEndDate')}
 							value={props.values.trialEndDate}
 							onBlur={props.handleBlur('trialEndDate')}

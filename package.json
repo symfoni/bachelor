@@ -48,6 +48,7 @@
     "@veramo/kms-local": "^3.1.0",
     "@walletconnect/react-native-dapp": "^1.7.7",
     "axios": "^0.26.1",
+    "date-fns": "^2.28.0",
     "dotenv": "^16.0.0",
     "ethers": "^5.6.2",
     "ethr-did-resolver": "^5.0.4",

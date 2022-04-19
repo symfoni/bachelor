@@ -122,7 +122,6 @@
                                 }
                             },
                             "required": [
-                                "employeeId",
                                 "jobTitle",
                                 "placeOfWork",
                                 "hoursOfWork",
