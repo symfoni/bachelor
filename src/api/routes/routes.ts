@@ -28,6 +28,7 @@ router.post('/user/messaging', express.text({type:'*/*'}) , userController.handl
 router.post('/user/sendMessage', userController.sendMessage);
 router.get('/user/messages', userController.getMessages);
 router.get('/user/message/:id', userController.getMessage);
+router.get('/user/handleMessageToken/:token', userController.handleMessageToken);
 
 
 // ------- SYMFONI ENDPOINTS -------
