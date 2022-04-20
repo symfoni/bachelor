@@ -318,6 +318,26 @@ const deleteCredential = async (req: Request, res: Response) => {
 	}
 };
 
+// takes a message token and converts into a readable message
+const handleMessageToken = async (req: Request, res: Response) => {
+	try {
+		const token: string = req.params.token;
+
+		const handledMessage = await userAgentController.agent.handleMessage({
+			raw: token
+		});
+
+		return res.status(200).json({
+			handledMessage
+		});
+
+	} catch (error) {
+		return res.status(400).json({
+			error: 'could not handle the message token'
+		});
+	}
+};
+
 export default { 
 	createDID, 
 	listDIDs, 
@@ -333,5 +353,6 @@ export default {
 	sendMessage,
 	getMessages,
 	getMessage,
-	deleteCredential
+	deleteCredential,
+	handleMessageToken
 };
