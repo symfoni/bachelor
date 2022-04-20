@@ -245,3 +245,6 @@ web-build/
 
 # service account key
 serviceAccountKey.json
+
+# The 'verifiable' registry
+verifiableRegistry.json
