@@ -21,6 +21,7 @@ export const USER_GET_ALL_CREDENTIALS_URL = `http://${host}:${PORT}/user/credent
 export const USER_GET_MAIN_IDENTIFIER = `http://${host}:${PORT}/user/mainIdentifier`;
 export const USER_GET_ALL_MESSAGES = `http://${host}:${PORT}/user/messages`;
 export const USER_CREDENTIAL_URL = `http://${host}:${PORT}/user/credential`;
+export const USER_HANDLE_MESSAGE_TOKEN_URL = `http://${host}:${PORT}/user/handleMessageToken/`;
 
 // nav
 export const NAV_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/nav/mainIdentifier`;
