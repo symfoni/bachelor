@@ -3,14 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Text, TouchableOpacity } from 'react-native';
 import { styles } from '../styles';
 import verifiableRegistry from '../../verifiableRegistry.json';
+import { IVerifiableRegistry } from '../interfaces/IVerifiableRegistry';
 
-interface IVerifiableRegistry {
-	nav: string,
-	state: string,
-	symfoni: string
-}
-
-// TODO: Make navigation go to a view where you can see the full message
 // should be able to delete message, add cred to database if cred available etc..
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export function MessageCard({item, navigation}: {item: IMessage, navigation: any}){
