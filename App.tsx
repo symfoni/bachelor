@@ -7,12 +7,10 @@ import { NAVRecieveVPView } from './app/views/NAVViews/NAVRecieveVPView';
 import StateHomeView from './app/views/StateViews/StateHomeView';
 import { SymfoniCreateEmploymentVCView } from './app/views/SymfoniViews/SymfoniCreateEmploymentVCView';
 import { SymfoniCreateTerminationVCView } from './app/views/SymfoniViews/SymfoniCreateTerminationVCView';
-import { SymfoniQrCodeView } from './app/views/SymfoniViews/SymfoniQrCodeView';
 import SymfoniHomeView from './app/views/SymfoniViews/SymfoniHomeView';
 import { UserCreateVPView } from './app/views/UserViews/UserCreateVPView';
 import UserHomeView from './app/views/UserViews/UserHomeView';
 import UserListVCView from './app/views/UserViews/UserListVCView';
-import UserRecieveVCView from './app/views/UserViews/UserRecieveVCView';
 import { UserVCDetailView } from './app/views/UserViews/UserVCDetailView';
 import RequestCredentialView from './app/views/StateViews/RequestCredentialView';
 import UserSendVPView from './app/views/UserViews/UserSendVPView';
@@ -33,7 +31,6 @@ export default function App() {
 				
 				<Stack.Screen name='UserHome' component={UserHomeView} options={{title: 'User Agent'}}></Stack.Screen>
 				<Stack.Screen name='UserMainIdentifier' component={UserMainIdentifierView} options={{title: 'Recieve your VC'}}></Stack.Screen>
-				<Stack.Screen name='UserRecieveVC' component={UserRecieveVCView} options={{title: 'Recieve your VC'}}></Stack.Screen>
 				<Stack.Screen name='UserListVCs' component={UserListVCView} options={{title: 'All your VCs'}}></Stack.Screen>
 				<Stack.Screen name='UserCreateVP' component={UserCreateVPView} options={{title: 'Create your verifiable presentation'}}></Stack.Screen>
 				<Stack.Screen name='UserVCDetail' component={UserVCDetailView}></Stack.Screen>
@@ -44,7 +41,6 @@ export default function App() {
 				<Stack.Screen name='SymfoniHome' component={SymfoniHomeView} options={{title: 'Symfoni Agent'}}></Stack.Screen>
 				<Stack.Screen name='SymfoniCreateEmploymentVC' component={SymfoniCreateEmploymentVCView} options={{title: 'Create employment VC'}}></Stack.Screen>
 				<Stack.Screen name='SymfoniCreateTerminationVC' component={SymfoniCreateTerminationVCView} options={{title: 'Create termination VC'}}></Stack.Screen>
-				<Stack.Screen name='SymfoniQrCodeView' component={SymfoniQrCodeView} options={{title: 'Symfoni QR code'}}></Stack.Screen>
 				<Stack.Screen name='SymfoniRecieveVP' component={SymfoniRecieveVPView} options={{title: 'Send a VP here'}}></Stack.Screen>
 				
 				

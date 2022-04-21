@@ -21,12 +21,6 @@ export default function UserHomeView({navigation}: any){
 			></NavigationButton>
 
 			<NavigationButton
-				title='Recieve VC'
-				customStyle={buttonStyles.navigationButtonUser}
-				onPress={()=> navigation.navigate('UserRecieveVC')}
-			></NavigationButton>
-
-			<NavigationButton
 				title='List VCs'
 				customStyle={buttonStyles.navigationButtonUser}
 				onPress={()=>navigation.navigate('UserListVCs')}
