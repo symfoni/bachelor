@@ -28,6 +28,7 @@ export const NAV_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/nav/mainIdent
 
 // symfoni
 export const SYMFONI_GET_MAIN_IDENTIFIER_URL = `http://${host}:${PORT}/symfoni/mainIdentifier`;
+export const SYMFONI_ADD_EMPLOYMENT_CONTRACT_TO_DB_URL = `http://${host}:${PORT}/symfoni/employmentContract`;
 
 // state
 export const STATE_PERSON_URL = `http://${host}:${PORT}/state/person/`;
