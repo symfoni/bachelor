@@ -39,10 +39,14 @@ export default function SymfoniRecieveVPView(){
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.headingTextBlack}>Scan the QRCode to send a VP!</Text>
+			<Text style={styles.headingTextBlack}>Send your VP by scanning the QR-code with your wallet!</Text>
 			{ isLoading ? <ActivityIndicator></ActivityIndicator> : (
 				<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
 			)}
+			<Text style={{marginTop: 10}}>Info:</Text>
+			<Text style={{marginHorizontal: 200}}>
+				The QR-code contains our main DID address and which VC(s) we must validate before issuing your employment contract and termination contract VC. 
+				It might take a few seconds to verify your credentials, but you should receive your result in a minute.</Text>
 		</View> 
 	);
 }

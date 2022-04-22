@@ -4,9 +4,19 @@ import { USER_CREATE_PRESENTATION_URL, USER_GET_CREDENTIAL_ON_TYPE_URL, USER_SEN
 import { CredentialCard } from '../../components/credentialCard';
 import { IVerifiableCredentialDataStore } from '../../interfaces/IListCredentials.interface';
 import { buttonStyles, styles } from '../../styles';
+import verifiableRegistry from '../../../verifiableRegistry.json';
+import { IVerifiableRegistry } from '../../interfaces/IVerifiableRegistry';
 
+/**
+ * UserSendVPView is the view where the user decides whether they want to send their VP or not.
+ * It displays the name of the holder of the DID that is requesting the VP, and which VCs that will be sent.
+ * @param param0 the route param consists of the DID address that requested the VP and which VCs that was requested.
+ * @returns returns a view with a title, which DID that is requesting the VCs, a list of VCs that are requested, and a send button.
+ */
 export default function UserSendVPView({route, navigation}: any) {
 	const [isLoading, setLoading] = useState<boolean>(true);
+	const [issuer, setIssuer] = useState<string>('unknown');
+	const [isVerifiedIssuer, setIsVerifiedIssuer] = useState<boolean>(false);
 	const [listOfCredentials, setListOfCredentials] = useState<IVerifiableCredentialDataStore[]>([]);
 
 	// the data recieved from scanning the QR code
@@ -14,6 +24,16 @@ export default function UserSendVPView({route, navigation}: any) {
 
 	const credentials: string[] = dataJSON.credentials;
 
+	// check for verified issuer
+	const checkForVerifiedIssuer = ()=>{
+		for (const key in verifiableRegistry) {
+			if (verifiableRegistry[key as keyof IVerifiableRegistry] === dataJSON.did) {
+				setIssuer(key);
+				setIsVerifiedIssuer(true);
+			}
+		}
+		return;
+	};
 	// creates a VP based on the credentials in listOfCredentials, and sends the jwt token of this presentation
 	// to the did that requested the VCs
 	const sendPresentation = async () => {
@@ -77,6 +97,7 @@ export default function UserSendVPView({route, navigation}: any) {
 
 	useEffect(() => {
 		getVerifiableCredentials();
+		checkForVerifiedIssuer();
 	}, []);
 
 	return(
@@ -84,9 +105,10 @@ export default function UserSendVPView({route, navigation}: any) {
 		<View style={styles.container}>
             
 			<Text style={styles.headingTextBlack}>You have recieved a VP request!</Text>
+			{isVerifiedIssuer ? <Text style={{color: 'green'}}>Verified DID: {issuer}</Text> : <Text style={{color: 'red'}}>DID: {issuer}</Text>}
 			{isLoading ? <ActivityIndicator /> : (
 				<>
-					<Text style={styles.headingTextBlack}>These VCs are requested</Text>
+					<Text style={{color: 'black', marginTop: 15, fontSize: 14}}>VC(s) requested: </Text>
 					<FlatList
 						data={listOfCredentials}
 						keyExtractor={({ hash }) => hash}

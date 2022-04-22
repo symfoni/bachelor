@@ -30,18 +30,18 @@ export default function App() {
 				<Stack.Screen name='Login' component={LoginView} options={{title: 'Choose your agent!'}}></Stack.Screen>
 				
 				<Stack.Screen name='UserHome' component={UserHomeView} options={{title: 'User Agent'}}></Stack.Screen>
-				<Stack.Screen name='UserMainIdentifier' component={UserMainIdentifierView} options={{title: 'Recieve your VC'}}></Stack.Screen>
-				<Stack.Screen name='UserListVCs' component={UserListVCView} options={{title: 'All your VCs'}}></Stack.Screen>
-				<Stack.Screen name='UserCreateVP' component={UserCreateVPView} options={{title: 'Create your verifiable presentation'}}></Stack.Screen>
-				<Stack.Screen name='UserVCDetail' component={UserVCDetailView} options={{title: 'VC details'}}></Stack.Screen>
+				<Stack.Screen name='UserMainIdentifier' component={UserMainIdentifierView} options={{title: 'User - Main DID'}}></Stack.Screen>
+				<Stack.Screen name='UserListVCs' component={UserListVCView} options={{title: 'User - List of VCs'}}></Stack.Screen>
+				<Stack.Screen name='UserCreateVP' component={UserCreateVPView} options={{title: 'User - Scan for VP request'}}></Stack.Screen>
+				<Stack.Screen name='UserVCDetail' component={UserVCDetailView} options={{title: 'User - VC detail'}}></Stack.Screen>
 				<Stack.Screen name='UserSendVP' component={UserSendVPView} options={{title: 'Scan a QR-code with a VP request'}}></Stack.Screen>
 				<Stack.Screen name='UserMessages' component={UserSeeMessagesView} options={{title: 'Messages'}}></Stack.Screen>
 				<Stack.Screen name='UserMessageDetail' component={UserMessageDetailView} options={{title: 'Message'}}></Stack.Screen>
 
 				<Stack.Screen name='SymfoniHome' component={SymfoniHomeView} options={{title: 'Symfoni Home'}}></Stack.Screen>
-				<Stack.Screen name='SymfoniCreateEmploymentVC' component={SymfoniCreateEmploymentVCView} options={{title: 'Create employment VC'}}></Stack.Screen>
-				<Stack.Screen name='SymfoniCreateTerminationVC' component={SymfoniCreateTerminationVCView} options={{title: 'Create termination VC'}}></Stack.Screen>
-				<Stack.Screen name='SymfoniRecieveVP' component={SymfoniRecieveVPView} options={{title: 'Send a VP here'}}></Stack.Screen>
+				<Stack.Screen name='SymfoniCreateEmploymentVC' component={SymfoniCreateEmploymentVCView} options={{title: 'Symfoni - Add employee'}}></Stack.Screen>
+				<Stack.Screen name='SymfoniCreateTerminationVC' component={SymfoniCreateTerminationVCView} options={{title: 'Symfoni - Terminate employee'}}></Stack.Screen>
+				<Stack.Screen name='SymfoniRecieveVP' component={SymfoniRecieveVPView} options={{title: 'Symfoni - Send your VP'}}></Stack.Screen>
 				
 				
 				<Stack.Screen name='StateHome' component={StateHomeView} options={{title: 'State Home'}}></Stack.Screen>
@@ -50,7 +50,7 @@ export default function App() {
 				<Stack.Screen name='StateUserPage' component={StateUserPageView} options={{title: 'Home'}}></Stack.Screen>
 				
 				<Stack.Screen name='NAVHome' component={NAVHomeView} options={{title: 'NAV Home'}}></Stack.Screen>
-				<Stack.Screen name='NAVRecieveVP' component={NAVRecieveVPView} options={{title: 'Send your VP'}}></Stack.Screen>
+				<Stack.Screen name='NAVRecieveVP' component={NAVRecieveVPView} options={{title: 'NAV - Send your VP'}}></Stack.Screen>
 
 			</Stack.Navigator>
 		</NavigationContainer>
