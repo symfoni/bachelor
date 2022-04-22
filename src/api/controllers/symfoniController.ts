@@ -105,9 +105,9 @@ const createDID = async (req: Request, res: Response) => {
 	const kms: string = req.body.kms;
 
 	await symfoniAgentController.createDID(alias, provider, kms).then((did) => {
-		if (typeof did === 'string') {
+		if (did instanceof Error) {
 			return res.status(400).json({
-				error: did
+				error: did.message
 			});
 		}
 		return res.status(201).json({
