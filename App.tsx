@@ -4,7 +4,6 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginView from './app/views/LoginView';
 import NAVHomeView from './app/views/NAVViews/NavHomeView';
 import { NAVRecieveVPView } from './app/views/NAVViews/NAVRecieveVPView';
-import StateHomeView from './app/views/StateViews/StateHomeView';
 import { SymfoniCreateEmploymentVCView } from './app/views/SymfoniViews/SymfoniCreateEmploymentVCView';
 import { SymfoniCreateTerminationVCView } from './app/views/SymfoniViews/SymfoniCreateTerminationVCView';
 import SymfoniHomeView from './app/views/SymfoniViews/SymfoniHomeView';
@@ -44,7 +43,6 @@ export default function App() {
 				<Stack.Screen name='SymfoniRecieveVP' component={SymfoniRecieveVPView} options={{title: 'Symfoni - Send your VP'}}></Stack.Screen>
 				
 				
-				<Stack.Screen name='StateHome' component={StateHomeView} options={{title: 'State Home'}}></Stack.Screen>
 				<Stack.Screen name='StateUserLogin' component={StateUserLoginView} options={{title: 'Login to your state account'}}></Stack.Screen>
 				<Stack.Screen name='RequestCredential' component={RequestCredentialView} options={{title: 'State Agent'}}></Stack.Screen>
 				<Stack.Screen name='StateUserPage' component={StateUserPageView} options={{title: 'Home'}}></Stack.Screen>
