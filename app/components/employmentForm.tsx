@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { parse, isDate } from 'date-fns';
+import { SYMFONI_ADD_EMPLOYMENT_CONTRACT_TO_DB_URL } from '../api.constants.';
 
 
 function parseDateString(value: string, originalValue: string) {
@@ -38,12 +39,6 @@ const EmploymentSchema = yup.object({
 // Const for determining the os the app runs on.
 // Hides the scrollbar if on android
 const showScrollIndicator = Platform.OS === 'android' ? false : true;
-// TODO: find a way to run the local HTTP from the phone itself. It should not be dependent on a computer to work.
-// You have to replace the 'localhost' part in the first string with your IPV4 address.
-// You can find it by typing 'ipconfig' in your command line.
-const symfoniDatabaseEndpoint = Platform.OS === 'android' ? 'http://192.168.68.201:6060/symfoni/employmentContract' : 'http://localhost:6060/symfoni/employmentContract';
-
-
 
 function employmentFormDataToJson(
 	socialSecurityNumber: string,
@@ -159,7 +154,7 @@ export default function EmploymentForm({ screenName }: any) {
                     
 
 					const storeDataInDatabase = async () => {
-						await fetch(symfoniDatabaseEndpoint, requestOptions).then((res)=> {
+						await fetch(SYMFONI_ADD_EMPLOYMENT_CONTRACT_TO_DB_URL, requestOptions).then((res)=> {
 							if(res.ok) {
 								if(Platform.OS === 'android') {
 									const createSuccessAlert = () =>

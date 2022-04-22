@@ -6,6 +6,10 @@ import { SYMFONI_GET_MAIN_IDENTIFIER_URL } from '../../api.constants.';
 import { IMainIdentifier } from '../../interfaces/IMainIdentifier.interface';
 import { styles } from '../../styles';
 
+/**
+ * SymfoniRecieveVPView represents a view where symfoni displays a QR-code with their main did address, and which VC they need to verify before issuing credentials.
+ * @returns a view with a QR-code that a user can scan to send a VP with the required VCs to Symfonis main did address.
+ */
 export default function SymfoniRecieveVPView(){
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [mainIdentifier, setMainIdentifier] = useState<IMainIdentifier>();

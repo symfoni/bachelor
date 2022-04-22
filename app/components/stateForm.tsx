@@ -5,6 +5,10 @@ import { buttonStyles, formStyles, styles } from '../styles';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
+/**
+ * ! NO LONGER IN USE
+ */
+
 // Enum for validating predefined Social Security Numbers.
 enum SocialSecurityNumber {
 	SSN_1 = '1234',
