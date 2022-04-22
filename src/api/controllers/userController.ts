@@ -158,46 +158,51 @@ const verifyJWT = async (req: Request, res: Response) => {
 
 // create presentation
 const createPresentation = async (req: Request, res: Response) => {
-	const credentials: VerifiableCredential[] = [];
-	let holder: string = req.body.holder;
-    
-	// TODO: Add a typeguard that returns an error if credentials is not of type VC[]
-
-	// if holder is not specified, use default DID
-	if (typeof holder === 'undefined') {
-		await userAgentController.getMainIdentifier().then((mainIdentifier)=>{
-			
-			if (mainIdentifier instanceof Error) {
-				return res.status(500).json({
-					fatal_error: 'unable to find or create the main identifier'
-				});
-			}
-
-			holder = mainIdentifier.did;
-		});
-	}
-
-	if (req.body.listOfCredentials.length === 0) {
-		return res.status(400).json({
-			error: 'empty list of credentials'
-		});
-	}
-
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	req.body.listOfCredentials.forEach((credential: any) => {
-		credentials.push(credential['verifiableCredential']);
-	});
-    
-	await userAgentController.createPresentation(holder, credentials).then((presentation) => {
-		if (presentation instanceof Error) {
-			return res.status(400).json({
-				error: presentation.message
+	try {
+		const credentials: VerifiableCredential[] = [];
+		let holder: string = req.body.holder;
+  
+		// TODO: Add a typeguard that returns an error if credentials is not of type VC[]
+	
+		// if holder is not specified, use default DID
+		if (typeof holder === 'undefined') {
+			await userAgentController.getMainIdentifier().then((mainIdentifier)=>{
+				
+				if (mainIdentifier instanceof Error) {
+					return res.status(500).json({
+						fatal_error: 'unable to find or create the main identifier'
+					});
+				}
+	
+				holder = mainIdentifier.did;
 			});
 		}
-		return res.status(201).json({
-			presentation
+	
+		if (req.body.listOfCredentials.length === 0) {
+			return res.status(400).json({
+				error: 'empty list of credentials'
+			});
+		}
+	
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		req.body.listOfCredentials.forEach((credential: any) => {
+			credentials.push(credential['verifiableCredential']);
+		});   
+		await userAgentController.createPresentation(holder, credentials).then((presentation) => {
+			if (presentation instanceof Error) {
+				return res.status(400).json({
+					error: presentation.message
+				});
+			}
+			return res.status(201).json({
+				presentation
+			});
 		});
-	});
+	} catch (error) {
+		return res.status(400).json({
+			error: 'unable to create presenatation, make sure that the credentials are inside an array.'
+		});
+	}
 
 };
 
@@ -263,11 +268,18 @@ const sendMessage = async (req: Request, res: Response) => {
 		}
 
 		const fromDid: string = mainIdentifier.did;
-		const type = req.body.type;
-		const message = req.body.message;
+		const type: string = req.body.type;
+		const message: object = req.body.message;
 
 		// use params to send message
-		await userAgentController.sendMessage(toDid, type, message, fromDid);
+		const messageSent = await userAgentController.sendMessage(toDid, type, message, fromDid);
+
+		if (messageSent instanceof Error) {
+			return res.status(400).json({
+				error: messageSent.message
+			});
+		}
+
 		return res.status(200).json({
 			success: 'message sent'
 		});
