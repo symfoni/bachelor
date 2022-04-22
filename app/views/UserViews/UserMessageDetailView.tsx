@@ -61,7 +61,7 @@ export function UserMessageDetailView({navigation, route}: any){
 				});
 			}
 
-			alert('credential was successfully added to your database');
+			alert('A credential was successfully added to your wallet');
 
 		} catch (error) {
 			return alert('something went wrong, try again later');
