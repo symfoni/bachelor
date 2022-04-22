@@ -60,7 +60,7 @@ export default function StateUserPageView({route}: any) {
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>Hello, {item.personData.person.name.firstName}.</Text>
 			
-			<Text style={{marginTop: 10}}>Enter you did address to connect to your wallet:</Text>
+			<Text style={{marginTop: 10}}>Enter you DID address to recieve your person credential:</Text>
 			<TextInput onChangeText={(text)=>{setText(text);}} style={styles.textInputFieldWide} placeholder='did:ethr:rinkeby:0x...'></TextInput>
 			
 			<Button onPress={issuePersonCredential} title={'Recieve person VC'}></Button>
