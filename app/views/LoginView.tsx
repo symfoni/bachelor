@@ -34,7 +34,7 @@ export default function LoginView( { navigation }: any ) {
 
 			<NavigationButton
 				title='State'
-				onPress={()=>navigation.navigate('StateHome')}
+				onPress={()=>navigation.navigate('StateUserLogin')}
 			></NavigationButton>
 
 		</View>
