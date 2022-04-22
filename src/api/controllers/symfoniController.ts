@@ -526,6 +526,7 @@ const handleMessaging = async (req: Request, res: Response) => {
 		metaData: [{type: 'message'}],
 		save: false
 	});
+	
 	const messagePresentationToken = message.data.messageData;
 	const senderDid = message.from;
 	const toDid = message.to;
@@ -544,7 +545,7 @@ const handleMessaging = async (req: Request, res: Response) => {
 
 	const ssn: string = handledMessage.credentials?.at(0)?.credentialSubject.person.SSN;
 
-	// TODO: Consider hashing in the dbGetTerminationContract and dbGetEmploymentContract themselves.
+	// TODO: Consider hashing in the dbGetTerminationContract and dbGetEmploymentContract functions.
 	const ssnHash = hashString(ssn);
 
 	const terminationContractData = await dbGetTerminationContract(ssnHash);
@@ -587,8 +588,6 @@ const handleMessaging = async (req: Request, res: Response) => {
 		// push credential to array
 	}
 	
-	console.log(generatedCredentials);
-	
 	// as long as the list of generated credentials are not empty, send the credentials
 	if (generatedCredentials.length !== 0) {
 		for (let index = 0; index < generatedCredentials.length; index++) {
@@ -596,7 +595,7 @@ const handleMessaging = async (req: Request, res: Response) => {
 		}
 	}
 
-	return res.status(200).json({ Error: 'Failed' });
+	return res.status(400).json({ Error: 'Failed' });
 };
 
 export default { 
