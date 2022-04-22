@@ -7,6 +7,12 @@ import { buttonStyles, styles } from '../../styles';
 import verifiableRegistry from '../../../verifiableRegistry.json';
 import { IVerifiableRegistry } from '../../interfaces/IVerifiableRegistry';
 
+/**
+ * UserSendVPView is the view where the user decides whether they want to send their VP or not.
+ * It displays the name of the holder of the DID that is requesting the VP, and which VCs that will be sent.
+ * @param param0 the route param consists of the DID address that requested the VP and which VCs that was requested.
+ * @returns returns a view with a title, which DID that is requesting the VCs, a list of VCs that are requested, and a send button.
+ */
 export default function UserSendVPView({route, navigation}: any) {
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [issuer, setIssuer] = useState<string>('unknown');
