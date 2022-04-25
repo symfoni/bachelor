@@ -105,9 +105,9 @@ const createDID = async (req: Request, res: Response) => {
 	const kms: string = req.body.kms;
 
 	await symfoniAgentController.createDID(alias, provider, kms).then((did) => {
-		if (typeof did === 'string') {
+		if (did instanceof Error) {
 			return res.status(400).json({
-				error: did
+				error: did.message
 			});
 		}
 		return res.status(201).json({
@@ -519,84 +519,97 @@ const getMainIdentifier = async (req: Request, res: Response) => {
 
 // handles symfonis incoming messages
 const handleMessaging = async (req: Request, res: Response) => {
-	const generatedCredentials = [];
-	// handle incoming message to retrieve the token from the encrypted message body
-	const message = await agentSymfoni.handleMessage({
-		raw: req.body as string,
-		metaData: [{type: 'message'}],
-		save: false
-	});
-	const messagePresentationToken = message.data.messageData;
-	const senderDid = message.from;
-	const toDid = message.to;
-
-	const isQualified = await symfoniAgentController.isQualifiedForContractVCs(messagePresentationToken);
-
-	if (!isQualified) {
-		return res.status(400).json({
-			error: 'person does not have the right credentials'
+	try {
+		const generatedCredentials = [];
+		// handle incoming message to retrieve the token from the encrypted message body
+		const message = await agentSymfoni.handleMessage({
+			raw: req.body as string,
+			metaData: [{type: 'message'}],
+			save: false
 		});
-	}
+	
+		const messagePresentationToken = message.data.messageData;
+		const senderDid = message.from;
+	
+		const mainIdentifier = await symfoniAgentController.getMainIdentifier();
 
-	const handledMessage = await symfoniAgentController.agent.handleMessage({
-		raw: messagePresentationToken
-	});
-
-	const ssn: string = handledMessage.credentials?.at(0)?.credentialSubject.person.SSN;
-
-	// TODO: Consider hashing in the dbGetTerminationContract and dbGetEmploymentContract themselves.
-	const ssnHash = hashString(ssn);
-
-	const terminationContractData = await dbGetTerminationContract(ssnHash);
-	const employmentContractData = await dbGetEmploymentContract(ssnHash);
-
-	// if any contract fetch from db throws an error, just end the transaction completly
-	if (terminationContractData instanceof Error || employmentContractData instanceof Error) {
-		return res.status(400).json({
-			error: 'something went wrong when trying to fetch from the database.'
-		});
-	}
-
-	// only make termination vc if symfoni has the termination data
-	if (typeof terminationContractData !== 'undefined') {
-		const terminationVCObject: any = {
-			id: senderDid,
-			termination: terminationContractData['termination']
-		};
-		// make credential
-		const terminationVC = await symfoniAgentController.createTerminationCredential(toDid, terminationVCObject);
-		if (!(terminationVC instanceof Error)) {
-			generatedCredentials.push(terminationVC.proof.jwt);
+		if (mainIdentifier instanceof Error) {
+			return res.status(500).json({
+				error: mainIdentifier.message
+			});
 		}
-	}
 
-	// only make the employment vc if symfoni has the employment data
-	if (typeof employmentContractData !== 'undefined') {
-		const employmentVCObject: any = {
-			id: senderDid,
-			employment: employmentContractData['employment']
+		const mainDid = mainIdentifier.did;
+
+		const isQualified = await symfoniAgentController.isQualifiedForContractVCs(messagePresentationToken);
+
+		if (!isQualified) {
+			return res.status(400).json({
+				error: 'person does not have the right credentials'
+			});
+		}
+
+		const handledMessage = await symfoniAgentController.agent.handleMessage({
+			raw: messagePresentationToken
+		});
+
+		const ssn: string = handledMessage.credentials?.at(0)?.credentialSubject.person.SSN;
+
+		// TODO: Consider hashing in the dbGetTerminationContract and dbGetEmploymentContract functions.
+		const ssnHash = hashString(ssn);
+
+		const terminationContractData = await dbGetTerminationContract(ssnHash);
+		const employmentContractData = await dbGetEmploymentContract(ssnHash);
+
+		// if any contract fetch from db throws an error, just end the transaction completly
+		if (terminationContractData instanceof Error || employmentContractData instanceof Error) {
+			return res.status(400).json({
+				error: 'something went wrong when trying to fetch from the database.'
+			});
+		}
+
+		// only make termination vc if symfoni has the termination data
+		if (typeof terminationContractData !== 'undefined') {
+			const terminationVCObject: any = {
+				id: senderDid,
+				termination: terminationContractData['termination']
+			};
+			// make credential
+			const terminationVC = await symfoniAgentController.createTerminationCredential(mainDid, terminationVCObject);
+			if (!(terminationVC instanceof Error)) {
+				generatedCredentials.push(terminationVC.proof.jwt);
+			}
+		}
+
+		// only make the employment vc if symfoni has the employment data
+		if (typeof employmentContractData !== 'undefined') {
+			const employmentVCObject: any = {
+				id: senderDid,
+				employment: employmentContractData['employment']
 			
-		};
-		// make credential
-		const employmentVC = await symfoniAgentController.createEmploymentCredential(toDid, employmentVCObject);
+			};
+			// make credential
+			const employmentVC = await symfoniAgentController.createEmploymentCredential(mainDid, employmentVCObject);
 		
-		// as long as it is not an error, push it to the credentials array.
-		if (!(employmentVC instanceof Error)) {
-			generatedCredentials.push(employmentVC.proof.jwt);	
+			// as long as it is not an error, push it to the credentials array.
+			if (!(employmentVC instanceof Error)) {
+				generatedCredentials.push(employmentVC.proof.jwt);	
+			}
 		}
-		// push credential to array
-	}
 	
-	console.log(generatedCredentials);
-	
-	// as long as the list of generated credentials are not empty, send the credentials
-	if (generatedCredentials.length !== 0) {
-		for (let index = 0; index < generatedCredentials.length; index++) {
-			await symfoniAgentController.sendMessage(senderDid, 'SymfoniCredential', generatedCredentials[index]);
+		// as long as the list of generated credentials are not empty, send the credentials
+		if (generatedCredentials.length !== 0) {
+			for (let index = 0; index < generatedCredentials.length; index++) {
+				await symfoniAgentController.sendMessage(senderDid, 'SymfoniCredential', generatedCredentials[index]);
+			}
 		}
-	}
 
-	return res.status(200).json({ Error: 'Failed' });
+		return res.status(400).json({ Error: 'unable to handle the message' });
+	} catch (error) {
+		return res.status(500).json({
+			error
+		});
+	}
 };
 
 export default { 
