@@ -7,7 +7,7 @@ import React, { useState } from 'react';
 import { CheckBox } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
 import { parse, isDate } from 'date-fns';
-import { SYMFONI_ADD_EMPLOYMENT_CONTRACT_TO_DB_URL } from '../api.constants.';
+import { SYMFONI_ADD_EMPLOYMENT_CONTRACT_TO_DB_URL } from '../api.constants';
 
 
 function parseDateString(value: string, originalValue: string) {

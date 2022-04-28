@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
-import { USER_GET_MAIN_IDENTIFIER } from '../../api.constants.';
+import { USER_GET_MAIN_IDENTIFIER } from '../../api.constants';
 import { IMainIdentifier } from '../../interfaces/IMainIdentifier.interface';
 import { styles } from '../../styles';
   

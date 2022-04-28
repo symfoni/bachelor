@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 import { Button } from 'react-native-elements';
-import { STATE_PERSON_CREDENTIAL_URL, STATE_SEND_MESSAGE_URL } from '../../api.constants.';
+import { STATE_PERSON_CREDENTIAL_URL, STATE_SEND_MESSAGE_URL } from '../../api.constants';
 import { styles } from '../../styles';
 
 /**

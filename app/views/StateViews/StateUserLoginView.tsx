@@ -3,7 +3,7 @@ import { buttonStyles, styles } from '../../styles';
 import React from 'react';
 import { TextInput, View, Text } from 'react-native';
 import { Button } from 'react-native-elements';
-import { STATE_PERSON_URL } from '../../api.constants.';
+import { STATE_PERSON_URL } from '../../api.constants';
 
 /**
  * StateUserLoginView is a view where a user can log into their state account with their SSN.

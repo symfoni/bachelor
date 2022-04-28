@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, ActivityIndicator } from 'react-native';
-import { USER_GET_ALL_MESSAGES } from '../../api.constants.';
+import { USER_GET_ALL_MESSAGES } from '../../api.constants';
 import { MessageCard } from '../../components/messageCard';
 import { styles } from '../../styles';
 

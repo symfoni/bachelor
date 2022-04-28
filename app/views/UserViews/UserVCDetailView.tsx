@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alert, Button, View } from 'react-native';
-import { USER_CREDENTIAL_URL } from '../../api.constants.';
+import { USER_CREDENTIAL_URL } from '../../api.constants';
 import { CredentialDetail } from '../../components/credentialDetail';
 import { styles } from '../../styles';
 

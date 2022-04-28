@@ -2,7 +2,7 @@ import { VerifiableCredential } from '@veramo/core';
 import React from 'react';
 import { Alert, ScrollView } from 'react-native';
 import { Button } from 'react-native-elements';
-import { USER_CREDENTIAL_URL, USER_HANDLE_MESSAGE_TOKEN_URL } from '../../api.constants.';
+import { USER_CREDENTIAL_URL, USER_HANDLE_MESSAGE_TOKEN_URL } from '../../api.constants';
 import { MessageDetail } from '../../components/messageDetail';
 import { IHandledMessage } from '../../interfaces/IMessageData.interface';
 

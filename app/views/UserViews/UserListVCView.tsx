@@ -1,7 +1,7 @@
 import { useIsFocused } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { FlatList, View, ActivityIndicator, Text } from 'react-native';
-import { USER_GET_ALL_CREDENTIALS_URL } from '../../api.constants.';
+import { USER_GET_ALL_CREDENTIALS_URL } from '../../api.constants';
 import { CredentialCard } from '../../components/credentialCard';
 import { IVerifiableCredentialDataStore } from '../../interfaces/IListCredentials.interface';
 import { styles } from '../../styles';

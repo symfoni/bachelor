@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, ActivityIndicator, FlatList, Alert, Pressable } from 'react-native';
-import { USER_CREATE_PRESENTATION_URL, USER_GET_CREDENTIAL_ON_TYPE_URL, USER_SEND_MESSAGE_URL } from '../../api.constants.';
+import { USER_CREATE_PRESENTATION_URL, USER_GET_CREDENTIAL_ON_TYPE_URL, USER_SEND_MESSAGE_URL } from '../../api.constants';
 import { CredentialCard } from '../../components/credentialCard';
 import { IVerifiableCredentialDataStore } from '../../interfaces/IListCredentials.interface';
 import { buttonStyles, styles } from '../../styles';

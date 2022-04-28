@@ -7,7 +7,7 @@ import { CheckBox } from 'react-native-elements';
 import { Picker } from '@react-native-picker/picker';
 import { useNavigation } from '@react-navigation/native';
 import { parse, isDate } from 'date-fns';
-import { SYMFONI_ADD_TERMINATION_CONTRACT_TO_DB_URL } from '../api.constants.';
+import { SYMFONI_ADD_TERMINATION_CONTRACT_TO_DB_URL } from '../api.constants';
 
 
 
