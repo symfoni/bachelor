@@ -11,7 +11,7 @@ import { styles } from '../styles';
  * @returns a login page view component.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function LoginView( { navigation }: any ) {
+export default function LoginView( { navigation }: any ): JSX.Element {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>Choose your agent!</Text>

@@ -4,7 +4,7 @@ import { USER_GET_ALL_MESSAGES } from '../../api.constants';
 import { MessageCard } from '../../components/messageCard';
 import { styles } from '../../styles';
 
-export default function UserSeeMessagesView({navigation}: any){
+export default function UserSeeMessagesView({navigation}: any): JSX.Element {
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [data, setData] = useState([]);
 

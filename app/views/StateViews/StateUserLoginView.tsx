@@ -10,7 +10,7 @@ import { STATE_PERSON_URL } from '../../api.constants';
  * @param param0 navigatior.
  * @returns a view where the user can log into their state account using their SSN.
  */
-export function StateUserLoginView({navigation}: any) {
+export default function StateUserLoginView({navigation}: any): JSX.Element {
 	const [text, setText] = React.useState('');
 	const [invalid, setInvalid] = React.useState(false);
 

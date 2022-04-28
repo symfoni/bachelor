@@ -10,7 +10,7 @@ import { styles } from '../../styles';
  * @returns the details within the verifiable credential that was passed from the parameter.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function UserVCDetailView({route, navigation}:any) {
+export default function UserVCDetailView({route, navigation}:any): JSX.Element {
 	const {item} = route.params;
 
 	// deletes a credential

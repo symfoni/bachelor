@@ -9,7 +9,7 @@ import { styles } from '../../styles';
  * @param param0 person data passed from the login page.
  * @returns a view with a custom user page at the state site.
  */
-export default function StateUserPageView({route}: any) {
+export default function StateUserPageView({route}: any): JSX.Element {
 	const [text, setText] = useState('');
 	const {item} = route.params;
 

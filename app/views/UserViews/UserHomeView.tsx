@@ -9,7 +9,7 @@ import { buttonStyles, styles } from '../../styles';
  * @returns the homepage view for the user.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function UserHomeView({navigation}: any){
+export default function UserHomeView({navigation}: any): JSX.Element {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>Welcome User!</Text>

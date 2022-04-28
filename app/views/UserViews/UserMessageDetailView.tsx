@@ -11,7 +11,7 @@ import { IHandledMessage } from '../../interfaces/IMessageData.interface';
  * @param param0 takes an object with a navigator and a route that contains the message details.
  * @returns a view with message details.
  */
-export function UserMessageDetailView({navigation, route}: any){
+export default function UserMessageDetailView({navigation, route}: any): JSX.Element {
 	const {item} = route.params;
 
 	// deletes a message from the database

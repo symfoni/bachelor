@@ -12,7 +12,7 @@ import { IMainIdentifier } from '../../interfaces/IMainIdentifier.interface';
  * to send a VP to NAV.
  * @returns a view containing a QR-code with navs address and the required VCs for unemployment benefits.
  */
-export function NAVRecieveVPView() {
+export default function NAVRecieveVPView(): JSX.Element {
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [mainIdentifier, setMainIdentifier] = useState<IMainIdentifier>();
 	

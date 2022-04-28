@@ -9,7 +9,7 @@ import { styles } from '../../styles';
  * UserMainIdentifierView is a view that shows the users main identifier as a QRCode and in plain text.
  * @returns a view with the users main identifier on display.
  */
-export default function UserMainIdentifierView() {
+export default function UserMainIdentifierView(): JSX.Element {
 	const [isLoading, setLoading] = useState(true);
 	const [mainIdentifier, setMainIdentifier] = useState<IMainIdentifier>();
 

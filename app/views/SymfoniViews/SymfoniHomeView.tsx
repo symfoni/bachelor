@@ -9,7 +9,7 @@ import { buttonStyles, styles } from '../../styles';
  * @returns the homepage view for Symfoni.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function SymfoniHomeView({navigation}: any){
+export default function SymfoniHomeView({navigation}: any): JSX.Element {
 	return (
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>This is the symfoni home page.</Text>

@@ -7,7 +7,7 @@ import React from 'react';
  * SymfoniCreateEmploymentVCView is a view where the employer can add a new employee to their database by filling out a form.
  * @returns a view with an employment contract form.
  */
-export function SymfoniCreateEmploymentVCView() {
+export default function SymfoniCreateEmploymentVCView(): JSX.Element {
 	return (
 		<View style={styles.container}>
 			<EmploymentForm screenName='SymfoniHome'/>

@@ -10,7 +10,7 @@ import { styles } from '../../styles';
  * UserListVCView is a view that fetches all locally stored credentials and displays them for the user.
  * @returns a view with a list of credentials owned by the user.
  */
-export default function UserListVCView({ navigation }: any) {
+export default function UserListVCView({ navigation }: any): JSX.Element {
 	const isFocused = useIsFocused();
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [data, setData] = useState<IVerifiableCredentialDataStore[]>([]);

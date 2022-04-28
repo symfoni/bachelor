@@ -9,7 +9,7 @@ import { buttonStyles, styles } from '../../styles';
  * @returns the NAV homepage view.
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function NAVHomeView({navigation}:any){
+export default function NAVHomeView({navigation}:any): JSX.Element{
 	return (
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>This is the NAV home page.</Text>

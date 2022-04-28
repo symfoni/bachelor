@@ -10,7 +10,7 @@ const QR_TYPE = 256;
  * UserCreateVPView is the view where the user makes their VP upon scanning a QR code.
  * @returns a view where the user uses their phone to scan a QR code for sending their presentation.
  */
-export function UserCreateVPView({navigation}: any) {
+export default function UserCreateVPView({navigation}: any): JSX.Element {
 	const [hasPermission, setHasPermission] = useState<boolean>(false);
 	const [scanned, setScanned] = useState<boolean>(false);
 

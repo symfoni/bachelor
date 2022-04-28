@@ -13,7 +13,7 @@ import { IVerifiableRegistry } from '../../interfaces/IVerifiableRegistry';
  * @param param0 the route param consists of the DID address that requested the VP and which VCs that was requested.
  * @returns returns a view with a title, which DID that is requesting the VCs, a list of VCs that are requested, and a send button.
  */
-export default function UserSendVPView({route, navigation}: any) {
+export default function UserSendVPView({route, navigation}: any): JSX.Element {
 	const [isLoading, setLoading] = useState<boolean>(true);
 	const [issuer, setIssuer] = useState<string>('unknown');
 	const [isVerifiedIssuer, setIsVerifiedIssuer] = useState<boolean>(false);
