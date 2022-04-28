@@ -2,7 +2,7 @@ import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CR
 import { agentNAV } from '../veramo/setup';
 import { AgentController } from './AgentController';
 import { computeYearsBetweenDates } from '../utils/dateUtils';
-import { IVCMessageDataPerson } from '../interfaces/messages.interface';
+import { IVCMessageDataPerson } from '../interfaces/message.interface';
 import { issuers, verifyIssuer, verifySchema } from '../utils/verifyPresentation';
 import { INAVAgentController } from '../interfaces/navAgentController.interface';
 

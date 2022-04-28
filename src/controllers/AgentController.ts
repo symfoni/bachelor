@@ -14,7 +14,7 @@ import {IDIDComm, IDIDCommMessage} from '@veramo/did-comm';
 import { ICredentialIssuer } from '@veramo/credential-w3c';
 import { IDataStoreORM, UniqueVerifiableCredential } from '@veramo/data-store';
 import { PROOF_FORMAT_JWT, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
-import { IAgentController } from '../interfaces/agentControllerInterface';
+import { IAgentController } from '../interfaces/agentController.interface';
 import crypto from 'crypto';
 
 /**

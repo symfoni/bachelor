@@ -1,6 +1,6 @@
 import { VerifiableCredential } from '@veramo/core';
 import { PROOF_FORMAT_JWT, SCHEMA_BUSINESS_CREDENTIAL, SCHEMA_PERSON_CREDENTIAL, SCHEMA_W3_CREDENTIAL, TYPE_BUSINESS_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
-import { IStateAgentController } from '../interfaces/stateControllerInterface';
+import { IStateAgentController } from '../interfaces/stateAgentController.interface';
 import { businessVerifiableCredential } from '../types/businessVCtype';
 import { personVerifiableCredential } from '../types/personVCType';
 import { agentState } from '../veramo/setup';

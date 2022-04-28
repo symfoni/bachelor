@@ -1,6 +1,6 @@
 import { IMessage, VerifiableCredential } from '@veramo/core';
 import { PROOF_FORMAT_JWT, SCHEMA_EMPLOYMENT_CONTRACT, SCHEMA_TERMINATION_CREDENTIAL, SCHEMA_W3_CREDENTIAL, TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
-import { ISymfoniAgentController } from '../interfaces/symfoniControllerInterface';
+import { ISymfoniAgentController } from '../interfaces/symfoniAgentController.interface';
 import { employmentVC } from '../types/employmentVCType';
 import { terminationVC } from '../types/terminationVCType';
 import { issuers, verifyIssuer, verifySchema } from '../utils/verifyPresentation';

@@ -1,6 +1,6 @@
 import assert from 'assert';
 import { describe, it } from 'mocha';
-import { IVCMessageData } from '../src/interfaces/messages.interface';
+import { IVCMessageData } from '../src/interfaces/message.interface';
 import { issuers, verifyIssuer, verifySchema } from '../src/utils/verifyPresentation';
 
 

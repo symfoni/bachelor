@@ -1,4 +1,4 @@
-import { IVCMessageData } from '../interfaces/messages.interface';
+import { IVCMessageData } from '../interfaces/message.interface';
 import { validateSchemaWithURL } from './schemaValidation';
 import verifiableRegistry from '../../verifiableRegistry.json';
 
