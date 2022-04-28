@@ -1,5 +1,5 @@
 import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL } from '../constants/verifiableCredentialConstants';
-import { agentNAV } from '../veramo/setup';
+import { agentNAV } from '../veramo/veramo.setup';
 import { AgentController } from './AgentController';
 import { computeYearsBetweenDates } from '../utils/dateUtils';
 import { IVCMessageDataPerson } from '../interfaces/message.interface';

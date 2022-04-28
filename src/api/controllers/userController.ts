@@ -2,7 +2,7 @@
 import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 import { AgentController } from '../../controllers/AgentController';
-import { agentUser } from '../../veramo/setup';
+import { agentUser } from '../../veramo/veramo.setup';
 
 const userAgentController = new AgentController(agentUser, 'user');
 

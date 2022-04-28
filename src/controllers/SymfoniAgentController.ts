@@ -4,7 +4,7 @@ import { ISymfoniAgentController } from '../interfaces/symfoniAgentController.in
 import { employmentVC } from '../types/employmentVCType';
 import { terminationVC } from '../types/terminationVCType';
 import { issuers, verifyIssuer, verifySchema } from '../utils/verifyPresentation';
-import { agentSymfoni } from '../veramo/setup';
+import { agentSymfoni } from '../veramo/veramo.setup';
 import { AgentController } from './AgentController';
 
 /**

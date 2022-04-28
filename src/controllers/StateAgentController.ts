@@ -3,7 +3,7 @@ import { PROOF_FORMAT_JWT, SCHEMA_BUSINESS_CREDENTIAL, SCHEMA_PERSON_CREDENTIAL,
 import { IStateAgentController } from '../interfaces/stateAgentController.interface';
 import { businessVerifiableCredential } from '../types/businessVCtype';
 import { personVerifiableCredential } from '../types/personVCType';
-import { agentState } from '../veramo/setup';
+import { agentState } from '../veramo/veramo.setup';
 import { AgentController } from './AgentController';
 
 /**

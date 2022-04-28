@@ -2,7 +2,7 @@
 import { VerifiableCredential } from '@veramo/core';
 import { Request, Response } from 'express';
 import { NAVAgentController } from '../../controllers/NAVAgentController';
-import { agentNAV } from '../../veramo/setup';
+import { agentNAV } from '../../veramo/veramo.setup';
 
 const navAgentController = new NAVAgentController('nav');
 

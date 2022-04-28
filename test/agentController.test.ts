@@ -3,7 +3,7 @@ import { after, before, it } from 'mocha';
 import { AnyObject } from 'yup/lib/types';
 import { SCHEMA_W3_CREDENTIAL } from '../src/constants/verifiableCredentialConstants';
 import { AgentController } from '../src/controllers/AgentController';
-import { agentTest, dbConnectionTest } from '../src/veramo/setup';
+import { agentTest, dbConnectionTest } from '../src/veramo/veramo.setup';
 import exampleCredential from './test data/exampleCredential.json';
 
 const testAgentController = new AgentController(agentTest, 'test');

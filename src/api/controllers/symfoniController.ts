@@ -13,7 +13,7 @@ import { employmentVC } from '../../types/employmentVCType';
 import { terminationVC } from '../../types/terminationVCType';
 import { hashString } from '../../utils/encryption';
 import { validateSchema } from '../../utils/schemaValidation';
-import { agentSymfoni } from '../../veramo/setup';
+import { agentSymfoni } from '../../veramo/veramo.setup';
 
 const TERMINATION_VC_SCHEMA_FILE_PATH = 'schemas/terminationSchema.json';
 const EMPLOYMENT_VC_SCHEMA_FILE_PATH = 'schemas/employmentSchema.json';
