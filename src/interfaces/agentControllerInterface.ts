@@ -2,10 +2,9 @@ import { DIDResolutionResult, IIdentifier, VerifiableCredential, VerifiablePrese
 import { UniqueVerifiableCredential } from '@veramo/data-store';
 
 /**
- * A simple interface for the AgentController class
+ * IAgentController is an interface for the AgentController class.
  */
 export interface IAgentController {
-    // TODO: Fix return type any to actually be of type did, 'did[]', etc.
     getDID(did: string): Promise<IIdentifier | Error>
 
     createDID(alias?: string, provider?: string, keyManagementSystem?: string): Promise<IIdentifier | Error>
@@ -25,4 +24,12 @@ export interface IAgentController {
     getAllCredentials(): Promise<UniqueVerifiableCredential[]>
 
     createPresentation(holder:string,credentials: VerifiableCredential[]): Promise<VerifiablePresentation | Error>
+
+    addServiceKeyToDid(): Promise<void | Error>
+
+    addPostMessagingServiceToDid(messagingServiceEndpoint: string): Promise<void | Error>
+
+    addDIDCommMessagingServiceToDid(messagingServiceEndpoint: string): Promise<void | Error>
+
+    sendMessage(toDid: string, type: string, messageData: object, fromDid?: string): Promise<void | Error>
 }
