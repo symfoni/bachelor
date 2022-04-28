@@ -1,4 +1,4 @@
-import { VerifiableCredential } from '@veramo/core';
+import { IMessage, VerifiableCredential } from '@veramo/core';
 import { PROOF_FORMAT_JWT, SCHEMA_EMPLOYMENT_CONTRACT, SCHEMA_TERMINATION_CREDENTIAL, SCHEMA_W3_CREDENTIAL, TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL, TYPE_VERIFIABLE_CREDENTIAL } from '../constants/verifiableCredentialConstants';
 import { ISymfoniAgentController } from '../interfaces/symfoniControllerInterface';
 import { employmentVC } from '../types/employmentVCType';
@@ -11,9 +11,8 @@ import { AgentController } from './AgentController';
  * AgentSymfoniController is a factory class that controls the actions of the symfoni agent.
  */
 export class SymfoniAgentController extends AgentController implements ISymfoniAgentController{
-	// TODO: make it so that the class automatically initializes and keeps a main did for the agent
 
-	constructor(mainIdentifierAlias: string) {
+	constructor(mainIdentifierAlias = 'symfoni') {
 		super(agentSymfoni, mainIdentifierAlias);
 	}
 
@@ -78,19 +77,23 @@ export class SymfoniAgentController extends AgentController implements ISymfoniA
 	 * @param presentationToken the token used for verifying.
 	 * @returns true if the person has a valid person VC.
 	 */
-	async isQualifiedForContractVCs(presentationToken: string){
+	async isQualifiedForContractVCs(presentationToken: string): Promise<boolean | Error>{
 		try {
 			
-			const handledMessage: any = await this.agent.handleMessage({
+			const handledMessage: IMessage = await this.agent.handleMessage({
 				raw: presentationToken
 			});
 
 			const credentials = handledMessage.credentials;
+
+			if (typeof credentials === 'undefined') {
+				return false;
+			}
 			
 			// loops through, incase the end user wants to send more credentials than neccessary.
 			for (let index = 0; index < credentials.length; index++) {
 				
-				const credentialMessage: any = await this.agent.handleMessage({
+				const credentialMessage: IMessage = await this.agent.handleMessage({
 					raw: credentials[index].proof.jwt
 				});	
 
