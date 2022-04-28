@@ -10,7 +10,13 @@ import { AgentController } from './AgentController';
  * StateAgentController is a class that manages the state agent.
  */
 export class StateAgentController extends AgentController implements IStateAgentController{
-	constructor(mainIdentifierAlias: string) {
+	
+	/**
+	 * The constructor is used to set which agent the class should control
+	 * and what the alias for the main identifier should be.
+	 * @param mainIdentifierAlias the alias of the main identifier, defaults to 'state'.
+	 */
+	constructor(mainIdentifierAlias = 'state') {
 		super(agentState, mainIdentifierAlias);
 	}
 

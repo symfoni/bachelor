@@ -4,15 +4,28 @@ import { AgentController } from './AgentController';
 import { computeYearsBetweenDates } from '../utils/dateUtils';
 import { IVCMessageDataPerson } from '../interfaces/messages.interface';
 import { issuers, verifyIssuer, verifySchema } from '../utils/verifyPresentation';
+import { INAVAgentController } from '../interfaces/navAgentController.interface';
 
 /**
  * NAVAgentController handles the functionality of the NAV agent.
  */
-export class NAVAgentController extends AgentController {
-	constructor(mainIdentifierAlias: string) {
+export class NAVAgentController extends AgentController implements INAVAgentController {
+	
+	/**
+	 * The constructor is used to set which agent the class should control
+	 * and what the alias for the main identifier should be.
+	 * @param mainIdentifierAlias the alias of the main identifier, defaults to 'nav'.
+	 */
+	constructor(mainIdentifierAlias = 'nav') {
 		super(agentNAV, mainIdentifierAlias);
 	}
 
+	/**
+	 * isQualifiedForUnemploymentBenefits takes a presentation token and checks if the VCs within the presenation
+	 * token qualifies for unemployment benefits.
+	 * @param presentationToken a presentation token containing multiple VCs.
+	 * @returns a boolean stating whether the token qualifies or not.
+	 */
 	async isQualifiedForUnemploymentBenefits(presentationToken: string): Promise<boolean | Error> {
 		try {
 			let isVerifiedPersonVC = false;

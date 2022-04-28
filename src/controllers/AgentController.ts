@@ -26,8 +26,12 @@ export class AgentController implements IAgentController {
 
 	agent: TAgent<IDataStore & IDataStoreORM & ICredentialIssuer & IResolver & IDIDManager & IDIDComm & IKeyManager & IMessageHandler>;
 
-	// TODO: Find a better type than 'any'
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	/**
+	 * The constructor is used to set which agent the class should control, and what
+	 * the alias of the main identifier should be.
+	 * @param agent states which agent that should be controlled.
+	 * @param mainIdentifierAlias will be the alias of the main identifier.
+	 */
 	constructor(agent: any, mainIdentifierAlias: string) {
 		this.agent = agent;
 		this.mainIdentifierAlias = mainIdentifierAlias;

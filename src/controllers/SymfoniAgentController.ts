@@ -12,6 +12,11 @@ import { AgentController } from './AgentController';
  */
 export class SymfoniAgentController extends AgentController implements ISymfoniAgentController{
 
+	/**
+	 * The constructor is used to set which agent the class should control
+	 * and what the alias for the main identifier should be.
+	 * @param mainIdentifierAlias the alias of the main identifier, defaults to 'symfoni'.
+	 */
 	constructor(mainIdentifierAlias = 'symfoni') {
 		super(agentSymfoni, mainIdentifierAlias);
 	}
