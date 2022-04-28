@@ -382,7 +382,5 @@ export class AgentController implements IAgentController {
 			console.error('unable to send message', error);
 			return new Error('unable to send message');
 		}
-	}	
-	
-	// TODO: Make a function that can verify a credential
+	}		
 }
