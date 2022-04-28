@@ -1,24 +1,26 @@
 import React from 'react';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 import LoginView from './app/views/LoginView';
 import NAVHomeView from './app/views/NAVViews/NavHomeView';
-import { NAVRecieveVPView } from './app/views/NAVViews/NAVRecieveVPView';
-import { SymfoniCreateEmploymentVCView } from './app/views/SymfoniViews/SymfoniCreateEmploymentVCView';
-import { SymfoniCreateTerminationVCView } from './app/views/SymfoniViews/SymfoniCreateTerminationVCView';
+import NAVRecieveVPView from './app/views/NAVViews/NAVRecieveVPView';
+import SymfoniCreateEmploymentVCView from './app/views/SymfoniViews/SymfoniCreateEmploymentVCView';
+import SymfoniCreateTerminationVCView from './app/views/SymfoniViews/SymfoniCreateTerminationVCView';
 import SymfoniHomeView from './app/views/SymfoniViews/SymfoniHomeView';
-import { UserCreateVPView } from './app/views/UserViews/UserCreateVPView';
+import UserCreateVPView from './app/views/UserViews/UserCreateVPView';
 import UserHomeView from './app/views/UserViews/UserHomeView';
 import UserListVCView from './app/views/UserViews/UserListVCView';
-import { UserVCDetailView } from './app/views/UserViews/UserVCDetailView';
+import UserVCDetailView from './app/views/UserViews/UserVCDetailView';
 import RequestCredentialView from './app/views/StateViews/RequestCredentialView';
 import UserSendVPView from './app/views/UserViews/UserSendVPView';
 import UserMainIdentifierView from './app/views/UserViews/UserMainIdentifierView';
 import SymfoniRecieveVPView from './app/views/SymfoniViews/SymfoniRecieveVPView';
 import UserSeeMessagesView from './app/views/UserViews/UserSeeMessagesView';
-import { UserMessageDetailView } from './app/views/UserViews/UserMessageDetailView';
+import UserMessageDetailView from './app/views/UserViews/UserMessageDetailView';
 import StateUserPageView from './app/views/StateViews/StateUserPageView';
-import { StateUserLoginView } from './app/views/StateViews/StateUserLoginView';
+import StateUserLoginView from './app/views/StateViews/StateUserLoginView';
 
 const Stack = createNativeStackNavigator();
 
