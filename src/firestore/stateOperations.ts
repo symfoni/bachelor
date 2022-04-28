@@ -1,4 +1,4 @@
-import { db } from './setup';
+import { dbFireStore } from './firestore.setup';
 
 const PERSON_DATA_COLLECTION = 'person-data';
 
@@ -10,7 +10,7 @@ const PERSON_DATA_COLLECTION = 'person-data';
  */
 export async function dbAddPersonData(id: string, personData: object): Promise<void | Error> {
 	try {
-		const docRef = db.collection(PERSON_DATA_COLLECTION).doc(id);
+		const docRef = dbFireStore.collection(PERSON_DATA_COLLECTION).doc(id);
 		await docRef.set(personData);
 	} catch (error) {
 		console.error('database insertion failed', error);
@@ -25,7 +25,7 @@ export async function dbAddPersonData(id: string, personData: object): Promise<v
  */
 export async function dbGetPersonData(id: string): Promise<FirebaseFirestore.DocumentData | Error | undefined> {
 	try {
-		const docRef = db.collection(PERSON_DATA_COLLECTION).doc(id);
+		const docRef = dbFireStore.collection(PERSON_DATA_COLLECTION).doc(id);
 		const doc = await docRef.get();
 		if (!doc.exists) {
 			console.log('No such document!');
@@ -45,7 +45,7 @@ export async function dbGetPersonData(id: string): Promise<FirebaseFirestore.Doc
  */
 export async function dbDeletePersonData(id:string): Promise<void | Error | FirebaseFirestore.DocumentData> {
 	try {
-		const docRef = db.collection(PERSON_DATA_COLLECTION).doc(id);
+		const docRef = dbFireStore.collection(PERSON_DATA_COLLECTION).doc(id);
 		docRef.delete();
 		return (await docRef.get()).data();
 	} catch (error) {

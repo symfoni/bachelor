@@ -1,4 +1,4 @@
-import { db } from './setup';
+import { dbFireStore } from './firestore.setup';
 
 // the name of the employment contract collection in the database
 const EMPLOYMENT_COLLECTION = 'employment-contracts';
@@ -14,7 +14,7 @@ const TERMINATION_COLLECTION = 'termination-contracts';
  */
 export async function dbAddEmploymentContract(id: string, employmentData: object): Promise<void | Error> {
 	try {
-		const docRef = db.collection(EMPLOYMENT_COLLECTION).doc(id);
+		const docRef = dbFireStore.collection(EMPLOYMENT_COLLECTION).doc(id);
 		await docRef.set(employmentData);
 	} catch (error) {
 		console.error('database insertion failed', error);
@@ -30,7 +30,7 @@ export async function dbAddEmploymentContract(id: string, employmentData: object
  */
 export async function dbAddTerminationContract(id: string, terminationData: object): Promise<void | Error> {
 	try {
-		const docRef = db.collection(TERMINATION_COLLECTION).doc(id);
+		const docRef = dbFireStore.collection(TERMINATION_COLLECTION).doc(id);
 		await docRef.set(terminationData);
 	} catch (error) {
 		console.error('database insertion failed', error);
@@ -45,7 +45,7 @@ export async function dbAddTerminationContract(id: string, terminationData: obje
  */
 export async function dbGetEmploymentContract(id:string): Promise<FirebaseFirestore.DocumentData | Error | undefined> {
 	try {
-		const employmentContractRef = db.collection(EMPLOYMENT_COLLECTION).doc(id);
+		const employmentContractRef = dbFireStore.collection(EMPLOYMENT_COLLECTION).doc(id);
 		const doc = await employmentContractRef.get();
 		if (!doc.exists) {
 			console.log('No such document!');
@@ -65,7 +65,7 @@ export async function dbGetEmploymentContract(id:string): Promise<FirebaseFirest
  */
 export async function dbGetTerminationContract(id:string): Promise<FirebaseFirestore.DocumentData | Error | undefined> {
 	try {
-		const terminationContractRef = db.collection(TERMINATION_COLLECTION).doc(id);
+		const terminationContractRef = dbFireStore.collection(TERMINATION_COLLECTION).doc(id);
 		const doc = await terminationContractRef.get();
 		if (!doc.exists) {
 			console.log('No such document!');
@@ -85,7 +85,7 @@ export async function dbGetTerminationContract(id:string): Promise<FirebaseFires
  */
 export async function dbDeleteEmploymentContract(id:string): Promise<void | Error | FirebaseFirestore.DocumentData> {
 	try {
-		const docRef = db.collection(EMPLOYMENT_COLLECTION).doc(id);
+		const docRef = dbFireStore.collection(EMPLOYMENT_COLLECTION).doc(id);
 		docRef.delete();
 		return (await docRef.get()).data();
 	} catch (error) {
@@ -101,7 +101,7 @@ export async function dbDeleteEmploymentContract(id:string): Promise<void | Erro
  */
 export async function dbDeleteTerminationContract(id:string): Promise<void | Error | FirebaseFirestore.DocumentData> {
 	try {
-		const docRef = db.collection(TERMINATION_COLLECTION).doc(id);
+		const docRef = dbFireStore.collection(TERMINATION_COLLECTION).doc(id);
 		docRef.delete();
 		return (await docRef.get()).data();
 	} catch (error) {
