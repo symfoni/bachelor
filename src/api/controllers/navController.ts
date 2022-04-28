@@ -218,29 +218,47 @@ const getMainIdentifier = async (req: Request, res: Response) => {
 
 // how nav handles incoming messages (to verify or deny a request for unemployment benefits)
 const handleMessage = async (req: Request, res: Response) => {
-	// handle incoming message to retrieve the token from the encrypted message body
-	const message = await agentNAV.handleMessage({
-		raw: req.body as string,
-		metaData: [{type: 'message'}],
-		save: false
-	});
+	try {
+		// handle incoming message to retrieve the token from the encrypted message body
+		const message = await agentNAV.handleMessage({
+			raw: req.body as string,
+			metaData: [{type: 'message'}],
+			save: false
+		});
+	
+		const messagePresentationToken = message.data.messageData;
+		const senderDid = message.from;
+	
+		// check if the presentation token qualifies for unemployment benefits
+		const isQualified = await navAgentController.isQualifiedForUnemploymentBenefits(messagePresentationToken);
+		
+		// if the token qualifies, then send a message back
+		if (isQualified) {
+			await navAgentController.sendMessage(
+				senderDid, 
+				'Unemployment Benefit Qualification', 
+				{
+					result: 'You qualify for unemployment benefits.'
+				}
+			);
+		} else if (!isQualified) {
+			await navAgentController.sendMessage(
+				senderDid, 
+				'Unemployment Benefit Qualification', 
+				{
+					result: 'You do not qualify for unemployment benefits.'
+				}
+			);
+		}
+	
+		// if nothing fails, return status code 200
+		return res.status(200);
 
-	const messagePresentationToken = message.data.messageData;
-	const senderDid = message.from;
-
-	// check if the presentation token qualifies for unemployment benefits
-	const isQualified = await navAgentController.isQualifiedForUnemploymentBenefits(messagePresentationToken);
-
-	console.log(isQualified);
-	console.log(senderDid);
-
-	await navAgentController.sendMessage(senderDid, 'Unemployment Benefit Qualification', {result: 'you qualify for unemployment benefits'});
-
-	if (message) {
-		return res.json({ id: message });
+	} catch (error) {
+		return res.status(500).json({
+			error: 'unable to handle message'
+		});
 	}
-    
-	return res.status(400).json({ Error: 'Failed' });
 };
 
 export default { 
