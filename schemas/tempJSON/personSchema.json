@@ -118,9 +118,6 @@
                     },
                     "required": [
                         "SSN",
-                        "dateOfDeath",
-                        "countryOfDeath",
-                        "placeOfDeath",
                         "countryOfBirth",
                         "placeOfBirth",
                         "dateOfBirth",
