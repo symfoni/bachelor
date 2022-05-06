@@ -26,10 +26,16 @@ export default function NAVRecieveVPView(): JSX.Element {
 	const getMainIdentifier = async () => {
 		try {
 			const response = await fetch(NAV_GET_MAIN_IDENTIFIER_URL);
-			const json = await response.json();
-			setMainIdentifier(json.mainIdentifier.did);
+			if (!response.ok) {
+				alert('unable to generate the QR-code with the main DID address');
+				return;
+			} else {
+				const json = await response.json();
+				setMainIdentifier(json.mainIdentifier.did);
+			}
 		} catch (error) {
 			console.error(error);
+			alert('Something went wrong');
 		} finally {
 			setLoading(false);
 		}
@@ -43,7 +49,11 @@ export default function NAVRecieveVPView(): JSX.Element {
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>Send your VP by scanning the QR-code with your wallet!</Text>
 			{ isLoading ? <ActivityIndicator></ActivityIndicator> : (
-				<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
+				<>
+					{typeof mainIdentifier === 'undefined' ? <Text>Could not generate the QR-code</Text> : (
+						<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
+					)}
+				</>
 			)}
 			<Text style={{marginTop: 10}}>Info:</Text>
 			<Text style={{marginHorizontal: 200}}>
