@@ -18,8 +18,13 @@ export default function UserListVCView({ navigation }: any): JSX.Element {
 	const getCredentials = async () => {
 		try {
 			const response = await fetch(USER_GET_ALL_CREDENTIALS_URL);
-			const json = await response.json();
-			setData(json.listOfCredentials);
+			if (!response.ok) {
+				setData([]);
+				return;
+			} else {
+				const json = await response.json();
+				setData(json.listOfCredentials);
+			}
 		} catch (error) {
 			console.error(error);
 		} finally {

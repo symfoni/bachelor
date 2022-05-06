@@ -15,10 +15,14 @@ export default function UserMainIdentifierView(): JSX.Element {
 
 	const getMainIdentifier = async () => {
 		try {
-			const result = await fetch(USER_GET_MAIN_IDENTIFIER);
-			const jsonResult = await result.json();
-
-			setMainIdentifier(jsonResult.mainIdentifier);
+			const response = await fetch(USER_GET_MAIN_IDENTIFIER);
+			if (!response.ok) {
+				setMainIdentifier(undefined);
+				return;
+			} else {
+				const json = await response.json();
+				setMainIdentifier(json.mainIdentifier);
+			}
 		} catch (error) {
 			console.error(error);   
 		} finally {
