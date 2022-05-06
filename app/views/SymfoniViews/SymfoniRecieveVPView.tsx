@@ -20,14 +20,20 @@ export default function SymfoniRecieveVPView(): JSX.Element {
 		credentials: [TYPE_PERSON_CREDENTIAL]
 	};
 
-	// Retrieves NAVs main identifier. This is important for the end user to know where they'll send their VP.
+	// Retrieves Symfonis main identifier. This is important for the end user to know where they'll send their VP.
 	const getMainIdentifier = async () => {
 		try {
 			const response = await fetch(SYMFONI_GET_MAIN_IDENTIFIER_URL);
-			const json = await response.json();
-			setMainIdentifier(json.mainIdentifier.did);
+			if (!response.ok) {
+				alert('unable to generate QR-code with the main DID address');
+				return;
+			} else {
+				const json = await response.json();
+				setMainIdentifier(json.mainIdentifier.did);
+			}
 		} catch (error) {
 			console.error(error);
+			alert('something went wrong');
 		} finally {
 			setLoading(false);
 		}
