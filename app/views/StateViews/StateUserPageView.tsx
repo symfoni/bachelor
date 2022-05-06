@@ -26,14 +26,14 @@ export default function StateUserPageView({route}: any): JSX.Element {
 			};
 			
 			// create person VC
-			const rawdata = await fetch(STATE_PERSON_CREDENTIAL_URL, {
+			const response = await fetch(STATE_PERSON_CREDENTIAL_URL, {
 				method: 'POST',
 				body: JSON.stringify(credentialSubject),
 				headers: {
 					'Content-Type': 'application/json'
 				}
 			});
-			const credential = await rawdata.json();
+			const credential = await response.json();
 			const credentialToken = credential.credential.proof.jwt;
 
 			// construct a message body.
