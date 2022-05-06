@@ -47,7 +47,11 @@ export default function SymfoniRecieveVPView(): JSX.Element {
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>Send your VP by scanning the QR-code with your wallet!</Text>
 			{ isLoading ? <ActivityIndicator></ActivityIndicator> : (
-				<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
+				<>
+					{typeof mainIdentifier === 'undefined' ? <Text>Could not generate the QR-code</Text> : (
+						<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
+					)}
+				</>
 			)}
 			<Text style={{marginTop: 10}}>Info:</Text>
 			<Text style={{marginHorizontal: 200}}>
