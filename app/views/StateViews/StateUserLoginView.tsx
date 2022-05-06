@@ -17,19 +17,18 @@ export default function StateUserLoginView({navigation}: any): JSX.Element {
 	// fetch person data from the database
 	const getPersonData = async () => {
 		try {
-			const rawdata = await fetch(STATE_PERSON_URL + text);
-			const json = await rawdata.json();
+			const response = await fetch(STATE_PERSON_URL + text);
+			const json = await response.json();
 			
-			if (rawdata.status === 200) {
+			if (response.ok) {
 				navigation.navigate('StateUserPage', {
 					item: json
 				});
 				return;
 			}
-
 			setInvalid(true);
-
 		} catch (error) {
+			alert('Something went wrong, please try again later.');
 			console.error(error);
 		}
 	};
