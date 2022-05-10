@@ -107,6 +107,10 @@ The application uses DIDComm to send messages between agents/wallets. If you wan
 To gas up the DID, you have to compute its did address and fill it with gas by going to a website like
 [Rinkeby Faucet](https://rinkebyfaucet.com/). After giving the did gas, you have to update the did document on the blockchain with a service key and service endpoints. We recommend using the veramo library for this.
 
+### Verifiable registry
+
+The demo is dependent on a verifiable registry, which for simplicity is a json file called ```verifiableRegistry.json```. It consists of key-value pair where the key is the name of the agent and the value is its main DID address. See, ```verifiableRegistry.template.json```, for further help. To gather the main DID addresses, use the APIs endpoints for fetching each agents main identifier, e.g, ```/symfoni/mainIdentifier/```.
+
 ### Starting the demo
 
 Start the demo by opening two terminals and typing,
