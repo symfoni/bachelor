@@ -1,28 +1,124 @@
 # Bachelor
+
 Bachelor project with NTNU and Symfoni, spring 2022.
 
-# Setup
-First of all you have to initialize the project by running, ```npm ci```.
+## Installation
 
-To run the demo, make sure to create a new 'dotenv.env' file, and follow the instruction given in 'dotenv-template.env'.
+### Prerequisites
 
-## Test
-To run the tests in this project, simply run, ```npm run test```.
+Make sure that you have the Node.js runtime environment with support for typescript, see [Node.js](https://nodejs.org/en/). Then install the Veramo client by typing,
 
-## API
-To run the api, type ```npm run dev```.
+```bash
+npm i @veramo/cli -g
+```
 
-## App
-To run the application, use ```npm start```, and follow the instructions in the terminal.
+Lastly, make sure that you have installed the Expo client by typing,
 
-## Build
-To build the application for the web, run ```expo build:web```. For android and ios, run ```eas build```. Ensure that you have the respective client installed by typing either ```npm install -g expo-cli``` or  ```npm install -g eas-cli```.
+```bash
+npm install -g expo-cli
+```
 
-## Database
-The demo is dependent on a Firebase database connection. Start by creating an account on Firebase, then create a project with a Firestore database. Then go to project settings to create and download a service account key JSON document, place it in the root folder, and name it 'serviceAccountKey.json.'  Alternatively, ask one of the developers on this project for access to their Firebase project and generate a service account key from there.
+, and the EAS client,
 
-## Messaging
+```bash
+npm install -g eas-cli
+```
+
+### Dependencies
+
+Install all required dependencies by running,
+
+```bash
+npm ci
+```
+
+If this does not work you can try,
+
+```bash
+npm i
+```
+
+However, keep in mind that this updates the dependencies.
+
+### Generate database keys and link to infura project
+
+The local databases handled by the veramo API requires secret keys. The project also requires a link to a infura project to run. Both the keys and the infura project id must be set in a ```dotenv.env``` file, see ```dotenv-template.env``` for further guidance.
+
+### Test
+
+To run the tests in this project, simply run,
+
+```bash
+npm run test
+```
+
+### API
+
+To run the api, type,
+
+```bash
+npm run dev
+```
+
+### App
+
+To run the application, use,
+
+```bash
+npm start
+```
+
+Follow the instructions given in the terminal.
+
+### Build
+
+To build the application for the web, run,
+
+```bash
+expo build:web
+```
+
+For android and ios, run,
+
+```bash
+eas build
+```
+
+Again, ensure that you have the respective client installed by typing either,
+
+```bash
+npm install -g expo-cli
+```
+
+or  
+
+```bash
+npm install -g eas-cli
+```
+
+### Database
+
+The demo is dependent on a Firebase database connection. Start by creating an account on Firebase, then create a project with a Firestore database. Then go to project settings to create and download a service account key JSON document, place it in the root folder, and name it ```serviceAccountKey.json.```  Alternatively, ask one of the developers on this project for access to their Firebase project and generate a service account key from there.
+
+### Messaging
+
 The application uses DIDComm to send messages between agents/wallets. If you want to use this feature, you have to gas up the main did of each agent, then add a service key and service endpoints to the did document.
 
-To gas up the DID, you have to compute its did address and fill it with gas by going to a website like 
-[Rinkeby Faucet](https://rinkebyfaucet.com/). After giving the did gas, you have to update the did document on the blockchain with a service key and service endpoints. We recommend using the veramo library for this. 
+To gas up the DID, you have to compute its did address and fill it with gas by going to a website like
+[Rinkeby Faucet](https://rinkebyfaucet.com/). After giving the did gas, you have to update the did document on the blockchain with a service key and service endpoints. We recommend using the veramo library for this.
+
+### Starting the demo
+
+Start the demo by opening two terminals and typing,
+
+```bash
+npm start
+```
+
+, in both terminals. Choose the web build option in one terminal, and android/IOS in the other. When the project has successfully been built to each device, open a third terminal to spin up the server by typing,
+
+```bash
+npm run dev
+```
+
+That is it.
