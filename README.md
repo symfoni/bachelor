@@ -60,6 +60,8 @@ To run the api, type,
 npm run dev
 ```
 
+For API documentation, please refer to our [published API documentation](https://documenter.getpostman.com/view/14505624/UyrAEwgK).
+
 ### App
 
 To run the application, use,
