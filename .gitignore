@@ -245,5 +245,3 @@ web-build/
 
 # service account key
 serviceAccountKey.json
-
-verifiableRegistry.json
