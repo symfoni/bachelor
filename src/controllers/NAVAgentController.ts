@@ -1,8 +1,8 @@
 import { TYPE_EMPLOYMENT_CREDENTIAL, TYPE_PERSON_CREDENTIAL, TYPE_TERMINATION_CREDENTIAL } from '../constants/verifiableCredentialConstants';
 import { agentNAV } from '../veramo/veramo.setup';
 import { AgentController } from './AgentController';
-import { computeYearsBetweenDates } from '../utils/dateUtils';
-import { IVCMessageDataPerson } from '../interfaces/message.interface';
+import { computeMonthsBetweenDates, computeYearsBetweenDates } from '../utils/dateUtils';
+import { IVCMessageDataPerson, IVCMessageDataTermination } from '../interfaces/message.interface';
 import { issuers, verifyIssuer, verifySchema } from '../utils/verifyPresentation';
 import { INAVAgentController } from '../interfaces/navAgentController.interface';
 
@@ -47,9 +47,9 @@ export class NAVAgentController extends AgentController implements INAVAgentCont
 				const credentialMessage: any = await this.agent.handleMessage({
 					raw: credentials[index].proof.jwt
 				});
-				
+
 				// get credential message data
-				const credentialMessageData: IVCMessageDataPerson = credentialMessage.data;
+				const credentialMessageData: any = credentialMessage.data;
 
 				switch (credentialMessageData.vc.type.at(1)) {
 				case TYPE_EMPLOYMENT_CREDENTIAL:
@@ -65,7 +65,8 @@ export class NAVAgentController extends AgentController implements INAVAgentCont
 				case TYPE_TERMINATION_CREDENTIAL:
 					if (
 						! await verifySchema(credentialMessageData) || 
-						! await verifyIssuer(credentialMessageData, issuers.symfoni)
+						! await verifyIssuer(credentialMessageData, issuers.symfoni) ||
+						! this.verifyTerminationVCData(credentialMessageData)
 					) {
 						return false;
 					}
@@ -115,8 +116,33 @@ export class NAVAgentController extends AgentController implements INAVAgentCont
 			}
 			return true;
 		} catch (error) {
-			console.error(error);
 			return new Error('unable to verify person data');
+		}
+	}
+
+	/**
+	 * verifyTerminationVCData verifies the data within the termination contract credential.
+	 * @param credentialMessageData the credential message.
+	 * @returns true if all requirements are met.
+	 */
+	private verifyTerminationVCData(credentialMessageData: IVCMessageDataTermination): boolean | Error {
+		try {
+			const todaysDate = new Date().toISOString();
+
+			const lastPayDay = credentialMessageData.vc.credentialSubject.termination.employee.lastPayday;
+
+			const years = computeYearsBetweenDates(lastPayDay, todaysDate);
+			const months = computeMonthsBetweenDates(lastPayDay, todaysDate);
+
+			// if years is more than one, or months is less than three, return false
+			if (years > 1 || months < 3) {
+				return false;
+			}
+		
+			return true;
+		
+		} catch (error) {
+			return new Error('unable to verify the termination contract data');
 		}
 	}
 }
