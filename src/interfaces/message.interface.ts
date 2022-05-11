@@ -23,3 +23,20 @@ export interface IVCMessageDataPerson {
 	nbf: number
 	iss: string
 }
+
+export interface IVCMessageDataTermination {
+	vc: {
+		'@context': [string, string]
+		type: [string, string]
+		credentialSubject: {
+            termination: {
+                employee: {
+					lastPayday: string
+				}
+            }
+        }
+	}
+	sub: string
+	nbf: number
+	iss: string
+}
