@@ -9,7 +9,7 @@ Bachelor project with NTNU and Symfoni, spring 2022.
 Make sure that you have the Node.js runtime environment with support for typescript, see [Node.js](https://nodejs.org/en/). Then install the Veramo client by typing,
 
 ```bash
-npm i @veramo/cli -g
+npm install @veramo/cli -g
 ```
 
 Lastly, make sure that you have installed the Expo client by typing,
