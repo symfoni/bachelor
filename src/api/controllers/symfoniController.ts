@@ -602,9 +602,13 @@ const handleMessaging = async (req: Request, res: Response) => {
 			for (let index = 0; index < generatedCredentials.length; index++) {
 				await symfoniAgentController.sendMessage(senderDid, 'SymfoniCredential', generatedCredentials[index]);
 			}
+			return res.status(200).json({
+				success: 'issued credentials'
+			});
 		}
 
 		return res.status(400).json({ Error: 'unable to handle the message' });
+	
 	} catch (error) {
 		return res.status(500).json({
 			error
