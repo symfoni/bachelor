@@ -1,6 +1,18 @@
 # Bachelor
 
-Bachelor project with NTNU and Symfoni, spring 2022.
+This repo contains a NTNU bachelor project in collaboration with Symfoni. The project is a demo of how [EU Digital Wallet](https://ec.europa.eu/info/strategy/priorities-2019-2024/europe-fit-digital-age/european-digital-identity_en) could be used when applying for unemployment benefits at [NAV](https://www.nav.no/no/person). It is built after the Self-Sovereign Identity model, meaning that the user is control of their own verifiable data. However, it is important to state that none of the sensitive verifiable data used in the application is real, therefore it can not be used in a real-life scenario. Nonetheless, it is a good demo for showcasing the flow of data in the Self-Sovereign Identity system.
+
+## Tools used
+- [Veramo](https://veramo.io/), to manage verifiable data and anything related to the SSI model.
+- [React Native](https://reactnative.dev/), as a framework for creating the web and phone application.
+- [Express.js](https://expressjs.com/), as a web framework for creating the API.
+- [Node.js](https://nodejs.org/en/), as the runtime environment.
+- [Infura](https://infura.io/), as an access point to the ethereum networks.
+- [Firestore](https://firebase.google.com/docs/firestore), for saving data in a cloud database.
+- [Expo](https://docs.expo.dev/), for easily building the application.
+- [TypeScript](https://www.typescriptlang.org/), the main programming language used.
+- [Mocha](https://mochajs.org/), the testing framework.
+- [Husky](https://typicode.github.io/husky/#/), for managing modern Git hooks.
 
 ## Installation
 
@@ -113,6 +125,10 @@ To gas up the DID, you have to compute its did address and fill it with gas by g
 
 The demo is dependent on a verifiable registry, which for simplicity is a json file called ```verifiableRegistry.json```. It consists of key-value pair where the key is the name of the agent and the value is its main DID address. See, ```verifiableRegistry.template.json```, for further help. To gather the main DID addresses, use the APIs endpoints for fetching each agents main identifier, e.g, ```/symfoni/mainIdentifier/```.
 
+### Connect smartphone to local server
+
+The express server is run on a local machine unless it is chosen to be deployed somewhere. In order for a mobile phone to access the server that is running on a local computer it needs to know the IPV4 address of said computer. The IPV4 can be found by typing ```ipconfig``` on a windows machine, and ```ifconfig``` on either Linux or Mac. When the IPV4 address is found, replace the IPV4 string with your actual IPV4 address on line 11 in ```./app/api.constants.ts```.
+
 ### Starting the demo
 
 Start the demo by opening two terminals and typing,
@@ -127,4 +143,4 @@ npm start
 npm run dev
 ```
 
-That is it.
+That is it. Happy demoing. :rocket:
