@@ -202,7 +202,7 @@ export default function TerminationForm({ screenName }: any) {
 
 						<Text>{props.touched.lastDayAtWork && props.errors.lastDayAtWork}</Text>
 
-						<Text style={formStyles.textLabel}>Last day at work</Text>
+						<Text style={formStyles.textLabel}>Last payday</Text>
 						<TextInput
 							style={formStyles.textInput}
 							placeholder='YYYY-MM-DD'

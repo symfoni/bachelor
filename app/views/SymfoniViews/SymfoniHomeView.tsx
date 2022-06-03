@@ -12,7 +12,7 @@ import { buttonStyles, styles } from '../../styles';
 export default function SymfoniHomeView({navigation}: any): JSX.Element {
 	return (
 		<View style={styles.container}>
-			<Text style={styles.headingTextBlack}>This is the symfoni home page.</Text>
+			<Text style={styles.headingTextBlack}>This is the Symfoni home page.</Text>
 			<Text>Employer actions</Text>
 			<NavigationButton
 				title='Add employee'

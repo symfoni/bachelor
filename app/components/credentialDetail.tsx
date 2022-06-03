@@ -25,7 +25,7 @@ export function CredentialDetail({item}: any){
 					<Text style={styles.credentialDetailHeadingText}>Employee info</Text>
 					<Text>Employee ID: {item.verifiableCredential.credentialSubject.employment.employee.employeeId}</Text>
 					<Text>Job title: {item.verifiableCredential.credentialSubject.employment.employee.jobTitle}</Text>
-					<Text>Place of work: {item.verifiableCredential.credentialSubject.employment.employee.placeofWork}</Text>
+					<Text>Place of work: {item.verifiableCredential.credentialSubject.employment.employee.placeOfWork}</Text>
 					<Text>Hours of work: {item.verifiableCredential.credentialSubject.employment.employee.hoursOfWork}</Text>
 					<Text>Start date: {item.verifiableCredential.credentialSubject.employment.employee.startDate}</Text>
 					<Text>End date: {item.verifiableCredential.credentialSubject.employment.employee.endDate}</Text>
@@ -39,8 +39,8 @@ export function CredentialDetail({item}: any){
 					<Divider style={styles.credentialDetailTextDivider}></Divider>
 			
 					<Text style={styles.credentialDetailHeadingText}>Salary</Text>
-					<Text>Amount: {item.verifiableCredential.credentialSubject.employment.employee.salary.amount}</Text>
-					<Text>Frequency: {item.verifiableCredential.credentialSubject.employment.employee.salary.frequency}</Text>
+					<Text>Monthly salary: {item.verifiableCredential.credentialSubject.employment.employee.salary.monthlySalary}</Text>
+					<Text>Work percentage: {item.verifiableCredential.credentialSubject.employment.employee.salary.workPercentage}</Text>
 					<Text>Currency: {item.verifiableCredential.credentialSubject.employment.employee.salary.currency}</Text>
 			
 					<Divider style={styles.credentialDetailTextDivider}></Divider>
@@ -66,7 +66,7 @@ export function CredentialDetail({item}: any){
 				
 					<Text style={styles.credentialDetailHeadingText}>Employee info</Text>
 					<Text>Last day at work: {item.verifiableCredential.credentialSubject.termination.employee.lastDayAtWork}</Text>
-					<Text>Last payday: {item.verifiableCredential.credentialSubject.termination.employee.lastPayDay}</Text>
+					<Text>Last payday: {item.verifiableCredential.credentialSubject.termination.employee.lastPayday}</Text>
 					<Text>Termination status: {item.verifiableCredential.credentialSubject.termination.employee.terminationStatus}</Text>
 					<Text>Terminated during trial period: {item.verifiableCredential.credentialSubject.termination.employee.terminatedDuringTrialPeriod.toString()}</Text>
 					<Text>Weekly work hours: {item.verifiableCredential.credentialSubject.termination.employee.WeeklyWorkHours}</Text>

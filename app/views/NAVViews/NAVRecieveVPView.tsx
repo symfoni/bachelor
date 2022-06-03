@@ -50,7 +50,7 @@ export default function NAVRecieveVPView(): JSX.Element {
 			<Text style={styles.headingTextBlack}>Send your VP by scanning the QR code with your wallet!</Text>
 			{ isLoading ? <ActivityIndicator></ActivityIndicator> : (
 				<>
-					{typeof mainIdentifier === 'undefined' ? <Text>Could not generate the QR-code</Text> : (
+					{typeof mainIdentifier === 'undefined' ? <Text>Could not generate the QR code</Text> : (
 						<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
 					)}
 				</>
