@@ -25,7 +25,7 @@ export default function SymfoniRecieveVPView(): JSX.Element {
 		try {
 			const response = await fetch(SYMFONI_GET_MAIN_IDENTIFIER_URL);
 			if (!response.ok) {
-				alert('unable to generate QR-code with the main DID address');
+				alert('unable to generate QR code with the main DID address');
 				return;
 			} else {
 				const json = await response.json();
@@ -45,17 +45,17 @@ export default function SymfoniRecieveVPView(): JSX.Element {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.headingTextBlack}>Send your VP by scanning the QR-code with your wallet!</Text>
+			<Text style={styles.headingTextBlack}>Send your VP by scanning the QR code with your wallet!</Text>
 			{ isLoading ? <ActivityIndicator></ActivityIndicator> : (
 				<>
-					{typeof mainIdentifier === 'undefined' ? <Text>Could not generate the QR-code</Text> : (
+					{typeof mainIdentifier === 'undefined' ? <Text>Could not generate the QR code</Text> : (
 						<QRCode value={JSON.stringify(QRCodeData)} size={200}></QRCode>
 					)}
 				</>
 			)}
 			<Text style={{marginTop: 10}}>Info:</Text>
 			<Text style={{marginHorizontal: 200}}>
-				The QR-code contains our main DID address and which VC(s) we must validate before issuing your employment contract and termination contract VC. 
+				The QR code contains our main DID address and which VC(s) we must validate before issuing your employment contract and termination contract VC. 
 				It might take a few seconds to verify your credentials, but you should receive your result in a minute.</Text>
 		</View> 
 	);

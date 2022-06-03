@@ -11,6 +11,10 @@ export default function UserSeeMessagesView({navigation}: any): JSX.Element {
 	const getMessages = async () => {
 		try {
 			const rawdata = await fetch(USER_GET_ALL_MESSAGES);
+			if (rawdata.status !== 200) {
+				setData([]);
+				return;
+			}
 			const json = await rawdata.json();
 			setData(json.messages);
 		} catch (error) {

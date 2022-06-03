@@ -20,7 +20,7 @@ export function CredentialCard({item, navigation}: {item: VerifiableCredential, 
 			>
 				<Text style={styles.headingText}>{item.verifiableCredential.type[1]}</Text>
 				<Text style={styles.defaultText}>Job title: {item.verifiableCredential.credentialSubject.employment.employee.jobTitle}</Text>
-				<Text style={styles.defaultText}>Work place: {item.verifiableCredential.credentialSubject.employment.employee.placeofWork}</Text>
+				<Text style={styles.defaultText}>Work place: {item.verifiableCredential.credentialSubject.employment.employee.placeOfWork}</Text>
 				<Text style={styles.defaultText}>Start date: {item.verifiableCredential.credentialSubject.employment.employee.startDate}</Text>
 			</TouchableOpacity>
 		);

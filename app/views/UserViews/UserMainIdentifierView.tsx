@@ -36,7 +36,7 @@ export default function UserMainIdentifierView(): JSX.Element {
 
 	return (
 		<View style={styles.container}>
-			<Text style={styles.headingTextBlack}>This is your did address!</Text>
+			<Text style={styles.headingTextBlack}>This is your DID address!</Text>
 			{isLoading ? <ActivityIndicator></ActivityIndicator> : (
 				<>
 					{typeof mainIdentifier === 'undefined' ? <Text>Something went wrong</Text> : (

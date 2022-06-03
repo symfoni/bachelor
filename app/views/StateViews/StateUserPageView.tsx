@@ -60,7 +60,7 @@ export default function StateUserPageView({route}: any): JSX.Element {
 		<View style={styles.container}>
 			<Text style={styles.headingTextBlack}>Hello, {item.personData.person.name.firstName}.</Text>
 			
-			<Text style={{marginTop: 10}}>Enter you DID address to recieve your person credential:</Text>
+			<Text style={{marginTop: 10}}>Enter your DID address to recieve your person credential:</Text>
 			<TextInput onChangeText={(text)=>{setText(text);}} style={styles.textInputFieldWide} placeholder='did:ethr:rinkeby:0x...'></TextInput>
 			
 			<Button onPress={issuePersonCredential} title={'Recieve person VC'}></Button>

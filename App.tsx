@@ -45,7 +45,7 @@ export default function App() {
 				<Stack.Screen name='SymfoniRecieveVP' component={SymfoniRecieveVPView} options={{title: 'Symfoni - Send your VP'}}></Stack.Screen>
 				
 				
-				<Stack.Screen name='StateUserLogin' component={StateUserLoginView} options={{title: 'Login to your state account'}}></Stack.Screen>
+				<Stack.Screen name='StateUserLogin' component={StateUserLoginView} options={{title: 'Login into your state account'}}></Stack.Screen>
 				<Stack.Screen name='RequestCredential' component={RequestCredentialView} options={{title: 'State Agent'}}></Stack.Screen>
 				<Stack.Screen name='StateUserPage' component={StateUserPageView} options={{title: 'Home'}}></Stack.Screen>
 				
