@@ -19,7 +19,9 @@ function parseDateString(value: string, originalValue: string) {
 	return parsedDate;
 }
 
-// Typeguards and error handling for the input in the form using the yup library.
+/**
+ * Typeguards and error handling for the input in the form using the yup library.
+ */
 const TerminationSchema = yup.object({
 	socialSecurityNumber: yup.string().required('Required Field'),
 	terminationNoticeReceived: yup.date().transform(parseDateString).required('Required Field'),
@@ -33,6 +35,17 @@ const TerminationSchema = yup.object({
 // Hides the scrollbar if on android
 const showScrollIndicator = Platform.OS === 'android' ? false : true;
 
+/**
+ * terminationFormDataToJSON converts termination form data to JSON
+ * @param socialSecurityNumber the social security number.
+ * @param terminationNoticeReceived the date of the termination notice.
+ * @param terminationReason the termination reason.
+ * @param lastDayAtWork the date of the last day at work.
+ * @param lastPayday the date of the last payday.
+ * @param terminationStatus the termination status.
+ * @param terminatedDuringTrialPeriod if the employee was terminated during trial period.
+ * @returns JSON object with termination form data.
+ */
 function terminationFormDataToJSON(
 	socialSecurityNumber: string, 
 	terminationNoticeReceived: string, 
@@ -59,8 +72,12 @@ function terminationFormDataToJSON(
 	return jsonData;
 }
 
-// TerminationForm is a form component for providing the information for a termination VC.
-// On successful submit takes you back to the homepage.
+/**
+ * TerminationForm is a form component for providing the information for a termination VC.
+ * On successful submit takes you back to the homepage.
+ * @param param0 the screen to navigate to when the form is submited.
+ * @returns a termination form component.
+ */
 export default function TerminationForm({ screenName }: any) {
 
 	// Const used for determining the state of the picker.

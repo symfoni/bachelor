@@ -9,7 +9,6 @@ import { useNavigation } from '@react-navigation/native';
 import { parse, isDate } from 'date-fns';
 import { SYMFONI_ADD_EMPLOYMENT_CONTRACT_TO_DB_URL } from '../api.constants';
 
-
 function parseDateString(value: string, originalValue: string) {
 	const parsedDate = isDate(originalValue)
 		? originalValue
@@ -18,7 +17,9 @@ function parseDateString(value: string, originalValue: string) {
 	return parsedDate;
 }
 
-// EmploymentSchema for validating the form inputs using the yup library.
+/**
+ * EmploymentSchema for validating the form inputs using the yup library.
+ */
 const EmploymentSchema = yup.object({
 	socialSecurityNumber: yup.string().required(),
 	jobTitle: yup.string().required('Required Field'),
@@ -40,6 +41,27 @@ const EmploymentSchema = yup.object({
 // Hides the scrollbar if on android
 const showScrollIndicator = Platform.OS === 'android' ? false : true;
 
+/**
+ * employmentFormDataToJson converts the employment form data to JSON.
+ * @param socialSecurityNumber the social security number.
+ * @param jobTitle the job title.
+ * @param placeOfWork the place of work.
+ * @param hoursOfWork the hours of work.
+ * @param startDate the start date.
+ * @param employerTerminationNotice when the player recieved termination notice. 
+ * @param employeeTerminationNotice when the player recieved termination notice. 
+ * @param temporaryContractEndDate temporary contract end date.
+ * @param workPercentage work percentage.
+ * @param monthlySalary monthly salary.
+ * @param currency currenxy.
+ * @param trialStartDate trial start date.
+ * @param trialEndDate trial end date.
+ * @param trialPeriodTerminationNotice number of days from notice to termination.
+ * @param rightForPension if the employee has pension rights.
+ * @param nonCompeteClause if the employee has a non-compete claus.
+ * @param requirementToWorkOverseas if the employee has requirement to work overseas.
+ * @param employmentType the type of employment.
+ */
 function employmentFormDataToJson(
 	socialSecurityNumber: string,
 	jobTitle: string,
@@ -99,8 +121,12 @@ function employmentFormDataToJson(
 
 // TODO: Implement a way to pass the props to the proper endpoint
 
-// TerminationForm is a form component for providing the information for a termination VC.
-// On successful submit takes you back to the homepage.
+/**
+ * TerminationForm is a form component for providing the information for a termination VC.
+ * On successful submit takes you back to the homepage.
+ * @param param0 
+ * @returns an employment form component.
+ */
 export default function EmploymentForm({ screenName }: any) {
 
 	// Const used for determining the state of the picker.

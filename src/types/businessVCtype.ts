@@ -1,3 +1,6 @@
+/**
+ * businessVerifiableCredential describes the content of a business credential.
+ */
 export type businessVerifiableCredential = {
     '@context': [
         'https://www.w3.org/2018/credentials/v1', 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/tempJSON/businessSchema.json'

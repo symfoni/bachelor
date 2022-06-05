@@ -6,7 +6,9 @@ export const navColor = '#C30000';
 export const userColor =  '#003399';
 export const stateColor = '#6f2c3f';
 
-// General styles
+/**
+ * General styles.
+ */
 export const styles = StyleSheet.create({
 	container: {
 		flex: 1,
@@ -68,6 +70,9 @@ export const styles = StyleSheet.create({
 	}
 });
 
+/**
+ * Styles related to forms.
+ */
 export const formStyles = StyleSheet.create({
 	picker: {
 		height: 35,
@@ -103,7 +108,9 @@ export const formStyles = StyleSheet.create({
 	}
 });
 
-// Button styles
+/**
+ * Styles related to buttons.
+ */
 export const buttonStyles = StyleSheet.create({
 	submitButtonFormSymfoni: {
 		margin: 10,
