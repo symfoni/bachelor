@@ -113,6 +113,9 @@ export const dbConnectionTest = createConnection({
 	entities: Entities,
 });
 
+/**
+ * agentNAV is an agent constructed by Veramo.
+ */
 export const agentNAV = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
 		new DIDComm(),
@@ -151,6 +154,9 @@ export const agentNAV = createAgent<IDIDManager & IKeyManager & IDataStore & IDa
 	],
 });
 
+/**
+ * agentSymfoni is an agent constructed by Veramo.
+ */
 export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
 		new DIDComm(),
@@ -189,6 +195,9 @@ export const agentSymfoni = createAgent<IDIDManager & IKeyManager & IDataStore &
 	],
 });
 
+/**
+ * agentUser is an agent constructed by Veramo.
+ */
 export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
 		new DIDComm(),
@@ -227,6 +236,9 @@ export const agentUser = createAgent<IDIDManager & IKeyManager & IDataStore & ID
 	],
 });
 
+/**
+ * agentState is an agent constructed by Veramo.
+ */
 export const agentState = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer>({
 	plugins: [
 		new DIDComm(),
@@ -265,6 +277,9 @@ export const agentState = createAgent<IDIDManager & IKeyManager & IDataStore & I
 	],
 });
 
+/**
+ * agentTest is an agent constructed by Veramo.
+ */
 export const agentTest = createAgent<IDIDManager & IKeyManager & IDataStore & IDataStoreORM & IResolver & ICredentialIssuer & IDIDComm>({
 	plugins: [
 		new DIDComm(),

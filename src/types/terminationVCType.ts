@@ -1,3 +1,6 @@
+/**
+ * terminationVC describes the contents of a termination verifiable credential.
+ */
 export type terminationVC = {
     '@context': [
         'https://www.w3.org/2018/credentials/v1', 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/terminationSchema.json'

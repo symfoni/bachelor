@@ -1,3 +1,6 @@
+/**
+ * personVerifiableCredential describes the content of a person verifiable credential.
+ */
 export type personVerifiableCredential = {
     '@context': [
         'https://www.w3.org/2018/credentials/v1', 'https://github.com/symfoni/bachelor/blob/dev/schemas/tempJSON/personSchema.json'

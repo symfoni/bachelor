@@ -1,3 +1,6 @@
+/**
+ * employmentVC describes the contents of an employment verifiable credential.
+ */
 export type employmentVC = {
     '@context': [
         'https://www.w3.org/2018/credentials/v1', 'https://raw.githubusercontent.com/symfoni/bachelor/dev/schemas/employmentContractSchema.json'

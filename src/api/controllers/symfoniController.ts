@@ -19,7 +19,11 @@ const TERMINATION_VC_SCHEMA_FILE_PATH = 'schemas/terminationSchema.json';
 const EMPLOYMENT_VC_SCHEMA_FILE_PATH = 'schemas/employmentSchema.json';
 const symfoniAgentController = new SymfoniAgentController('symfoni');
 
-// creates employment credential
+/**
+ * createEmploymentCredential creates a verifiable credential of an employment contract.
+ * @param req takes a request body in form of a JSON with the issuer DID, and the credential subject.
+ * @param res responds with the created verifiable credential as JSON.
+ */
 const createEmploymentCredential = async (req: Request, res: Response) => {
 	// read json input
 	let issuer: string = req.body.issuer;
@@ -59,7 +63,11 @@ const createEmploymentCredential = async (req: Request, res: Response) => {
 	});
 };
 
-// create termination credential
+/**
+ * createTerminationCredential creates a verifiable credential of a termination contract.
+ * @param req takes a request body in form of a JSON with the issuer DID, and the credential subject.
+ * @param res responds with the created verifiable credential as JSON.
+ */
 const createTerminationCredential = async (req: Request, res: Response) => {
 	let issuer: string = req.body.issuer;
 	
@@ -98,7 +106,12 @@ const createTerminationCredential = async (req: Request, res: Response) => {
 	});
 };
 
-// creates a DID
+/**
+ * createDID creates a DID based on the request body parameters.
+ * @param req the request has a body defining the alias, promivder, and key management.
+ * @param res responds with json data containing the DID that was created, or an error if it was unable to create
+ * a DID.
+ */
 const createDID = async (req: Request, res: Response) => {
 	const alias: string = req.body.alias;
 	const provider: string = req.body.provider;
@@ -116,7 +129,11 @@ const createDID = async (req: Request, res: Response) => {
 	});
 };
 
-// get a specific did
+/**
+ * getDID retrieves a specific DID from the local database based on the DIDs ID.
+ * @param req the request contains a parameter with the DID address to look for.
+ * @param res responds with json data containing the DID, or an error message if no DID was found.
+ */
 const getDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	await symfoniAgentController.getDID(did).then((identifier) => {
@@ -131,7 +148,11 @@ const getDID = async (req: Request, res: Response) => {
 	});
 };
 
-// list dids
+/**
+ * listDIDs lists all the DIDs managed by the agent.
+ * @param req takes no request.
+ * @param res respinds with a list of DIDs in JSON format, or an error if it was unable to look up the database.
+ */
 const listDIDs = async (req: Request, res: Response) => {
 	await symfoniAgentController.listAllDIDs().then((didList) => {
 		if (typeof didList === 'undefined') {
@@ -145,7 +166,11 @@ const listDIDs = async (req: Request, res: Response) => {
 	});
 };
 
-// resolves a did
+/**
+ * resolveDID resolves a specific DID on the blockchain.
+ * @param req takes a request containing one parameter, the DID address you want to resolve.
+ * @param res responds with the DID-document in a JSON format.
+ */
 const resolveDID = async (req: Request, res: Response) => {
 	const did: string = req.params.did;
 	symfoniAgentController.resolveDID(did).then((didDocument) => {
@@ -164,7 +189,11 @@ const resolveDID = async (req: Request, res: Response) => {
 	});
 };
 
-// save a credential
+/**
+ * addCredential saves a credential to the local database.
+ * @param req takes a request body in a JSON format consisting of a verifiable credential.
+ * @param res responds with the hash of the credential that was added to the database.
+ */
 const addCredential = async (req: Request, res: Response) => {
 	if (typeof req.body.credential === 'undefined') {
 		return res.status(400).json({
@@ -191,7 +220,11 @@ const addCredential = async (req: Request, res: Response) => {
 
 };
 
-// list all saved credentials in the database
+/**
+ * listCredentials lists all the credentials in the local database.
+ * @param req takes no request.
+ * @param res responds with a list of verifiable credentials in a JSON format.
+ */
 const listCredentials = async (req: Request, res: Response) => {
 	await symfoniAgentController.getAllCredentials().then((credentialList) => {
 		if (credentialList.length === 0) {
@@ -205,7 +238,11 @@ const listCredentials = async (req: Request, res: Response) => {
 	});
 };
 
-// retrieve credential(s) based on type
+/**
+ * getCredential retrieves redentials based on type.
+ * @param req take one parameter which is the type of credential.
+ * @param res responds with verifiable credentials in a JSON format.
+ */
 const getCredential = async (req: Request, res: Response) => {
 	const credentialType: string = req.params.type;
 	await symfoniAgentController.getCredentialBasedOnType(credentialType).then((credentialList) => {
@@ -220,7 +257,11 @@ const getCredential = async (req: Request, res: Response) => {
 	});
 };
 
-// verify a jwt
+/**
+ * verifyJWT checks if a JWT is valid.
+ * @param req takes a request with a JSON body consisting of a JWT.
+ * @param res responds with a boolean stating whether the JWT is valid or not.
+ */
 const verifyJWT = async (req: Request, res: Response) => {
 	const jwt: string = req.body.jwt;
 
@@ -242,7 +283,11 @@ const verifyJWT = async (req: Request, res: Response) => {
 	});
 };
 
-// create presentation
+/**
+ * createPresentation takes a list of verifiable credentials and combine them into a verifiable presentation.
+ * @param req the request consist of a JSON body with a list of verifiable credentials, and the holder DID.
+ * @param res responds with a verifiable presentation in a JSON format.
+ */
 const createPresentation = async (req: Request, res: Response) => {
 	const credentials: VerifiableCredential[] = [];
 	let holder: string = req.body.holder;
@@ -287,7 +332,11 @@ const createPresentation = async (req: Request, res: Response) => {
 
 };
 
-// adds an employment contract to the database
+/**
+ * addEmploymentContractToDb adds employment contract data to the Firestore database.
+ * @param req takes a request body as JSON containing the ID for the document, and the subject data.
+ * @param res responds with the ID of the document created and its data in a JSON format.
+ */
 const addEmploymentContractToDb = async (req: Request, res: Response) => {
 	// check if id is missing
 	if (typeof req.body.id === 'undefined') {
@@ -334,7 +383,11 @@ const addEmploymentContractToDb = async (req: Request, res: Response) => {
 	});
 };
 
-// adds an termination contract to the database
+/**
+ * addTerminationContractToDb adds termination contract data to the Firestore database.
+ * @param req takes a request body as JSON containing the ID for the document, and the subject data.
+ * @param res responds with the ID of the document created and its data in a JSON format.
+ */
 const addTerminationContractToDb = async (req: Request, res: Response) => {
 	// check if id is missing
 	if (typeof req.body.id === 'undefined') {
@@ -381,7 +434,11 @@ const addTerminationContractToDb = async (req: Request, res: Response) => {
 	});
 };
 
-// retrieves an employment document from the database
+/**
+ * getEmploymentContract retrieves an employment contract document from the Firestore database.
+ * @param req the request has a parameter containing the ID of the document.
+ * @param res responds with the document data as JSON.
+ */
 const getEmploymentContract =async (req: Request, res: Response) => {
 	if (typeof req.params.id === 'undefined') {
 		return res.status(400).json({
@@ -411,7 +468,11 @@ const getEmploymentContract =async (req: Request, res: Response) => {
 	});
 };
 
-// retrieves a termination document from the database
+/**
+ * getTerminationContract retrieves a termination contract document from the Firestore database.
+ * @param req the request has a parameter containing the ID of the document.
+ * @param res responds with the document data as JSON.
+ */
 const getTerminationContract =async (req: Request, res: Response) => {
 	if (typeof req.params.id === 'undefined') {
 		return res.status(400).json({
@@ -441,7 +502,11 @@ const getTerminationContract =async (req: Request, res: Response) => {
 	});
 };
 
-// deletes employment contract from the database
+/**
+ * deleteEmploymentContractFromDb deletes an employment contract document from the Firestore database.
+ * @param req the request has one parameter containing the ID of the document.
+ * @param res responds with the deleted document in a JSON format.
+ */
 const deleteEmploymentContractFromDb = async (req: Request, res: Response) => {
 	if (typeof req.params.id === 'undefined') {
 		return res.status(400).json({
@@ -472,7 +537,11 @@ const deleteEmploymentContractFromDb = async (req: Request, res: Response) => {
 	});
 };
 
-// deletes termination contract from the database
+/**
+ * deleteTerminationContractFromDb deletes a termination contract document from the Firestore database.
+ * @param req the request has one parameter containing the ID of the document.
+ * @param res responds with the deleted document in a JSON format.
+ */
 const deleteTerminationContractFromDb = async (req: Request, res: Response) => {
 	if (typeof req.params.id === 'undefined') {
 		return res.status(400).json({
@@ -503,7 +572,11 @@ const deleteTerminationContractFromDb = async (req: Request, res: Response) => {
 	});
 };
 
-// Returns the main identifier of the did
+/**
+ * getMainIdentifier retrieves the main identifier managed by the agent.
+ * @param req takes no request.
+ * @param res responds with a DID document in a JSON format.
+ */
 const getMainIdentifier = async (req: Request, res: Response) => {
 	const mainIdentifier = await symfoniAgentController.getMainIdentifier();
 	if (mainIdentifier instanceof Error) {
@@ -517,7 +590,12 @@ const getMainIdentifier = async (req: Request, res: Response) => {
 	});
 };
 
-// handles symfonis incoming messages
+/**
+ * handleMessaging handles incoming messages containing a VP JWT. If the VP qualifies for contract VCs, contract VCs
+ * are sent back to the DID that sent the message.
+ * @param req takes a request containing a message in a JSON format.
+ * @param res responds with a status stating whether the transaction was successful or not.
+ */
 const handleMessaging = async (req: Request, res: Response) => {
 	try {
 		const generatedCredentials = [];
