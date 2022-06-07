@@ -61,7 +61,10 @@ export default function UserMessageDetailView({navigation, route}: any): JSX.Ele
 				});
 			}
 
-			alert('A credential was successfully added to your wallet');
+			Alert.alert(
+				'Added', 
+				'A credential was successfully added to your wallet.'
+			);
 
 		} catch (error) {
 			return alert('something went wrong, try again later');
